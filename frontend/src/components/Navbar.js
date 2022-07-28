@@ -2,7 +2,14 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import Offcanvas from "react-bootstrap/Offcanvas"
-import { FaHome, FaSearch } from "react-icons/fa"
+import {
+  FaHome,
+  FaSearch,
+  FaSearchPlus,
+  FaPlus,
+  FaDrumstickBite,
+  FaWindowClose,
+} from "react-icons/fa"
 import "./Navbar.css"
 
 function OffcanvasExample() {
@@ -15,12 +22,7 @@ function OffcanvasExample() {
             
     `}
           </style>
-          <Navbar
-            key={expand}
-            variant="green"
-            expand={expand}
-            className="mb-3 color-nav"
-          >
+          <Navbar key={expand} expand={expand} className="mb-3 color-nav">
             <Container fluid>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -37,21 +39,35 @@ function OffcanvasExample() {
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-${expand}`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-                placement="start"
               >
-                <Offcanvas.Header className="offcanvas-violet">
-                  {" "}
-                  <br />
+                <Offcanvas.Header className="offcanvas-violet text-end">
+                  <FaWindowClose />
                 </Offcanvas.Header>
-                <Offcanvas.Body className="offcanvas-violet">
-                  <div className="thickline">
-                    <Nav className="justify-content-end flex-grow-1 pe-3">
-                      <Nav.Link href="/Search">
-                        <FaSearch />
-                        ค้นหาเมนูทั้งหมด
-                      </Nav.Link>
-                    </Nav>
-                  </div>
+                <Offcanvas.Body className="offcanvas-violet" placement="start">
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/Search">
+                      <FaSearch />
+                      &nbsp;ค้นหาเมนูทั้งหมด
+                    </Nav.Link>
+                  </Nav>
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/SearchRef">
+                      <FaSearchPlus />
+                      &nbsp;ค้นหาเมนูจากของในตู้เย็น
+                    </Nav.Link>
+                  </Nav>
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/Add">
+                      <FaPlus />
+                      &nbsp;เพิ่มสูตรอาหาร
+                    </Nav.Link>
+                  </Nav>
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/Ref">
+                      <FaDrumstickBite />
+                      &nbsp;จัดการวัตถุดิบ
+                    </Nav.Link>
+                  </Nav>
                 </Offcanvas.Body>
               </Navbar.Offcanvas>
             </Container>
