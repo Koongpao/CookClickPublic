@@ -1,7 +1,11 @@
-import React from "react"
-
+import Navbar from "../components/Navbar"
 const Home = () => {
-  return <div className="container-sm text-center">Home</div>
+  return (
+    <>
+      <Navbar />
+      <div className="container text-center border">Home</div>
+    </>
+  )
 }
 
 export default Home
