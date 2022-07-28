@@ -5,7 +5,7 @@ const Login = () => {
     <>
       <h1 className="m-5 text-center">Login</h1>
       <div className="flex justify-content-center">
-        <Form className="formbox p-4">
+        <Form className="flex flex-col formbox p-4">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address:</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
@@ -20,12 +20,12 @@ const Login = () => {
           </Button>
           <a href="/" className="text-sm text-center text-muted mb-3" id="forget-password">forgotten password?</a>
           <hr />
-          <Button className="flex justify-content-center btn-create" variant="primary" type="submit">
+          <Button className="btn-create" variant="primary" type="submit">
             Create New Account
           </Button>
         </Form>
-        </div>
-      </>
+      </div>
+    </>
   );
   
 }
