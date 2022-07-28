@@ -9,20 +9,23 @@
   display: flex;
 }
 
-<<<<<<< HEAD
-.App-link {
-  color: #61dafb;
+.flex-col {
+  flex-direction: column;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .btn-orange {
   background-color: #e55934;
+  width: 100%;
+}
+
+.text-sm {
+  font-size: 0.8rem;
+}
+
+#forget-password {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#forget-password:hover {
+  text-decoration: underline;
 }
