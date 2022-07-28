@@ -15,11 +15,12 @@ const Login = () => {
             <Form.Label>Password:</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Button className="btn-orange mb-3" variant="primary" type="submit">
+          <Button className="btn-orange mb-1" variant="primary" type="submit">
             Log In
           </Button>
-          <a href="/" className="text-sm text-center text-muted mb-3" id="forget-password">forgotten password?</a>
+          <a href="/" className="text-sm text-end text-muted mb-3" id="forget-password">forgotten password?</a>
           <hr />
+          <div className="text-center text-muted mb-3" id="forget-password">or</div>
           <Button className="btn-create" variant="primary" type="submit">
             Create New Account
           </Button>
