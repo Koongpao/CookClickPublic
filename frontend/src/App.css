@@ -11,4 +11,18 @@
 
 .btn-orange {
   background-color: #e55934;
+  width: 100%;
+}
+
+.text-sm {
+  font-size: 0.8rem;
+}
+
+#forget-password {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#forget-password:hover {
+  text-decoration: underline;
 }
