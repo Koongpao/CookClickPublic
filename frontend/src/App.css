@@ -12,10 +12,6 @@
 .flex-col {
   flex-direction: column;
 }
-.btn-orange {
-  background-color: #e55934;
-  width: 100%;
-}
 
 .text-sm {
   font-size: 0.8rem;

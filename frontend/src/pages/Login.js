@@ -21,7 +21,7 @@ const Login = () => {
           <a href="/" className="text-sm text-end text-muted mb-3" id="forget-password">forgotten password?</a>
           <hr />
           <div className="text-center text-muted mb-3" id="forget-password">or</div>
-          <Button className="btn-create" variant="primary" type="submit">
+          <Button variant="primary" href="/sign-up">
             Create New Account
           </Button>
         </Form>

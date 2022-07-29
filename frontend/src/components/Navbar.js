@@ -33,7 +33,7 @@ function OffcanvasExample() {
                   alt="logo"
                 ></img>
               </Navbar.Brand>
-              <Navbar.Brand href="/Home">
+              <Navbar.Brand href="/">
                 <FaHome />
               </Navbar.Brand>
               <Navbar.Offcanvas
