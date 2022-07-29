@@ -1,0 +1,24 @@
+/* import the Bootstrap */
+@import '~bootstrap/scss/bootstrap.scss';
+
+
+/* ------- customize primary button color -------- */
+$newOrange: #E55934;
+
+.btn-primary {
+  @include button-variant(
+    $newOrange, 
+    darken($newOrange, 7.5%), 
+    rgb(245, 245, 245), 
+    lighten($newOrange, 5%), 
+    lighten($newOrange, 10%), 
+    darken($newOrange, 30%));
+}
+
+.btn-outline-primary {
+  @include button-outline-variant(
+    $newOrange, 
+    #222222, 
+    lighten($newOrange, 5%), 
+    $newOrange);
+}
