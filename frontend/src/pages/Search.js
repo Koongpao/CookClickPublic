@@ -3,14 +3,14 @@ import Dropdown from "react-bootstrap/Dropdown"
 function Search() {
   return (
     <>
-      <h1 className="m-5 text-center">ค้นหาสูตรอาหารทั้งหมด</h1>
+      <h1 className="text-center">ค้นหาสูตรอาหารทั้งหมด</h1>
       <div className="flex justify-content-center">
         <Form className="flex flex-col common-home p-4">
           <Form.Group className="mb-3" controlId="SearchKeyword">
             <Form.Label>Keyword:</Form.Label>
             <Form.Control type="search" placeholder="Enter Keyword" />
           </Form.Group>
-          <Dropdown>
+          <Dropdown className="text-end">
             <Dropdown.Toggle
               className="normal-search-btn"
               id="dropdown-search-type"
