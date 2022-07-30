@@ -44,10 +44,12 @@ function Nbar() {
               show={show}
               onHide={handleClose}
             >
-              <Offcanvas.Header
-                className="offcanvas-violet"
-                closeButton
-              ></Offcanvas.Header>
+              <Offcanvas.Header className="offcanvas-violet" closeButton>
+                <img
+                  src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t1.15752-9/292609703_1081595922750571_685075280195760492_n.png?_nc_cat=110&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeF3H1gtRa8PGzjadq8BR7wnxbqgAJaVdYjFuqAAlpV1iPHzdILqPjdtru9Hf5F8raYmiEO4LeFVXpuhlzCqmOyG&_nc_ohc=btb7wJIb7HcAX8ZO_RO&_nc_ht=scontent.fbkk14-1.fna&oh=03_AVLHVxeb6w65yGB6FQY2Tt60wu1l6bOa8xOtso7y9ZGktg&oe=630831A5"
+                  alt="logo"
+                ></img>
+              </Offcanvas.Header>
               <Offcanvas.Body className="offcanvas-violet" placement="start">
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/Search">
@@ -80,9 +82,9 @@ function Nbar() {
                   alt="profile"
                   className="profilepic"
                 ></img>
-                <div>
+                <div className="profilename">
                   <span>
-                    Loged in as
+                    Logged in as
                     <br />
                   </span>
                   <span>Mr.Mark Suck</span>
