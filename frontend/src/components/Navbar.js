@@ -54,7 +54,7 @@ function Nbar() {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/SearchRef">
                     <FaSearchPlus />
-                    &nbsp;ค้นหาสูตรอาหารจากของในตู้เย็น
+                    &nbsp;ค้นหาสูตรอาหารจากวัตถุดิบในตู้เย็น
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
