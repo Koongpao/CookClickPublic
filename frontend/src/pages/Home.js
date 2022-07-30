@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
 import Collapse from "react-bootstrap/Collapse"
+import Menucard from "../components/Menucard"
 
 function Home() {
   const [open0, setOpen0] = useState(true)
@@ -58,11 +59,13 @@ function Home() {
         </div>
         <div className="common-home flex align-items-center">
           <Collapse in={open0}>
-            <div id="today-collapse-text">
-              Today Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+            <div className="flex flex-col align-items-center" id="today-collapse-text">
+              <Menucard />
+              <Menucard />
+              <Menucard />
+              <Menucard />
+              <Menucard />
+
             </div>
           </Collapse>
           <Collapse in={open1}>
