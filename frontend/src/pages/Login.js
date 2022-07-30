@@ -15,7 +15,7 @@ const Login = () => {
             <Form.Label>Password:</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Button className="btn-orange mb-1" variant="primary" type="submit">
+          <Button className="mb-1" variant="primary" type="submit">
             Log In
           </Button>
           <a href="/" className="text-sm text-end text-muted mb-3" id="forget-password">forgotten password?</a>
