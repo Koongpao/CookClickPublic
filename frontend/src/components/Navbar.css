@@ -1,4 +1,17 @@
 .color-nav {background-color: #4A7C59;}
 
 .offcanvas-violet {background-color: #554971;
-color: #FFFF;}
+color: #FFFF;
+justify-content: right!important;}
+
+.offcanvas-foot {background-color: #2B271F;
+color: #FFFF;
+justify-content: center!important;}
+
+.containoff {
+    width: 20%;
+}
+
+.profilepic {
+    border-radius: 50%;
+}
