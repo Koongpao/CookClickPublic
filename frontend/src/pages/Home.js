@@ -23,7 +23,7 @@ function Home() {
         </div>
         <div>
           <Button
-            className="featurebutton feature-active"
+            className="featurebutton feature-active shadow-none"
             onClick={() => {
               setOpen0(!open0)
               setOpen1(false)
@@ -35,7 +35,7 @@ function Home() {
             Today
           </Button>
           <Button
-            className="featurebutton"
+            className="featurebutton shadow-none"
             onClick={() => {
               setOpen0(false)
               setOpen1(!open1)
@@ -47,7 +47,7 @@ function Home() {
             Week
           </Button>
           <Button
-            className="featurebutton"
+            className="featurebutton shadow-none"
             onClick={() => {
               setOpen0(false)
               setOpen1(false)
