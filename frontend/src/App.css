@@ -64,3 +64,9 @@ border-color: #36213E!important;
 width: 576px;
 flex-wrap: nowrap;
 }
+
+.normal-search-btn {
+background-color: #4A7C59!important;
+color: #FFFF!important;
+border-color: #4A7C59!important;
+}
