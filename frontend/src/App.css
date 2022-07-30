@@ -53,7 +53,7 @@
 .featurebutton {
   width: 30%;
   background-color: #554971 !important;
-  color: #ffff !important;
+  color: #fff !important;
   border-color: #554971 !important;
   margin: 0.25em;
   font-size: 20px !important;
@@ -68,4 +68,11 @@
 .common-home {
   max-width: 95%;
   width: 576px;
+}
+
+.err-box {
+  color: #fff;
+  font-size: 0.8rem;
+  background-color: #ff5a5a;
+  border-radius: 5px;
 }
