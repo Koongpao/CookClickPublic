@@ -9,7 +9,6 @@ import {
   FaPlus,
   FaDrumstickBite,
 } from "react-icons/fa"
-import "./Navbar.css"
 import React, { useState } from "react"
 
 function Nbar() {
@@ -21,11 +20,6 @@ function Nbar() {
   return (
     <>
       <div>
-        <style type="text/css">
-          {`
-            
-    `}
-        </style>
         <Navbar key="false" expand="false" className="mb-3 color-nav">
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
