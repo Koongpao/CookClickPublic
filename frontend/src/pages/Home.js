@@ -23,7 +23,7 @@ function Home() {
             <Button
               className="featurebutton feature-active shadow-none"
               onClick={() => {
-                setOpen0(!open0)
+                setOpen0(true)
                 setOpen1(false)
                 setOpen2(false)
               }}
@@ -36,7 +36,7 @@ function Home() {
               className="featurebutton shadow-none"
               onClick={() => {
                 setOpen0(false)
-                setOpen1(!open1)
+                setOpen1(true)
                 setOpen2(false)
               }}
               aria-controls="week-collapse-text"
@@ -49,7 +49,7 @@ function Home() {
               onClick={() => {
                 setOpen0(false)
                 setOpen1(false)
-                setOpen2(!open2)
+                setOpen2(true)
               }}
               aria-controls="month-collapse-text"
               aria-expanded={open2}
