@@ -17,46 +17,46 @@ function Home() {
 
   return (
     <>
-      <div className="flex justify-content-center">
-        <div className="common-home flex flex-col align-items-center">
-          <div>
-            <Button
-              className="featurebutton feature-active shadow-none"
-              onClick={() => {
-                setOpen0(true)
-                setOpen1(false)
-                setOpen2(false)
-              }}
-              aria-controls="today-collapse-text"
-              aria-expanded={open0}
-            >
-              Today
-            </Button>
-            <Button
-              className="featurebutton shadow-none"
-              onClick={() => {
-                setOpen0(false)
-                setOpen1(true)
-                setOpen2(false)
-              }}
-              aria-controls="week-collapse-text"
-              aria-expanded={open1}
-            >
-              Week
-            </Button>
-            <Button
-              className="featurebutton shadow-none"
-              onClick={() => {
-                setOpen0(false)
-                setOpen1(false)
-                setOpen2(true)
-              }}
-              aria-controls="month-collapse-text"
-              aria-expanded={open2}
-            >
-              Month
-            </Button>
-          </div>
+      <div className="flex flex-col align-items-center">
+        <div className="common-home flex justify-content-evenly">
+          <Button
+            className="featurebutton feature-active shadow-none"
+            onClick={() => {
+              setOpen0(true)
+              setOpen1(false)
+              setOpen2(false)
+            }}
+            aria-controls="today-collapse-text"
+            aria-expanded={open0}
+          >
+            Today
+          </Button>
+          <Button
+            className="featurebutton shadow-none"
+            onClick={() => {
+              setOpen0(false)
+              setOpen1(true)
+              setOpen2(false)
+            }}
+            aria-controls="week-collapse-text"
+            aria-expanded={open1}
+          >
+            Week
+          </Button>
+          <Button
+            className="featurebutton shadow-none"
+            onClick={() => {
+              setOpen0(false)
+              setOpen1(false)
+              setOpen2(true)
+            }}
+            aria-controls="month-collapse-text"
+            aria-expanded={open2}
+          >
+            Month
+          </Button>
+        </div>
+        <div className="common-home flex align-items-center">
           <Collapse in={open0}>
             <div id="today-collapse-text">
               Today Anim pariatur cliche reprehenderit, enim eiusmod high life
