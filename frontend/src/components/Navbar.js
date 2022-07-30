@@ -48,13 +48,13 @@ function Nbar() {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/Search">
                     <FaSearch />
-                    &nbsp;ค้นหาเมนูทั้งหมด
+                    &nbsp;ค้นหาสูตรอาหารทั้งหมด
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/SearchRef">
                     <FaSearchPlus />
-                    &nbsp;ค้นหาเมนูจากของในตู้เย็น
+                    &nbsp;ค้นหาสูตรอาหารจากของในตู้เย็น
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">

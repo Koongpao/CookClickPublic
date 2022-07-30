@@ -1,5 +1,6 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button"
+import Form from "react-bootstrap/Form"
+
 const Login = () => {
   return (
     <>
@@ -18,17 +19,24 @@ const Login = () => {
           <Button className="mb-1" variant="primary" type="submit">
             Log In
           </Button>
-          <a href="/" className="text-sm text-end text-muted mb-3" id="forget-password">forgotten password?</a>
+          <a
+            href="/"
+            className="text-sm text-end text-muted mb-3"
+            id="forget-password"
+          >
+            forgotten password?
+          </a>
           <hr />
-          <div className="text-center text-muted mb-3" id="forget-password">or</div>
+          <div className="text-center text-muted mb-3" id="forget-password">
+            or
+          </div>
           <Button variant="primary" href="/sign-up">
             Create New Account
           </Button>
         </Form>
       </div>
     </>
-  );
-  
+  )
 }
 
 export default Login

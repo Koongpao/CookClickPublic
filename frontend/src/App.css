@@ -66,13 +66,22 @@
 }
 
 .common-home {
-  max-width: 95%;
-  width: 576px;
+width: 576px;
+max-width: 95%;
+flex-wrap: nowrap;
 }
 
+<<<<<<< HEAD
 .err-box {
   color: #fff;
   font-size: 0.8rem;
   background-color: #ff5a5a;
   border-radius: 5px;
 }
+=======
+.normal-search-btn {
+background-color: #4A7C59!important;
+color: #FFFF!important;
+border-color: #4A7C59!important;
+}
+>>>>>>> e2b2847d58d66c062f139a98516065e61ddc1e68
