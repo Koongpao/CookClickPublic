@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
+import { FaTrashAlt } from "react-icons/fa";
 
 const RefIngItem = (props) => {
   const [showConf, setShowConf] = useState(false);
 
+  const handleShow = () => setShowConf(true);
+  const handleClose = () => setShowConf(false);
+
   return (
     <>
-       <Modal show={() => setShowConf(false)} onHide={() => setShowConf(false)}>
+      <Modal show={showConf} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Confirm delete {props.ingname}?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        {/* <Modal.Body></Modal.Body> */}
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConf(false)}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => setShowConf(false)}>
+          <Button variant="primary" onClick={handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -30,17 +34,11 @@ const RefIngItem = (props) => {
         <Card className="ref-ing-card-ing-amount">
           <Card.Body>{props.ingamount}</Card.Body>
         </Card>
-        <Button
-          className=""
-          variant="danger"
-          onClick={() => setShowConf(true)}
-        >
-          {" "}
-          X{" "}
+        <Button variant="danger" onClick={handleShow}>
+          <FaTrashAlt />
         </Button>
-        <Button className="" variant="success">
-          {" "}
-          แก้ไข{" "}
+        <Button variant="success" onClick={handleShow}>
+          แก้ไข
         </Button>
       </div>
     </>

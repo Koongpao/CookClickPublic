@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
@@ -44,6 +44,7 @@ const Ref = () => {
         >
           <Tab eventKey="meat" title="เนื้อสัตว์">
             <RefIngItem ingname="หมูสับ" ingamount="100g"/>
+            <RefIngItem ingname="ไอใบไมหน้าโง่" ingamount="1ตัว"/>
             <RefIngItem ingname="ไอใบไมหน้าโง่" ingamount="1ตัว"/>
           </Tab>
           <Tab eventKey="veggies" title="ผัก/ผลไม้">
