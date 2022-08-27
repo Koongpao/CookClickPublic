@@ -63,9 +63,6 @@ function Home() {
               <Menucard />
               <Menucard />
               <Menucard />
-              <Menucard />
-              <Menucard />
-
             </div>
           </Collapse>
           <Collapse in={open1}>
