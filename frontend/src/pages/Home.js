@@ -7,12 +7,29 @@ function Home() {
   const [foods] = useState([
     {
       "foodName": "Steak",
-      "foodImgURL": "https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      "foodImgURL": "https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "star": 3.2
     },
     {
       "foodName": "Chocolate Cake",
-      "foodImgURL": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80"
-    }
+      "foodImgURL": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80",
+      "star": 4.9
+    },
+    {
+      "foodName": "Hamburger",
+      "foodImgURL": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=699&q=80",
+      "star": 1.9
+    },
+    {
+      "foodName": "Pepperoni Pizza",
+      "foodImgURL": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "star": 3.3
+    },
+    {
+      "foodName": "Blueberry Icicle",
+      "foodImgURL": "https://images.unsplash.com/photo-1488900128323-21503983a07e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      "star": 4.7
+    },
   ])
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
@@ -73,7 +90,7 @@ function Home() {
               {
                 foods.map((food, index) => {
                   return (
-                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} />
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
                   )
                 })
               }
@@ -81,18 +98,24 @@ function Home() {
           </Collapse>
           <Collapse in={open1}>
             <div id="week-collapse-text">
-              Week Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+              {
+                foods.map((food, index) => {
+                  return (
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
+                  )
+                })
+              }
             </div>
           </Collapse>
           <Collapse in={open2}>
             <div id="month-collapse-text">
-              Month Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+              {
+                foods.map((food, index) => {
+                  return (
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
+                  )
+                })
+              }
             </div>
           </Collapse>
         </div>
