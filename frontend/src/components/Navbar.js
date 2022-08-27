@@ -26,7 +26,7 @@ function Nbar() {
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
             <Navbar.Brand>
-              <img src={Logonobg} alt="logo" height="50"></img>
+              <img src={Logonobg} alt="logo" width="150px"></img>
             </Navbar.Brand>
             <Navbar.Brand href="/">
               <FaHome />
@@ -38,7 +38,7 @@ function Nbar() {
               onHide={handleClose}
             >
               <Offcanvas.Header className="offcanvas-violet" closeButton>
-                <img src={Logonobg} alt="logo" height="30"></img>
+                <img src={Logonobg} alt="logo" width="150px"></img>
               </Offcanvas.Header>
               <Offcanvas.Body className="offcanvas-violet" placement="start">
                 <Nav className="justify-content-end flex-grow-1 pe-3">
