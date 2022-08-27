@@ -10,6 +10,8 @@ import {
   FaDrumstickBite,
 } from "react-icons/fa"
 import React, { useState } from "react"
+import Logonobg from "../img/logonobg.svg"
+import Mark from "../img/mark.jpg"
 
 function Nbar() {
   const [show, setShow] = useState(false)
@@ -24,10 +26,7 @@ function Nbar() {
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
             <Navbar.Brand>
-              <img
-                src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t1.15752-9/292609703_1081595922750571_685075280195760492_n.png?_nc_cat=110&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeF3H1gtRa8PGzjadq8BR7wnxbqgAJaVdYjFuqAAlpV1iPHzdILqPjdtru9Hf5F8raYmiEO4LeFVXpuhlzCqmOyG&_nc_ohc=btb7wJIb7HcAX8ZO_RO&_nc_ht=scontent.fbkk14-1.fna&oh=03_AVLHVxeb6w65yGB6FQY2Tt60wu1l6bOa8xOtso7y9ZGktg&oe=630831A5"
-                alt="logo"
-              ></img>
+              <img src={Logonobg} alt="logo" height="50"></img>
             </Navbar.Brand>
             <Navbar.Brand href="/">
               <FaHome />
@@ -39,10 +38,7 @@ function Nbar() {
               onHide={handleClose}
             >
               <Offcanvas.Header className="offcanvas-violet" closeButton>
-                <img
-                  src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t1.15752-9/292609703_1081595922750571_685075280195760492_n.png?_nc_cat=110&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeF3H1gtRa8PGzjadq8BR7wnxbqgAJaVdYjFuqAAlpV1iPHzdILqPjdtru9Hf5F8raYmiEO4LeFVXpuhlzCqmOyG&_nc_ohc=btb7wJIb7HcAX8ZO_RO&_nc_ht=scontent.fbkk14-1.fna&oh=03_AVLHVxeb6w65yGB6FQY2Tt60wu1l6bOa8xOtso7y9ZGktg&oe=630831A5"
-                  alt="logo"
-                ></img>
+                <img src={Logonobg} alt="logo" height="30"></img>
               </Offcanvas.Header>
               <Offcanvas.Body className="offcanvas-violet" placement="start">
                 <Nav className="justify-content-end flex-grow-1 pe-3">
@@ -72,9 +68,10 @@ function Nbar() {
               </Offcanvas.Body>
               <Offcanvas.Header className="offcanvas-foot flex">
                 <img
-                  src="https://scontent.fbkk6-2.fna.fbcdn.net/v/t1.15752-9/295496717_776865923732379_3601568390681838852_n.png?stp=cp0_dst-png&_nc_cat=109&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeGU1aSvncxZibrvqB1dkypzSuQL9EWXLUJK5Av0RZctQly3nxS50zwQthM9cLlJMw4feFeEg8Odq1dz9EGZ7DLk&_nc_ohc=iL3Mm-Eh904AX9m_N2I&tn=y3pXRUOwqqEgi0Fd&_nc_ht=scontent.fbkk6-2.fna&oh=03_AVLGZWWJlITl3nUYEYfOTjfWVbcLl-wpDgFmuUyKx64Kpw&oe=630B3F57"
+                  src={Mark}
                   alt="profile"
                   className="profilepic"
+                  width="50"
                 ></img>
                 <div className="profilename">
                   <span>
