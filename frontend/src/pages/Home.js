@@ -1,9 +1,19 @@
 import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
 import Collapse from "react-bootstrap/Collapse"
-import Menucard from "../components/Menucard"
+import MCard from "../components/MCard"
 
 function Home() {
+  const [foods] = useState([
+    {
+      "foodName": "Steak",
+      "foodImgURL": "https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+      "foodName": "Chocolate Cake",
+      "foodImgURL": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80"
+    }
+  ])
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
   const [open2, setOpen2] = useState(false)
@@ -57,12 +67,16 @@ function Home() {
             Month
           </Button>
         </div>
-        <div className="common-home flex align-items-center">
+        <div className="common-home flex flex-col align-items-center">
           <Collapse in={open0}>
-            <div className="flex flex-col align-items-center" id="today-collapse-text">
-              <Menucard />
-              <Menucard />
-              <Menucard />
+            <div className="flex flex-col align-items-center width-100" id="today-collapse-text">
+              {
+                foods.map((food, index) => {
+                  return (
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} />
+                  )
+                })
+              }
             </div>
           </Collapse>
           <Collapse in={open1}>
