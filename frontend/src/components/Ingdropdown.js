@@ -4,10 +4,8 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { FaPlus } from "react-icons/fa"
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a
-    href=""
-    ref={ref}
+const CustomToggle = React.forwardRef(({ children, onClick }) => (
+  <span
     onClick={(e) => {
       e.preventDefault()
       onClick(e)
@@ -16,7 +14,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   >
     {children}
     &#x25bc;
-  </a>
+  </span>
 ))
 
 const CustomMenu = React.forwardRef(
@@ -60,10 +58,10 @@ function Ingdropdown() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu as={CustomMenu}>
-        <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-        <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-        <Dropdown.Item eventKey="3">Orange</Dropdown.Item>
-        <Dropdown.Item eventKey="4">Red-Orange</Dropdown.Item>
+        <Dropdown.Item eventKey="1">หมู</Dropdown.Item>
+        <Dropdown.Item eventKey="2">หมา</Dropdown.Item>
+        <Dropdown.Item eventKey="3">วัว</Dropdown.Item>
+        <Dropdown.Item eventKey="4">ไก่</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
