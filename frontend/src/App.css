@@ -102,11 +102,22 @@ resize: none!important;
   margin: auto;
 }
 
-.ref-page-add-ingredient-button{
-  margin: auto;
-}
-
 .ref-page-ingredient-tab{
   color: black !important;
-  font-size: 3vw;
+  font-size: 18px;
+}
+.ref-ing-item{
+  display: flex;
+}
+
+.ref-ing-card-ing-name{
+  width: 60%;
+}
+
+.ref-ing-card-ing-amount{
+  width: 20%;
+}
+
+.tab-content{
+  padding: 5%;
 }
