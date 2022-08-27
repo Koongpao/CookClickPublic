@@ -1,23 +1,23 @@
-import Container from "react-bootstrap/Container"
-import Nav from "react-bootstrap/Nav"
-import Navbar from "react-bootstrap/Navbar"
-import Offcanvas from "react-bootstrap/Offcanvas"
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import {
   FaHome,
   FaSearch,
   FaSearchPlus,
   FaPlus,
   FaDrumstickBite,
-} from "react-icons/fa"
-import React, { useState } from "react"
-import Logonobg from "../img/logonobg.svg"
-import Mark from "../img/mark.jpg"
+} from "react-icons/fa";
+import React, { useState } from "react";
+import Logonobg from "../img/logonobg.svg";
+import Mark from "../img/mark.jpg";
 
 function Nbar() {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -26,11 +26,7 @@ function Nbar() {
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
             <Navbar.Brand>
-<<<<<<< HEAD
-              <img src={Logonobg} alt="logo" style={{ width:'150px' }}></img>
-=======
-              <img src={Logonobg} alt="logo" width="150px"></img>
->>>>>>> 619493390a6b84de110aa0027d58040cb8980b7a
+              <img src={Logonobg} alt="logo" style={{ width: "150px" }}></img>
             </Navbar.Brand>
             <Navbar.Brand href="/">
               <FaHome />
@@ -90,7 +86,7 @@ function Nbar() {
         </Navbar>
       </div>
     </>
-  )
+  );
 }
 
-export default Nbar
+export default Nbar;
