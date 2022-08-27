@@ -122,3 +122,15 @@ resize: none!important;
   padding: 5%;
   font-size: 3vw;
 }
+
+.add-ing-item{
+  display: flex;
+}
+
+.add-ing-name{
+  width: 60%;
+}
+
+.add-ing-amount{
+  width: 20%;
+}
