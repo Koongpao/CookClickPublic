@@ -26,7 +26,7 @@ function Nbar() {
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
             <Navbar.Brand>
-              <img src={Logonobg} alt="logo" height="50"></img>
+              <img src={Logonobg} alt="logo" style={{ width:'150px' }}></img>
             </Navbar.Brand>
             <Navbar.Brand href="/">
               <FaHome />
