@@ -93,3 +93,20 @@ resize: none!important;
   text-decoration: none;
   color: black;
 }
+
+.ref-page-form-box{
+  max-width: 60%;
+  margin-top: 5% !important;
+  justify-content: center;
+  margin-bottom: 5% !important;
+  margin: auto;
+}
+
+.ref-page-add-ingredient-button{
+  margin: auto;
+}
+
+.ref-page-ingredient-tab{
+  color: black !important;
+  font-size: 3vw;
+}
