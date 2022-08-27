@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react"
 import Form from "react-bootstrap/Form"
 import Dropdown from "react-bootstrap/Dropdown"
 import Button from "react-bootstrap/Button"
-import { FaPlus } from "react-icons/fa"
+import { FaPlus, FaBan } from "react-icons/fa"
+import Card from "react-bootstrap/Card"
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <span
@@ -50,7 +51,21 @@ const CustomMenu = React.forwardRef(
 
 function Add() {
   const [inglist, setinglist] = useState([])
+
+  const uniqueName = []
+  const uniqueIng = inglist.filter((element) => {
+    const isDuplicate = uniqueName.includes(element.ingname)
+    if (!isDuplicate) {
+      uniqueName.push(element.ingname)
+
+      return true
+    }
+    return false
+  })
   const addEntryClick = (ing) => {
+    setinglist([...inglist, ing])
+  }
+  const removeonClick = (ing) => {
     setinglist([...inglist, ing])
   }
   const [selectedFile, setSelectedFile] = useState()
@@ -74,10 +89,10 @@ function Add() {
     setSelectedFile(e.target.files[0])
   }
   const alling = [
-    { name: "หมู", value: 0 },
-    { name: "หมา", value: 0 },
-    { name: "ไก่", value: 0 },
-    { name: "ไข่", value: 0 },
+    { ingname: "หมู", ingamount: 0 },
+    { ingname: "หมา", ingamount: 0 },
+    { ingname: "ไก่", ingamount: 0 },
+    { ingname: "ไข่", ingamount: 0 },
   ]
 
   return (
@@ -113,18 +128,26 @@ function Add() {
                   tag="button"
                   onClick={() => addEntryClick(ing)}
                 >
-                  {ing.name}
+                  {ing.ingname}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
           </Dropdown>
           <div>
-            {inglist.map((ing) => (
-              <div>
-                <div>{ing.name}</div>
-                <Form.Group className="changeingvalue">
-                  <Form.Control type="number" placeholder={ing.value} />
-                </Form.Group>
+            {uniqueIng.map((ing) => (
+              <div className="add-ing-item">
+                <Card className="add-ing-name">
+                  <Card.Body>{ing.ingname}</Card.Body>
+                </Card>
+                <Form.Control type="number" placeholder={ing.ingamount} />
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(ing)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
               </div>
             ))}
           </div>
