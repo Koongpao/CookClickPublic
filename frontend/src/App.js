@@ -7,6 +7,7 @@ import Search from "./pages/Search"
 import SearchRef from "./pages/SearchRef"
 import Add from "./pages/Add"
 import Ref from "./pages/Ref"
+import Test from "./pages/Test"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
           <Route path="/add" element={<Add />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/ref" element={<Ref/>} />
+          <Route path="/ref" element={<Ref />} />
+          <Route path="/test" element={<Test/>} />
         </Routes>
       </Router>
     </>
