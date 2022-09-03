@@ -5,20 +5,6 @@ import Button from "react-bootstrap/Button"
 import { FaPlus, FaBan } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <span
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault()
-      onClick(e)
-    }}
-    className="dropdown-atag"
-  >
-    {children}
-    &#x25bc;
-  </span>
-))
-
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
     const [value, setValue] = useState("")
@@ -65,8 +51,11 @@ function Add() {
   const addEntryClick = (ing) => {
     setinglist([...inglist, ing])
   }
-  const removeonClick = (ing) => {
-    setinglist([...inglist, ing])
+  const ingsetamount = (amount) => {
+    this.ingamount = amount
+  }
+  const removeonClick = () => {
+    console.log(this)
   }
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
@@ -114,7 +103,7 @@ function Add() {
             />
           </Form.Group>
           <Dropdown>
-            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+            <Dropdown.Toggle id="dropdown-custom-components">
               <Button>
                 <FaPlus />
                 เพิ่มวัตถุดิบ
@@ -143,11 +132,12 @@ function Add() {
                   type="number"
                   placeholder={ing.ingamount}
                   min="0"
+                  onChange={(e) => ingsetamount(e.target.value)}
                 />
                 <Button
                   className=""
                   variant="danger"
-                  onClick={() => removeonClick(ing)}
+                  onClick={() => removeonClick()}
                 >
                   {" "}
                   <FaBan />{" "}
