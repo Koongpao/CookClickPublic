@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form"
 import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import Button from "react-bootstrap/Button"
-import { FaBan, FaPlus } from "react-icons/fa"
+import { FaBan } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
 import ButtonGroup from "react-bootstrap/ButtonGroup"
 
@@ -39,25 +39,42 @@ const CustomMenu = React.forwardRef(
 
 function Add() {
   const [inglist, setinglist] = useState([])
-
-  const uniqueName = []
-  const uniqueIng = inglist.filter((element) => {
-    const isDuplicate = uniqueName.includes(element.ingname)
-    if (!isDuplicate) {
-      uniqueName.push(element.ingname)
-
-      return true
+  const [toollist, settoollist] = useState([])
+  const [uniqueingid, setuniqueingid] = useState([])
+  const [uniquetoolid, setuniquetoolid] = useState([])
+  const addEntryClick = (t, element) => {
+    if (t === 0) {
+      const isDuplicate = uniqueingid.includes(element.id)
+      if (!isDuplicate) {
+        setinglist([...inglist, element])
+        setuniqueingid([...uniqueingid, element.id])
+      }
+    } else {
+      const isDuplicate = uniquetoolid.includes(element.id)
+      if (!isDuplicate) {
+        settoollist([...toollist, element])
+        setuniquetoolid([...uniquetoolid, element.id])
+      }
     }
-    return false
-  })
-  const addEntryClick = (ing) => {
-    setinglist([...inglist, ing])
   }
-  const ingsetamount = (amount) => {
-    this.ingamount = amount
+
+  const ingsetamount = (ing, amount) => {
+    ing.ingamount = amount
   }
-  const removeonClick = () => {
-    console.log(this)
+  const removeonClick = (t, element) => {
+    if (t === 0) {
+      let index = uniqueingid.indexOf(element.id)
+      setinglist(inglist.slice(0, index).concat(inglist.slice(index + 1)))
+      setuniqueingid(
+        uniqueingid.slice(0, index).concat(uniqueingid.slice(index + 1))
+      )
+    } else {
+      let index = uniquetoolid.indexOf(element.id)
+      settoollist(toollist.slice(0, index).concat(toollist.slice(index + 1)))
+      setuniquetoolid(
+        uniquetoolid.slice(0, index).concat(uniquetoolid.slice(index + 1))
+      )
+    }
   }
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
@@ -80,11 +97,21 @@ function Add() {
     setSelectedFile(e.target.files[0])
   }
   const alling = [
-    { ingname: "หมู", ingamount: 0 },
-    { ingname: "หมา", ingamount: 0 },
-    { ingname: "ไก่", ingamount: 0 },
-    { ingname: "ไข่", ingamount: 0 },
+    { ingname: "หมู", ingamount: 0, id: 1 },
+    { ingname: "หมา", ingamount: 0, id: 2 },
+    { ingname: "ไก่", ingamount: 0, id: 3 },
+    { ingname: "ไข่", ingamount: 0, id: 4 },
   ]
+  const alltool = [
+    { toolname: "หม้อ", id: 1 },
+    { toolname: "กระทะ", id: 2 },
+    { toolname: "กระทะเบิ้มๆ", id: 3 },
+    { toolname: "หม้อกากๆ", id: 4 },
+  ]
+  const send = (ready) => {
+    const ingarray = { status: ready, ing: inglist, tool: toollist }
+    console.log(ingarray)
+  }
 
   return (
     <>
@@ -111,11 +138,11 @@ function Add() {
             title="เพิ่มวัตถุดิบ"
           >
             <Dropdown.Menu as={CustomMenu}>
-              {alling.map((ing, index) => (
+              {alling.map((ing) => (
                 <Dropdown.Item
-                  key={index}
+                  key={ing.id}
                   tag="button"
-                  onClick={() => addEntryClick(ing)}
+                  onClick={() => addEntryClick(0, ing)}
                 >
                   {ing.ingname}
                 </Dropdown.Item>
@@ -123,8 +150,8 @@ function Add() {
             </Dropdown.Menu>
           </DropdownButton>
           <div>
-            {uniqueIng.map((ing) => (
-              <div className="add-ing-item">
+            {inglist.map((ing) => (
+              <div className="add-ing-item" key={ing.id}>
                 <Card className="add-ing-name">
                   <Card.Body>{ing.ingname}</Card.Body>
                 </Card>
@@ -132,12 +159,12 @@ function Add() {
                   type="number"
                   placeholder={ing.ingamount}
                   min="0"
-                  onChange={(e) => ingsetamount(e.target.value)}
+                  onChange={(e) => ingsetamount(ing, e.target.value)}
                 />
                 <Button
                   className=""
                   variant="danger"
-                  onClick={() => removeonClick()}
+                  onClick={() => removeonClick(0, ing)}
                 >
                   {" "}
                   <FaBan />{" "}
@@ -145,6 +172,50 @@ function Add() {
               </div>
             ))}
           </div>
+          <DropdownButton
+            as={ButtonGroup}
+            id="dropdown-variant-primary"
+            title="เพิ่มอุปกรณ์"
+          >
+            <Dropdown.Menu as={CustomMenu}>
+              {alltool.map((tool) => (
+                <Dropdown.Item
+                  key={tool.id}
+                  tag="button"
+                  onClick={() => addEntryClick(1, tool)}
+                >
+                  {tool.toolname}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </DropdownButton>
+          <div>
+            {toollist.map((tool) => (
+              <div className="add-ing-item" key={tool.id}>
+                <Card className="add-ing-name">
+                  <Card.Body>{tool.toolname}</Card.Body>
+                </Card>
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(1, tool)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button
+            className="savebutton"
+            variant="success"
+            onClick={() => send(1)}
+          >
+            save
+          </Button>
+          <Button className="" variant="success" onClick={() => send(2)}>
+            submit
+          </Button>
         </Form>
       </div>
     </>
