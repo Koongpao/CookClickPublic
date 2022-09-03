@@ -19,10 +19,10 @@ const RefIngItem = (props) => {
         {/* <Modal.Body></Modal.Body> */}
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cancel
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

@@ -105,6 +105,13 @@
   display: flex;
 }
 
+.ref-page-dropdown-box{
+  display: flex;
+  justify-content: center;
+  flex: content;
+  max-height: 5%;
+}
+
 .ref-ing-card-ing-name {
   width: 60%;
 }
