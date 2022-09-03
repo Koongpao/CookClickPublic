@@ -131,88 +131,98 @@ function Add() {
               as="textarea"
             />
           </Form.Group>
-          <Dropdown>
-            <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
-              เพิ่มวัตถุดิบ
-            </Dropdown.Toggle>
-            <Dropdown.Menu as={CustomMenu}>
-              {alling.map((ing) => (
-                <Dropdown.Item
-                  key={ing.id}
-                  tag="button"
-                  onClick={() => addEntryClick(0, ing)}
-                >
-                  {ing.ingname}
-                </Dropdown.Item>
+          <div className="dropdown-box">
+            <Dropdown className="dropdown-ing">
+              <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
+                เพิ่มวัตถุดิบ
+              </Dropdown.Toggle>
+              <Dropdown.Menu as={CustomMenu}>
+                {alling.map((ing) => (
+                  <Dropdown.Item
+                    key={ing.id}
+                    tag="button"
+                    onClick={() => addEntryClick(0, ing)}
+                  >
+                    {ing.ingname}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <div>
+              {inglist.map((ing) => (
+                <div className="add-ing-item" key={ing.id}>
+                  <Card className="add-ing-name">
+                    <Card.Body>{ing.ingname}</Card.Body>
+                  </Card>
+                  <Form.Control
+                    type="number"
+                    placeholder={ing.ingamount}
+                    min="0"
+                    onChange={(e) => ingsetamount(ing, e.target.value)}
+                  />
+                  <Button
+                    className=""
+                    variant="danger"
+                    onClick={() => removeonClick(0, ing)}
+                  >
+                    {" "}
+                    <FaBan />{" "}
+                  </Button>
+                </div>
               ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <div>
-            {inglist.map((ing) => (
-              <div className="add-ing-item" key={ing.id}>
-                <Card className="add-ing-name">
-                  <Card.Body>{ing.ingname}</Card.Body>
-                </Card>
-                <Form.Control
-                  type="number"
-                  placeholder={ing.ingamount}
-                  min="0"
-                  onChange={(e) => ingsetamount(ing, e.target.value)}
-                />
-                <Button
-                  className=""
-                  variant="danger"
-                  onClick={() => removeonClick(0, ing)}
-                >
-                  {" "}
-                  <FaBan />{" "}
-                </Button>
-              </div>
-            ))}
-          </div>
-          <Dropdown>
-            <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
-              เพิ่มอุปกรณ์
-            </Dropdown.Toggle>
-            <Dropdown.Menu as={CustomMenu}>
-              {alltool.map((tool) => (
-                <Dropdown.Item
-                  key={tool.id}
-                  tag="button"
-                  onClick={() => addEntryClick(1, tool)}
-                >
-                  {tool.toolname}
-                </Dropdown.Item>
+            </div>
+            <Dropdown className="dropdown-tool">
+              <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
+                เพิ่มอุปกรณ์
+              </Dropdown.Toggle>
+              <Dropdown.Menu as={CustomMenu}>
+                {alltool.map((tool) => (
+                  <Dropdown.Item
+                    key={tool.id}
+                    tag="button"
+                    onClick={() => addEntryClick(1, tool)}
+                  >
+                    {tool.toolname}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <div>
+              {toollist.map((tool) => (
+                <div className="add-tool-item" key={tool.id}>
+                  <Card className="add-tool-name">
+                    <Card.Body>{tool.toolname}</Card.Body>
+                  </Card>
+                  <Button
+                    className=""
+                    variant="danger"
+                    onClick={() => removeonClick(1, tool)}
+                  >
+                    {" "}
+                    <FaBan />{" "}
+                  </Button>
+                </div>
               ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <div>
-            {toollist.map((tool) => (
-              <div className="add-ing-item" key={tool.id}>
-                <Card className="add-ing-name">
-                  <Card.Body>{tool.toolname}</Card.Body>
-                </Card>
-                <Button
-                  className=""
-                  variant="danger"
-                  onClick={() => removeonClick(1, tool)}
-                >
-                  {" "}
-                  <FaBan />{" "}
-                </Button>
+            </div>
+            <div className="button-box">
+              <Button
+                className="savebutton"
+                variant="success"
+                onClick={() => send(1)}
+              >
+                Save
+              </Button>
+              <div className="blank-box">
               </div>
-            ))}
+              <Button
+                className="submitbutton"
+                variant="success"
+                onClick={() => send(2)}
+              >
+                Submit
+              </Button>
+            </div>
           </div>
-          <Button
-            className="savebutton"
-            variant="success"
-            onClick={() => send(1)}
-          >
-            Save
-          </Button>
-          <Button className="" variant="success" onClick={() => send(2)}>
-            Submit
-          </Button>
         </Form>
       </div>
     </>

@@ -19,21 +19,6 @@ const Ref = () => {
     <>
       <h1 className="text-center">ค้นหาสูตรอาหารทั้งหมด</h1>
       <div className="ref-page-form-box">
-        {/* <div className="ref-page-dropdown-box">
-            <Ingdropdown />
-            <Form>
-              <Form.Group
-                className="ref-page-form"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Control
-                  as="textarea"
-                  rows={1}
-                  placeholder="กรอกชื่อวัตถุดิบ"
-                />
-              </Form.Group>
-            </Form>
-          </div> */}
         <Form>
           <Form.Group
             className="ref-page-form"

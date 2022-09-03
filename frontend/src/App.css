@@ -133,6 +133,41 @@
   width: 60%;
 }
 
+.add-tool-item{
+  display: flex;
+}
+
+.add-tool-name{
+  width: 100%;
+}
+
 .add-ing-amount {
   width: 20%;
+}
+
+.dropdown-tool{
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.dropdown-ing{
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.button-box{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: auto;
+}
+
+.save-button{
+  margin-top: 20%;
+}
+
+.button-box > div {
+  flex: 1 1 auto;
+  text-align: center;
+  margin: 10px;
 }
