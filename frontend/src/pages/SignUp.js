@@ -4,17 +4,10 @@ import { useState } from "react"
 
 const SignUp = () => {
 
-  const [userDetails, setUserDetails] = useState({name: '', email: '', password: ''}); 
+  const [userDetails, setUserDetails] = useState({name: '', email: '', password: '', confirmPassword: ''}); 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userDetails);
-  }
-  const checkPwd = (pwd, confirmPwd) => {
-    if (pwd === confirmPwd) {
-      console.log('passwords match');
-    } else {
-      console.log('passwords do not match');
-    }
   }
 
   return (
@@ -82,7 +75,7 @@ const SignUp = () => {
           <Form.Group className="mb-2" controlId="formConfirmPassword">
             <Form.Label>Confirm Password:</Form.Label>
             <Form.Control type="password" placeholder="Confirm Password"
-              onChange={(e) => checkPwd(userDetails.password, e.target.value)} />
+              onChange={(e) => setUserDetails({...userDetails, confirmPassword: e.target.value})} />
           </Form.Group>
 
           <Button
