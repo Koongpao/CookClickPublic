@@ -104,14 +104,12 @@ function Add() {
               as="textarea"
             />
           </Form.Group>
-          <Dropdown>
-            <Dropdown.Toggle id="dropdown-custom-components">
-              <Button>
-                <FaPlus />
-                เพิ่มวัตถุดิบ
-              </Button>
-            </Dropdown.Toggle>
 
+          <DropdownButton
+            as={ButtonGroup}
+            id="dropdown-variant-primary"
+            title="เพิ่มวัตถุดิบ"
+          >
             <Dropdown.Menu as={CustomMenu}>
               {alling.map((ing, index) => (
                 <Dropdown.Item
@@ -123,22 +121,6 @@ function Add() {
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
-          </Dropdown>
-          <DropdownButton
-            as={ButtonGroup}
-            id="dropdown-variant-primary"
-            title="เพิ่มวัตถุดิบ"
-          >
-            <Dropdown.Item as={CustomMenu} />
-            {alling.map((ing, index) => (
-              <Dropdown.Item
-                key={index}
-                tag="button"
-                onClick={() => addEntryClick(ing)}
-              >
-                {ing.ingname}
-              </Dropdown.Item>
-            ))}
           </DropdownButton>
           <div>
             {uniqueIng.map((ing) => (
