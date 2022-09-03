@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
 import Form from "react-bootstrap/Form"
 import Dropdown from "react-bootstrap/Dropdown"
+import DropdownButton from "react-bootstrap/DropdownButton"
 import Button from "react-bootstrap/Button"
-import { FaPlus, FaBan } from "react-icons/fa"
+import { FaBan, FaPlus } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
+import ButtonGroup from "react-bootstrap/ButtonGroup"
 
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
@@ -122,6 +124,22 @@ function Add() {
               ))}
             </Dropdown.Menu>
           </Dropdown>
+          <DropdownButton
+            as={ButtonGroup}
+            id="dropdown-variant-primary"
+            title="เพิ่มวัตถุดิบ"
+          >
+            <Dropdown.Item as={CustomMenu} />
+            {alling.map((ing, index) => (
+              <Dropdown.Item
+                key={index}
+                tag="button"
+                onClick={() => addEntryClick(ing)}
+              >
+                {ing.ingname}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
           <div>
             {uniqueIng.map((ing) => (
               <div className="add-ing-item">
