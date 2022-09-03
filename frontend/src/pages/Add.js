@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from "react"
 import Form from "react-bootstrap/Form"
 import Dropdown from "react-bootstrap/Dropdown"
+import DropdownButton from "react-bootstrap/DropdownButton"
 import Button from "react-bootstrap/Button"
-import { FaPlus, FaBan } from "react-icons/fa"
+import { FaBan } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <span
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault()
-      onClick(e)
-    }}
-    className="dropdown-atag"
-  >
-    {children}
-    &#x25bc;
-  </span>
-))
 
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
@@ -113,26 +102,18 @@ function Add() {
               as="textarea"
             />
           </Form.Group>
-          <Dropdown>
-            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-              <Button>
-                <FaPlus />
-                เพิ่มวัตถุดิบ
-              </Button>
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu as={CustomMenu}>
-              {alling.map((ing, index) => (
-                <Dropdown.Item
-                  key={index}
-                  tag="button"
-                  onClick={() => addEntryClick(ing)}
-                >
-                  {ing.ingname}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+          <DropdownButton as={ButtonGroup} id="dropdown-variant-primary" title="เพิ่มวัตถุดิบ">
+            <Dropdown.Item as={CustomMenu} />
+            {alling.map((ing, index) => (
+              <Dropdown.Item
+                key={index}
+                tag="button"
+                onClick={() => addEntryClick(ing)}
+              >
+                {ing.ingname}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
           <div>
             {uniqueIng.map((ing) => (
               <div className="add-ing-item">

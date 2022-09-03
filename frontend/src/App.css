@@ -79,22 +79,17 @@
 }
 
 .normal-search-btn {
-background-color: #4A7C59!important;
-color: #FFFF!important;
-border-color: #4A7C59!important;
+  background-color: #4a7c59 !important;
+  color: #ffff !important;
+  border-color: #4a7c59 !important;
 }
 
 .larger-form {
-height: 4rem!important;
-resize: none!important;
+  height: 4rem !important;
+  resize: none !important;
 }
 
-.dropdown-atag{
-  text-decoration: none;
-  color: black;
-}
-
-.ref-page-form-box{
+.ref-page-form-box {
   max-width: 60%;
   margin-top: 5% !important;
   justify-content: center;
@@ -102,35 +97,35 @@ resize: none!important;
   margin: auto;
 }
 
-.ref-page-ingredient-tab{
+.ref-page-ingredient-tab {
   color: black !important;
   font-size: 18px;
 }
-.ref-ing-item{
+.ref-ing-item {
   display: flex;
 }
 
-.ref-ing-card-ing-name{
+.ref-ing-card-ing-name {
   width: 60%;
 }
 
-.ref-ing-card-ing-amount{
+.ref-ing-card-ing-amount {
   width: 20%;
 }
 
-.tab-content{
+.tab-content {
   padding: 5%;
   font-size: 3vw;
 }
 
-.add-ing-item{
+.add-ing-item {
   display: flex;
 }
 
-.add-ing-name{
+.add-ing-name {
   width: 60%;
 }
 
-.add-ing-amount{
+.add-ing-amount {
   width: 20%;
 }
