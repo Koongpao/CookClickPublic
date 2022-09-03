@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Button from "react-bootstrap/Button";
-import { FaBan } from "react-icons/fa";
-import Card from "react-bootstrap/Card";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import React, { useEffect, useState } from "react"
+import Form from "react-bootstrap/Form"
+import Dropdown from "react-bootstrap/Dropdown"
+import DropdownButton from "react-bootstrap/DropdownButton"
+import Button from "react-bootstrap/Button"
+import { FaBan } from "react-icons/fa"
+import Card from "react-bootstrap/Card"
+import ButtonGroup from "react-bootstrap/ButtonGroup"
 
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState("")
 
     return (
       <div
@@ -33,85 +33,85 @@ const CustomMenu = React.forwardRef(
           )}
         </ul>
       </div>
-    );
+    )
   }
-);
+)
 
 function Add() {
-  const [inglist, setinglist] = useState([]);
-  const [toollist, settoollist] = useState([]);
-  const [uniqueingid, setuniqueingid] = useState([]);
-  const [uniquetoolid, setuniquetoolid] = useState([]);
+  const [inglist, setinglist] = useState([])
+  const [toollist, settoollist] = useState([])
+  const [uniqueingid, setuniqueingid] = useState([])
+  const [uniquetoolid, setuniquetoolid] = useState([])
   const addEntryClick = (t, element) => {
     if (t === 0) {
-      const isDuplicate = uniqueingid.includes(element.id);
+      const isDuplicate = uniqueingid.includes(element.id)
       if (!isDuplicate) {
-        setinglist([...inglist, element]);
-        setuniqueingid([...uniqueingid, element.id]);
+        setinglist([...inglist, element])
+        setuniqueingid([...uniqueingid, element.id])
       }
     } else {
-      const isDuplicate = uniquetoolid.includes(element.id);
+      const isDuplicate = uniquetoolid.includes(element.id)
       if (!isDuplicate) {
-        settoollist([...toollist, element]);
-        setuniquetoolid([...uniquetoolid, element.id]);
+        settoollist([...toollist, element])
+        setuniquetoolid([...uniquetoolid, element.id])
       }
     }
-  };
+  }
 
   const ingsetamount = (ing, amount) => {
-    ing.ingamount = amount;
-  };
+    ing.ingamount = amount
+  }
   const removeonClick = (t, element) => {
     if (t === 0) {
-      let index = uniqueingid.indexOf(element.id);
-      setinglist(inglist.slice(0, index).concat(inglist.slice(index + 1)));
+      let index = uniqueingid.indexOf(element.id)
+      setinglist(inglist.slice(0, index).concat(inglist.slice(index + 1)))
       setuniqueingid(
         uniqueingid.slice(0, index).concat(uniqueingid.slice(index + 1))
-      );
+      )
     } else {
-      let index = uniquetoolid.indexOf(element.id);
-      settoollist(toollist.slice(0, index).concat(toollist.slice(index + 1)));
+      let index = uniquetoolid.indexOf(element.id)
+      settoollist(toollist.slice(0, index).concat(toollist.slice(index + 1)))
       setuniquetoolid(
         uniquetoolid.slice(0, index).concat(uniquetoolid.slice(index + 1))
-      );
+      )
     }
-  };
-  const [selectedFile, setSelectedFile] = useState();
-  const [preview, setPreview] = useState();
+  }
+  const [selectedFile, setSelectedFile] = useState()
+  const [preview, setPreview] = useState()
   useEffect(() => {
     if (!selectedFile) {
-      setPreview(undefined);
-      return;
+      setPreview(undefined)
+      return
     }
 
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
+    const objectUrl = URL.createObjectURL(selectedFile)
+    setPreview(objectUrl)
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [selectedFile])
 
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined);
-      return;
+      setSelectedFile(undefined)
+      return
     }
-    setSelectedFile(e.target.files[0]);
-  };
+    setSelectedFile(e.target.files[0])
+  }
   const alling = [
     { ingname: "หมู", ingamount: 0, id: 1 },
     { ingname: "หมา", ingamount: 0, id: 2 },
     { ingname: "ไก่", ingamount: 0, id: 3 },
     { ingname: "ไข่", ingamount: 0, id: 4 },
-  ];
+  ]
   const alltool = [
     { toolname: "หม้อ", id: 1 },
     { toolname: "กระทะ", id: 2 },
     { toolname: "กระทะเบิ้มๆ", id: 3 },
     { toolname: "หม้อกากๆ", id: 4 },
-  ];
+  ]
   const send = (ready) => {
-    const ingarray = { status: ready, ing: inglist, tool: toollist };
-    console.log(ingarray);
-  };
+    const ingarray = { status: ready, ing: inglist, tool: toollist }
+    console.log(ingarray)
+  }
 
   return (
     <>
@@ -212,8 +212,7 @@ function Add() {
               >
                 Save
               </Button>
-              <div className="blank-box">
-              </div>
+              <div className="blank-box"></div>
               <Button
                 className="submitbutton"
                 variant="success"
@@ -226,7 +225,7 @@ function Add() {
         </Form>
       </div>
     </>
-  );
+  )
 }
 
-export default Add;
+export default Add
