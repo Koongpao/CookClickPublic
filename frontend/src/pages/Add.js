@@ -132,11 +132,10 @@ function Add() {
             />
           </Form.Group>
 
-          <DropdownButton
-            as={ButtonGroup}
-            id="dropdown-variant-primary"
-            title="เพิ่มวัตถุดิบ"
-          >
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
+              เพิ่มวัตถุดิบ
+            </Dropdown.Toggle>
             <Dropdown.Menu as={CustomMenu}>
               {alling.map((ing) => (
                 <Dropdown.Item
@@ -148,7 +147,7 @@ function Add() {
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
-          </DropdownButton>
+          </Dropdown>
           <div>
             {inglist.map((ing) => (
               <div className="add-ing-item" key={ing.id}>
@@ -172,11 +171,10 @@ function Add() {
               </div>
             ))}
           </div>
-          <DropdownButton
-            as={ButtonGroup}
-            id="dropdown-variant-primary"
-            title="เพิ่มอุปกรณ์"
-          >
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
+              เพิ่มอุปกรณ์
+            </Dropdown.Toggle>
             <Dropdown.Menu as={CustomMenu}>
               {alltool.map((tool) => (
                 <Dropdown.Item
@@ -188,7 +186,7 @@ function Add() {
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
-          </DropdownButton>
+          </Dropdown>
           <div>
             {toollist.map((tool) => (
               <div className="add-ing-item" key={tool.id}>
