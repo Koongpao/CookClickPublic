@@ -3,11 +3,68 @@ import Form from "react-bootstrap/Form"
 import { useState } from "react"
 
 const SignUp = () => {
-
-  const [userDetails, setUserDetails] = useState({name: '', email: '', password: '', confirmPassword: ''}); 
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(userDetails);
+    e.preventDefault()
+    console.log(userDetails)
+  }
+  const [error, setError] = useState(null)
+  const [errorN, setErrorN] = useState(null)
+  const [errorP, setErrorP] = useState(null)
+  const [errorpw, setErrorpw] = useState(null)
+  const [message, setMessage] = useState("")
+  const [messageN, setMessageN] = useState("")
+  const [messageP, setMessageP] = useState("")
+  const [cfMessage, setcfMessage] = useState("")
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email)
+  }
+  function isValidLengthN(name) {
+    return name.length >= 6
+  }
+  function isValidLengthP(password) {
+    return password.length >= 8
+  }
+  function isPasswordConfirm(password, confirmPassword) {
+    return password === confirmPassword
+  }
+  const checkEmail = (event) => {
+    if (!isValidEmail(event.target.value)) {
+      setError("Email is invalid")
+    } else {
+      setError(null)
+    }
+    setMessage(event.target.value)
+  }
+  const checkLengthN = (event) => {
+    if (!isValidLengthN(event.target.value)) {
+      setErrorN("Display Name must be at least 6 characters long")
+    } else {
+      setErrorN(null)
+    }
+    setMessageN(event.target.value)
+  }
+  const checkLengthP = (event) => {
+    if (!isValidLengthP(event.target.value)) {
+      setErrorP("Password must be at least 8 characters long")
+    } else {
+      setErrorP(null)
+    }
+    setMessageP(event.target.value)
+  }
+  const checkPassword = (event) => {
+    if (!isPasswordConfirm(event.target.value)) {
+      setErrorpw("Confirm password is not matched")
+    } else {
+      setErrorpw(null)
+    }
+    setcfMessage(event.target.value)
   }
 
   return (
@@ -74,8 +131,23 @@ const SignUp = () => {
           </Form.Group>
           <Form.Group className="mb-2" controlId="formConfirmPassword">
             <Form.Label>Confirm Password:</Form.Label>
-            <Form.Control type="password" placeholder="Confirm Password"
-              onChange={(e) => setUserDetails({...userDetails, confirmPassword: e.target.value})} />
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              maxLength={20}
+              value={cfMessage}
+              onChange={
+                ((e) =>
+                  setUserDetails({
+                    ...userDetails,
+                    confirmPassword: e.target.value,
+                  }),
+                checkPassword)
+              }
+            />
+            {errorpw && (
+              <h6 style={{ color: "white", marginTop: "5px" }}>{errorpw}</h6>
+            )}
           </Form.Group>
 
           <Button
