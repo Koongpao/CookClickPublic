@@ -139,7 +139,11 @@ function Add() {
                 <Card className="add-ing-name">
                   <Card.Body>{ing.ingname}</Card.Body>
                 </Card>
-                <Form.Control type="number" placeholder={ing.ingamount} />
+                <Form.Control
+                  type="number"
+                  placeholder={ing.ingamount}
+                  min="0"
+                />
                 <Button
                   className=""
                   variant="danger"
