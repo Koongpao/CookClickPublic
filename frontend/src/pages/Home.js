@@ -86,7 +86,7 @@ function Home() {
         </div>
         <div className="common-home flex flex-col align-items-center">
           <Collapse in={open0}>
-            <div className="flex flex-col align-items-center width-100" id="today-collapse-text">
+            <div className="flex flex-col width-100" id="today-collapse-text">
               {
                 foods.map((food, index) => {
                   return (
@@ -97,7 +97,7 @@ function Home() {
             </div>
           </Collapse>
           <Collapse in={open1}>
-            <div id="week-collapse-text">
+            <div className="flex flex-col width-100"  id="week-collapse-text">
               {
                 foods.map((food, index) => {
                   return (
@@ -108,7 +108,7 @@ function Home() {
             </div>
           </Collapse>
           <Collapse in={open2}>
-            <div id="month-collapse-text">
+            <div className="flex flex-col width-100"  id="month-collapse-text">
               {
                 foods.map((food, index) => {
                   return (

@@ -17,25 +17,25 @@ const MCard = ({ FoodName, FoodImg, Star }) => {
         <span className="hint-star star">
           {
             Array(starInt).fill(1).map((el, i) =>
-              <TiStarFullOutline key={i} />,
+              <TiStarFullOutline className='inline' key={i} />,
             )
           }
           {
             (() => {
               if (Star - starInt > 0.8) {
-                return <TiStarFullOutline/>
+                return <TiStarFullOutline className='inline'/>
               }
               else if (Star - starInt > 0.3) {
-                return <TiStarHalfOutline />
+                return <TiStarHalfOutline className='inline'/>
               }
               else {
-                return <TiStarOutline />
+                return <TiStarOutline className='inline'/>
               }
             })()
           }
           {
             Array(5-(starInt+1)).fill(1).map((el, i) =>
-              <TiStarOutline key={i} />,
+              <TiStarOutline className='inline' key={i} />,
             )
           }
           <span className="text-muted text-sm"> ({Star})</span>
