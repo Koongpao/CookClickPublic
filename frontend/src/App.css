@@ -171,3 +171,6 @@
   text-align: center;
   margin: 10px;
 }
+.searchoffcanvas {
+  min-height: 100%;
+}

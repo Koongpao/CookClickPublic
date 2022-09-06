@@ -1,43 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Form from "react-bootstrap/Form"
-import Dropdown from "react-bootstrap/Dropdown"
-import DropdownButton from "react-bootstrap/DropdownButton"
 import Button from "react-bootstrap/Button"
-import { FaBan } from "react-icons/fa"
+import { FaBan, FaPlus } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
-import ButtonGroup from "react-bootstrap/ButtonGroup"
-
-const CustomMenu = React.forwardRef(
-  ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("")
-
-    return (
-      <div
-        ref={ref}
-        style={style}
-        className={className}
-        aria-labelledby={labeledBy}
-      >
-        <Form.Control
-          autoFocus
-          className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-        />
-        <ul className="list-unstyled">
-          {React.Children.toArray(children).filter(
-            (child) =>
-              !value ||
-              child.props.children.toLowerCase().startsWith(value.toLowerCase())
-          )}
-        </ul>
-      </div>
-    )
-  }
-)
+import Offcanvas from "react-bootstrap/Offcanvas"
+import { FormControl } from "react-bootstrap"
 
 function Add() {
+  const [recipename, setrecipename] = useState("")
+  const [recipedesc, setrecipedesc] = useState("")
   const [inglist, setinglist] = useState([])
   const [toollist, settoollist] = useState([])
   const [uniqueingid, setuniqueingid] = useState([])
@@ -57,7 +28,6 @@ function Add() {
       }
     }
   }
-
   const ingsetamount = (ing, amount) => {
     ing.ingamount = amount
   }
@@ -76,6 +46,14 @@ function Add() {
       )
     }
   }
+  const [showing, setshowing] = useState(false)
+  const handleCloseing = () => setshowing(false)
+  const handleShowing = () => setshowing(true)
+  const [keywording, setkeywording] = useState("")
+  const [showtool, setshowtool] = useState(false)
+  const handleClosetool = () => setshowtool(false)
+  const handleShowtool = () => setshowtool(true)
+  const [keywordtool, setkeywordtool] = useState("")
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
   useEffect(() => {
@@ -109,7 +87,13 @@ function Add() {
     { toolname: "หม้อกากๆ", id: 4 },
   ]
   const send = (ready) => {
-    const ingarray = { status: ready, ing: inglist, tool: toollist }
+    const ingarray = {
+      name: recipename,
+      desc: recipedesc,
+      status: ready,
+      ing: inglist,
+      tool: toollist,
+    }
     console.log(ingarray)
   }
 
@@ -122,105 +106,138 @@ function Add() {
             <img src={preview} width="180" height="180" alt="preview" />
           )}
           <Form.Group className="mb-3" controlId="AddName">
-            <Form.Control type="text" placeholder="Enter Recipe Name" />
+            <Form.Control
+              type="text"
+              placeholder="ใส่ชื่อสูตรอาหาร"
+              onChange={(e) => setrecipename(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="AddDesc">
             <Form.Control
               type="text"
-              placeholder="Enter Recipe Description"
+              placeholder="ใส่คำอธิบายของสูตรอาหาร"
               as="textarea"
+              onChange={(e) => setrecipedesc(e.target.value)}
             />
           </Form.Group>
-          <div className="dropdown-box">
-            <Dropdown className="dropdown-ing">
-              <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
-                เพิ่มวัตถุดิบ
-              </Dropdown.Toggle>
-              <Dropdown.Menu as={CustomMenu}>
-                {alling.map((ing) => (
-                  <Dropdown.Item
-                    key={ing.id}
-                    tag="button"
-                    onClick={() => addEntryClick(0, ing)}
-                  >
-                    {ing.ingname}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <div>
-              {inglist.map((ing) => (
-                <div className="add-ing-item" key={ing.id}>
-                  <Card className="add-ing-name">
-                    <Card.Body>{ing.ingname}</Card.Body>
-                  </Card>
-                  <Form.Control
-                    type="number"
-                    placeholder={ing.ingamount}
-                    min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
-                  />
+          <Button onClick={handleShowing} className="ingredient-add-button">
+            <FaPlus />
+            เพิ่มวัตถุดิบ
+          </Button>
+          <Offcanvas
+            show={showing}
+            onHide={handleCloseing}
+            placement="top"
+            className="searchoffcanvas"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>เพิ่มวัตถุดิบ</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <FormControl
+                type="text"
+                onChange={(e) => setkeywording(e.target.value)}
+              />
+              {alling
+                .filter((ing) => ing.ingname.includes(keywording.toLowerCase()))
+                .map((filtereding) => (
                   <Button
-                    className=""
-                    variant="danger"
-                    onClick={() => removeonClick(0, ing)}
+                    onClick={() => addEntryClick(0, filtereding)}
+                    key={filtereding.id}
                   >
-                    {" "}
-                    <FaBan />{" "}
+                    {filtereding.ingname}
                   </Button>
-                </div>
-              ))}
-            </div>
-            <Dropdown className="dropdown-tool">
-              <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
-                เพิ่มอุปกรณ์
-              </Dropdown.Toggle>
-              <Dropdown.Menu as={CustomMenu}>
-                {alltool.map((tool) => (
-                  <Dropdown.Item
-                    key={tool.id}
-                    tag="button"
-                    onClick={() => addEntryClick(1, tool)}
-                  >
-                    {tool.toolname}
-                  </Dropdown.Item>
                 ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <div>
-              {toollist.map((tool) => (
-                <div className="add-tool-item" key={tool.id}>
-                  <Card className="add-tool-name">
-                    <Card.Body>{tool.toolname}</Card.Body>
-                  </Card>
+            </Offcanvas.Body>
+          </Offcanvas>
+          <div>
+            {inglist.map((ing) => (
+              <div className="add-ing-item" key={ing.id}>
+                <Card className="add-ing-name">
+                  <Card.Body>{ing.ingname}</Card.Body>
+                </Card>
+                <Form.Control
+                  type="number"
+                  placeholder={ing.ingamount}
+                  min="0"
+                  onChange={(e) => ingsetamount(ing, e.target.value)}
+                />
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(0, ing)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button onClick={handleShowtool} className="tool-add-button">
+            <FaPlus />
+            เพิ่มอุปกรณ์
+          </Button>
+          <Offcanvas
+            show={showtool}
+            onHide={handleClosetool}
+            placement="top"
+            className="searchoffcanvas"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>เพิ่มอุปกรณ์</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <FormControl
+                type="text"
+                onChange={(e) => setkeywordtool(e.target.value)}
+              />
+              {alltool
+                .filter((tool) =>
+                  tool.toolname.includes(keywordtool.toLowerCase())
+                )
+                .map((filteredtool) => (
                   <Button
-                    className=""
-                    variant="danger"
-                    onClick={() => removeonClick(1, tool)}
+                    onClick={() => addEntryClick(1, filteredtool)}
+                    key={filteredtool.id}
                   >
-                    {" "}
-                    <FaBan />{" "}
+                    {filteredtool.toolname}
                   </Button>
-                </div>
-              ))}
-            </div>
-            <div className="button-box">
-              <Button
-                className="savebutton"
-                variant="success"
-                onClick={() => send(1)}
-              >
-                Save
-              </Button>
-              <div className="blank-box"></div>
-              <Button
-                className="submitbutton"
-                variant="success"
-                onClick={() => send(2)}
-              >
-                Submit
-              </Button>
-            </div>
+                ))}
+            </Offcanvas.Body>
+          </Offcanvas>
+          <div>
+            {toollist.map((tool) => (
+              <div className="add-tool-item" key={tool.id}>
+                <Card className="add-tool-name">
+                  <Card.Body>{tool.toolname}</Card.Body>
+                </Card>
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(1, tool)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <div className="button-box">
+            <Button
+              className="savebutton"
+              variant="success"
+              onClick={() => send(1)}
+            >
+              Save
+            </Button>
+            <div className="blank-box"></div>
+            <Button
+              className="submitbutton"
+              variant="success"
+              onClick={() => send(2)}
+            >
+              Submit
+            </Button>
           </div>
         </Form>
       </div>

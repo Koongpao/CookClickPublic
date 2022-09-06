@@ -89,7 +89,7 @@ const Ref = () => {
                   <Dropdown.Item
                     key={ing.id}
                     tag="button"
-                    onClick={() => addEntryClick(0, ing)}
+                    onClick={() => addEntryClick(ing)}
                   >
                     {ing.ingname}
                   </Dropdown.Item>
