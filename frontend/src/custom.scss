@@ -71,3 +71,15 @@ body {
 .width-100 {
   width: 100%;
 }
+
+#image {
+  display: block;
+  
+  /* This rule is very important, please don't ignore this */
+  max-width: 100%;
+}
+
+.c-width {
+  width: 50%;
+  border: 2px solid black
+}

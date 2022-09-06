@@ -5,7 +5,6 @@ import {
 } from 'react-icons/ti';
 const MCard = ({ FoodName, FoodImg, Star }) => {
   let starInt = parseInt(Star-0.01) // Hack for 5 star bug
-  console.log(Star)
   
   return (
     

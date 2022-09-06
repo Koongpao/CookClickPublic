@@ -1,5 +1,6 @@
 import NewUser from "../script/NewUser"
 import NewLogin from "../script/NewLogin";
+import GetImg from "../components/GetImg";
 
 const Test = () => {
   return (
@@ -7,6 +8,7 @@ const Test = () => {
       <h1>Test</h1>
       <NewUser />
       <NewLogin />
+      <GetImg />
     </div>
   )
 }
