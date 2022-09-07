@@ -5,7 +5,7 @@ import { AddUser } from "../script/controller"
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
-    name: "",
+    displayname: "",
     email: "",
     password: "",
   })
@@ -13,6 +13,7 @@ const SignUp = () => {
     e.preventDefault()
     console.log(userDetails)
     AddUser(userDetails)
+    
   }
   const [error, setError] = useState(null)
   const [errorN, setErrorN] = useState(null)
@@ -71,7 +72,7 @@ const SignUp = () => {
   }
 
   const handleDisplayN = (event) => {
-    setUserDetails({ ...userDetails, name: event.target.value })
+    setUserDetails({ ...userDetails, displayname: event.target.value })
     checkLengthN(event)
   }
 

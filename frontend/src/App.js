@@ -9,8 +9,10 @@ import Add from "./pages/Add"
 import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
+
   return (
     <>
       <Navbar />
@@ -23,7 +25,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/ref" element={<Ref />} />
-          <Route path="/test" element={<Test/>} />
+          <Route path="/test"
+            element={
+              <ProtectedRoute>
+                <Test />
+              </ProtectedRoute>
+            } />
         </Routes>
       </Router>
     </>
