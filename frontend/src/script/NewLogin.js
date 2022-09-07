@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Login } from "./controller";
+import { UserLogin } from "./controller";
 
 const NewLogin = () => {
   const [user, setUser] = useState({
-    "email" : "yaya@testera.tx",
-    "password" : "yaya",
+    "email" : "yaya@testtest.com",
+    "password" : "ayaya",
   });
 
   const handleClicked = (e) => {
     e.preventDefault();
-    Login(user);
+    UserLogin(user);
   }
 
   return (

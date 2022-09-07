@@ -8,7 +8,7 @@ const Test = () => {
       <h1>Test</h1>
       <NewUser />
       <NewLogin />
-      <GetImg />
+      {/* <GetImg /> */}
     </div>
   )
 }

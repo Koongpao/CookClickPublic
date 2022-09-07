@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState } from "react"
+import { AddUser } from "../script/controller"
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
@@ -12,6 +13,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(userDetails)
+    AddUser(userDetails)
   }
   const [error, setError] = useState(null)
   const [errorN, setErrorN] = useState(null)

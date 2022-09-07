@@ -3,9 +3,9 @@ import { AddUser } from "./controller";
 
 const NewUser = () => {
   const [user, setUser] = useState({
-    "email": "yaya@testera.tx",
-    "displayname": "yaya",
-    "password" : "yayaafdfasdf"
+    "email": "yaya@testtest.com",
+    "displayname": "ayaya",
+    "password" : "ayaya"
   });
 
   const handleClicked = (e) => {
