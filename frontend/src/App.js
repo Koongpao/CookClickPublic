@@ -10,8 +10,11 @@ import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
+import { useState } from "react"
 
 function App() {
+
+  const [token, setToken] = useState();
 
   return (
     <>
@@ -22,7 +25,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/searchref" element={<SearchRef />} />
           <Route path="/add" element={<Add />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/ref" element={<Ref />} />
           <Route path="/test"

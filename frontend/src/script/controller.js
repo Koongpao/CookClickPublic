@@ -18,8 +18,10 @@ export const UserLogin = async (item) => {
   try {
     const response = await axios.post(baseURL, item);
     console.log(response.data.token);
+    return response.data.token;
   }
   catch (err) {
     console.error(err.response.data);
+    return null;
   }
 }

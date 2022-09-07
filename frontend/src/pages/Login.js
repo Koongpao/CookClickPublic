@@ -2,12 +2,15 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { UserLogin } from "../script/controller"
 import { useState } from "react"
+import { Auth } from "../script/Auth"
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   })
+
+  const { login } = Auth()
 
   return (
     <>
@@ -27,10 +30,11 @@ const Login = () => {
           </Form.Group>
           <Button
             className="mb-1" variant="primary" type="submit"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault()
               console.log(userDetails)
-              UserLogin(userDetails)
+              const token = await UserLogin(userDetails)
+              login(token)
             }}>
             Log In
           </Button>

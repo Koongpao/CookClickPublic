@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom"
+import { Auth } from "../script/Auth"
 
 const ProtectedRoute = ({ children }) => {
-  const isAuth = true
+  const isAuth = Auth()
   if (isAuth) {
     return children
   }
