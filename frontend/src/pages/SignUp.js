@@ -33,9 +33,6 @@ const SignUp = () => {
   function isValidLengthP(password) {
     return password.length >= 8
   }
-  function isPasswordConfirm(password, confirmPassword) {
-    return password === confirmPassword
-  }
   const checkEmail = (event) => {
     if (!isValidEmail(event.target.value)) {
       setError("Email is invalid")
@@ -61,12 +58,35 @@ const SignUp = () => {
     setMessageP(event.target.value)
   }
   const checkPassword = (event) => {
-    if (!isPasswordConfirm(event.target.value)) {
+    if (!(userDetails.password === userDetails.confirmPassword)) {
       setErrorpw("Confirm password is not matched")
     } else {
       setErrorpw(null)
     }
     setcfMessage(event.target.value)
+  }
+
+  const handleEmail = (event) => {
+    setUserDetails({ ...userDetails, email: event.target.value })
+    checkEmail(event)
+  }
+
+  const handleDisplayN = (event) => {
+    setUserDetails({ ...userDetails, name: event.target.value })
+    checkLengthN(event)
+  }
+
+  const handlePass = (event) => {
+    setUserDetails({ ...userDetails, password: event.target.value })
+    checkLengthP(event)
+  }
+
+  const handleConf = (event) => {
+    setUserDetails({
+      ...userDetails,
+      confirmPassword: event.target.value,
+    })
+    checkPassword(event)
   }
 
   return (
@@ -80,11 +100,7 @@ const SignUp = () => {
               type="email"
               placeholder="name@example.com"
               value={message}
-              onChange={
-                ((e) =>
-                  setUserDetails({ ...userDetails, email: e.target.value }),
-                checkEmail)
-              }
+              onChange={(e) => handleEmail(e)}
             />
             {error && (
               <h6 style={{ color: "white", marginTop: "5px" }}>{error}</h6>
@@ -97,11 +113,7 @@ const SignUp = () => {
               placeholder="Enter Display Name"
               maxLength={20}
               value={messageN}
-              onChange={
-                ((e) =>
-                  setUserDetails({ ...userDetails, name: e.target.value }),
-                checkLengthN)
-              }
+              onChange={(e) => handleDisplayN(e)}
             />
             {errorN && (
               <h6 style={{ color: "white", marginTop: "5px" }}>{errorN}</h6>
@@ -118,11 +130,7 @@ const SignUp = () => {
               placeholder="Password"
               maxLength={20}
               value={messageP}
-              onChange={
-                ((e) =>
-                  setUserDetails({ ...userDetails, password: e.target.value }),
-                checkLengthP)
-              }
+              onChange={(e) => handlePass(e)}
             />
             {errorP && (
               <h6 style={{ color: "white", marginTop: "5px" }}>{errorP}</h6>
@@ -138,14 +146,7 @@ const SignUp = () => {
               placeholder="Confirm Password"
               maxLength={20}
               value={cfMessage}
-              onChange={
-                ((e) =>
-                  setUserDetails({
-                    ...userDetails,
-                    confirmPassword: e.target.value,
-                  }),
-                checkPassword)
-              }
+              onChange={(e) => handleConf(e)}
             />
             {errorpw && (
               <h6 style={{ color: "white", marginTop: "5px" }}>{errorpw}</h6>
