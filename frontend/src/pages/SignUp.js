@@ -8,7 +8,6 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   })
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -57,13 +56,13 @@ const SignUp = () => {
     }
     setMessageP(event.target.value)
   }
-  const checkPassword = (event) => {
-    if (!(userDetails.password === userDetails.confirmPassword)) {
+  const checkPassword = (CFPassword) => {
+    if (!(userDetails.password === CFPassword)) {
       setErrorpw("Confirm password is not matched")
     } else {
       setErrorpw(null)
     }
-    setcfMessage(event.target.value)
+    setcfMessage(CFPassword)
   }
 
   const handleEmail = (event) => {
@@ -79,14 +78,6 @@ const SignUp = () => {
   const handlePass = (event) => {
     setUserDetails({ ...userDetails, password: event.target.value })
     checkLengthP(event)
-  }
-
-  const handleConf = (event) => {
-    setUserDetails({
-      ...userDetails,
-      confirmPassword: event.target.value,
-    })
-    checkPassword(event)
   }
 
   return (
@@ -146,7 +137,7 @@ const SignUp = () => {
               placeholder="Confirm Password"
               maxLength={20}
               value={cfMessage}
-              onChange={(e) => handleConf(e)}
+              onChange={(e) => checkPassword(e.target.value)}
             />
             {errorpw && (
               <h6 style={{ color: "white", marginTop: "5px" }}>{errorpw}</h6>
