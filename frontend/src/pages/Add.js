@@ -13,6 +13,16 @@ function Add() {
   const [toollist, settoollist] = useState([])
   const [uniqueingid, setuniqueingid] = useState([])
   const [uniquetoolid, setuniquetoolid] = useState([])
+  const [steplist, setsteplist] = useState([])
+  const newstep = { desc: "ใส่รายละเอียดขั้นตอน" }
+  const addnewstep = () => {
+    console.log(steplist)
+    setsteplist([...steplist, newstep])
+    console.log(steplist)
+  }
+  const changedesc = (step, value) => {
+    step.desc = value
+  }
   const addEntryClick = (t, element) => {
     if (t === 0) {
       const isDuplicate = uniqueingid.includes(element.id)
@@ -38,12 +48,15 @@ function Add() {
       setuniqueingid(
         uniqueingid.slice(0, index).concat(uniqueingid.slice(index + 1))
       )
-    } else {
+    } else if (t === 1) {
       let index = uniquetoolid.indexOf(element.id)
       settoollist(toollist.slice(0, index).concat(toollist.slice(index + 1)))
       setuniquetoolid(
         uniquetoolid.slice(0, index).concat(uniquetoolid.slice(index + 1))
       )
+    } else {
+      let index = steplist.indexOf(element)
+      setsteplist(steplist.slice(0, index).concat(steplist.slice(index + 1)))
     }
   }
   const [showing, setshowing] = useState(false)
@@ -88,11 +101,13 @@ function Add() {
   ]
   const send = (ready) => {
     const ingarray = {
+      img: selectedFile,
       name: recipename,
       desc: recipedesc,
       status: ready,
       ing: inglist,
       tool: toollist,
+      step: steplist,
     }
     console.log(ingarray)
   }
@@ -215,6 +230,30 @@ function Add() {
                   className=""
                   variant="danger"
                   onClick={() => removeonClick(1, tool)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button onClick={() => addnewstep()}>
+            <FaPlus />
+            เพิ่มขั้นตอน
+          </Button>
+          <div>
+            {steplist.map((step) => (
+              <div className="add-tool-item" key={steplist.indexOf(step)}>
+                <Form.Control
+                  type="text"
+                  as="textarea"
+                  placeholder={step.desc}
+                  onChange={(e) => changedesc(step, e.target.value)}
+                />
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(2, step)}
                 >
                   {" "}
                   <FaBan />{" "}
