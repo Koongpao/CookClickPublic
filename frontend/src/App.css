@@ -177,3 +177,6 @@
   margin: 0.25rem;
   color: whitesmoke;
 }
+.searchoffcanvas {
+  min-height: 100%;
+}
