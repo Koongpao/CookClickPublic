@@ -13,6 +13,25 @@ function Add() {
   const [toollist, settoollist] = useState([])
   const [uniqueingid, setuniqueingid] = useState([])
   const [uniquetoolid, setuniquetoolid] = useState([])
+  const [steplist, setsteplist] = useState([])
+  const [steppic, setsteppic] = useState([])
+  const newstep = { desc: "ใส่รายละเอียดขั้นตอน", pic: null }
+  const onSelectstepFile = (step, event) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      return
+    }
+    step.pic = event.target.files[0]
+    let newpic = [...steppic]
+    newpic[steplist.indexOf(step)] = URL.createObjectURL(step.pic)
+    setsteppic(newpic)
+  }
+  const addnewstep = () => {
+    setsteplist([...steplist, newstep])
+    setsteppic([...steppic, ""])
+  }
+  const changedesc = (step, value) => {
+    step.desc = value
+  }
   const addEntryClick = (t, element) => {
     if (t === 0) {
       const isDuplicate = uniqueingid.includes(element.id)
@@ -38,12 +57,16 @@ function Add() {
       setuniqueingid(
         uniqueingid.slice(0, index).concat(uniqueingid.slice(index + 1))
       )
-    } else {
+    } else if (t === 1) {
       let index = uniquetoolid.indexOf(element.id)
       settoollist(toollist.slice(0, index).concat(toollist.slice(index + 1)))
       setuniquetoolid(
         uniquetoolid.slice(0, index).concat(uniquetoolid.slice(index + 1))
       )
+    } else {
+      let index = steplist.indexOf(element)
+      setsteplist(steplist.slice(0, index).concat(steplist.slice(index + 1)))
+      setsteppic(steplist.slice(0, index).concat(steplist.slice(index + 1)))
     }
   }
   const [showing, setshowing] = useState(false)
@@ -62,17 +85,17 @@ function Add() {
       return
     }
 
-    const objectUrl = URL.createObjectURL(selectedFile)
+    let objectUrl = URL.createObjectURL(selectedFile)
     setPreview(objectUrl)
     return () => URL.revokeObjectURL(objectUrl)
   }, [selectedFile])
 
-  const onSelectFile = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
+  const onSelectFile = (event) => {
+    if (!event.target.files || event.target.files.length === 0) {
       setSelectedFile(undefined)
       return
     }
-    setSelectedFile(e.target.files[0])
+    setSelectedFile(event.target.files[0])
   }
   const alling = [
     { ingname: "หมู", ingamount: 0, id: 1 },
@@ -88,11 +111,13 @@ function Add() {
   ]
   const send = (ready) => {
     const ingarray = {
+      img: selectedFile,
       name: recipename,
       desc: recipedesc,
       status: ready,
       ing: inglist,
       tool: toollist,
+      step: steplist,
     }
     console.log(ingarray)
   }
@@ -215,6 +240,42 @@ function Add() {
                   className=""
                   variant="danger"
                   onClick={() => removeonClick(1, tool)}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button onClick={() => addnewstep()}>
+            <FaPlus />
+            เพิ่มขั้นตอน
+          </Button>
+          <div>
+            {steplist.map((step) => (
+              <div key={steplist.indexOf(step)}>
+                <input
+                  type="file"
+                  onChange={(e) => onSelectstepFile(step, e)}
+                />
+                {step.pic && (
+                  <img
+                    src={steppic[steplist.indexOf(step)]}
+                    width="180"
+                    height="180"
+                    alt="preview"
+                  />
+                )}
+                <Form.Control
+                  type="text"
+                  as="textarea"
+                  placeholder={step.desc}
+                  onChange={(e) => changedesc(step, e.target.value)}
+                />
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() => removeonClick(2, step)}
                 >
                   {" "}
                   <FaBan />{" "}

@@ -1,43 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
-import RefIngItem from "../components/RefIngItem"
-import Ingdropdown from "../components/Ingdropdown"
-import { FaPassport } from "react-icons/fa"
-import Dropdown from "react-bootstrap/Dropdown"
+import { FaPassport, FaPlus } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
-
-const CustomMenu = React.forwardRef(
-  ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("")
-
-    return (
-      <div
-        ref={ref}
-        style={style}
-        className={className}
-        aria-labelledby={labeledBy}
-      >
-        <Form.Control
-          autoFocus
-          className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-        />
-        <ul className="list-unstyled">
-          {React.Children.toArray(children).filter(
-            (child) =>
-              !value ||
-              child.props.children.toLowerCase().startsWith(value.toLowerCase())
-          )}
-        </ul>
-      </div>
-    )
-  }
-)
+import { Offcanvas } from "react-bootstrap"
 
 const Ref = () => {
   const [inglist, setinglist] = useState([])
@@ -53,17 +21,18 @@ const Ref = () => {
       uniqueingid.slice(0, index).concat(uniqueingid.slice(index + 1))
     )
   }
-  const handleIngSubmit = (e) => {
-    e.preventDefault()
-    console.log(IngDetails)
-  }
   const addEntryClick = (element) => {
+    console.log(element)
     const isDuplicate = uniqueingid.includes(element.id)
     if (!isDuplicate) {
       setinglist([...inglist, element])
       setuniqueingid([...uniqueingid, element.id])
     }
   }
+  const [showing, setshowing] = useState(false)
+  const handleCloseing = () => setshowing(false)
+  const handleShowing = () => setshowing(true)
+  const [keywording, setkeywording] = useState("")
   const alling = [
     { ingname: "หมู", ingamount: 0, id: 1 },
     { ingname: "หมา", ingamount: 0, id: 2 },
@@ -76,42 +45,36 @@ const Ref = () => {
       <h1 className="text-center">จัดการวัตถุดิบ</h1>
       <div className="ref-page-form-box">
         <Form>
-          <Form.Group
-            className="ref-page-form"
-            controlId="exampleForm.ControlTextarea1"
-          >
-            <Dropdown className="dropdown-ing-ref">
-              <Dropdown.Toggle id="dropdown-autoclose-true dropdown-variant-primary">
-                เพิ่มวัตถุดิบ
-              </Dropdown.Toggle>
-              <Dropdown.Menu as={CustomMenu}>
-                {alling.map((ing) => (
-                  <Dropdown.Item
-                    key={ing.id}
-                    tag="button"
-                    onClick={() => addEntryClick(ing)}
-                  >
-                    {ing.ingname}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <Form.Control
-              onChange={(e) =>
-                setIngDetails({ ...IngDetails, ingamount: e.target.value })
-              }
-              as="textarea"
-              rows={1}
-              placeholder="กรอกปริมาณวัตถุดิบ"
-            />
-          </Form.Group>
-          <Button
-            className="ref-page-add-ingredient-button"
-            variant="primary"
-            onClick={(e) => handleIngSubmit(e)}
-          >
-            Add Ingredient
+          <Button onClick={handleShowing} className="ingredient-add-button">
+            <FaPlus />
+            เพิ่มวัตถุดิบ
           </Button>
+          <Offcanvas
+            show={showing}
+            onHide={handleCloseing}
+            placement="top"
+            className="searchoffcanvas"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>เพิ่มวัตถุดิบ</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Form.Control
+                type="text"
+                onChange={(e) => setkeywording(e.target.value)}
+              />
+              {alling
+                .filter((ing) => ing.ingname.includes(keywording.toLowerCase()))
+                .map((filtereding) => (
+                  <Button
+                    onClick={() => addEntryClick(filtereding)}
+                    key={filtereding.id}
+                  >
+                    {filtereding.ingname}
+                  </Button>
+                ))}
+            </Offcanvas.Body>
+          </Offcanvas>
         </Form>
       </div>
       <div className="ref-page-ingredient-list">
