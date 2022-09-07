@@ -105,7 +105,7 @@
   display: flex;
 }
 
-.ref-page-dropdown-box{
+.ref-page-dropdown-box {
   display: flex;
   justify-content: center;
   flex: content;
@@ -133,11 +133,11 @@
   width: 60%;
 }
 
-.add-tool-item{
+.add-tool-item {
   display: flex;
 }
 
-.add-tool-name{
+.add-tool-name {
   width: 100%;
 }
 
@@ -145,24 +145,24 @@
   width: 20%;
 }
 
-.dropdown-tool{
+.dropdown-tool {
   margin-top: 4%;
   margin-bottom: 4%;
 }
 
-.dropdown-ing{
+.dropdown-ing {
   margin-top: 4%;
   margin-bottom: 4%;
 }
 
-.button-box{
+.button-box {
   display: flex;
   flex-direction: column;
   padding: 20px;
   margin: auto;
 }
 
-.save-button{
+.save-button {
   margin-top: 20%;
 }
 
@@ -170,4 +170,10 @@
   flex: 1 1 auto;
   text-align: center;
   margin: 10px;
+}
+
+.zoom-icon {
+  font-size: 2rem;
+  margin: 0.25rem;
+  color: whitesmoke;
 }
