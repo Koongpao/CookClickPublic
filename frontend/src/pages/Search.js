@@ -23,9 +23,9 @@ function Search() {
               value={keyword}
               onChange={(e) => handlekwchange(e.target.value)}
             />
+            <Button onClick={handlesearchbutton}>ค้นหา</Button>
           </Form.Group>
         </Form>
-        <Button onClick={handlesearchbutton}>ค้นหา</Button>
       </div>
     </>
   )
