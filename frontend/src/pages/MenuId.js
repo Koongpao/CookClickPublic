@@ -3,6 +3,8 @@ import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
 import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem";
+import Burger from "../img/testburger.jpg";
+import { GetAllIngredient, GetAllKitchenware } from "../script/controller";
 
 const MenuPage = () => {
   // const [menuDetails, setMenuDetails] = React.useState({
@@ -57,10 +59,18 @@ const MenuPage = () => {
           "ใส่ใบกะเพรา ตามด้วยซีอิ๊วดำเล็กน้อย ผัดจนเข้ากัน พร้อมเสิร์ฟ",
       },
     ],
-  })
+  });
+  const mytoken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBhYWEuYWFhIiwidXNlcklEIjoiNjMxYzI3ODFhNDM4NjM0ZWUwZWMwYmZjIiwicm9sZSI6MSwiaWF0IjoxNjYyODEwOTY3fQ.fYd8O3wm-kXTczREl9Cr2J55uvxdtCTlC258l0jLj5c"
+  
+  const testget = async (token) => {
+    const response = await GetAllIngredient(token)
+    console.log(response)
+    console.log("hi")
+  }
 
   return (
     <div className="menupage">
+      <button onClick={testget(mytoken)}>TEST</button>
       <div className="menu-img">
         <img src={menuDetails.image} alt="testburger"></img>
       </div>
@@ -70,15 +80,22 @@ const MenuPage = () => {
       </div>
       <div className="menu-ing-list">
         <h1>ส่วนผสม</h1>
-        {menuDetails.ingredient.map((eachIng) => 
-        (<MenuIngItem name={eachIng.ingredientID} amount={eachIng.amount}/>
+        {menuDetails.ingredient.map((eachIng) => (
+          <MenuIngItem name={eachIng.ingredientID} amount={eachIng.amount} />
         ))}
       </div>
       <div className="menu-steps-list">
-        <h1>ขั้นตอนการทำ</h1>
-        {menuDetails.cookingstep.map((eachSteps) => 
-        (<MenuStepsItem img={eachSteps.image} desc={eachSteps.description} index={eachSteps.index}/>
+        <div className="menu-steps-head">
+          <h1>ขั้นตอนการทำ</h1>
+        </div>
+        {menuDetails.cookingstep.map((eachSteps) => (
+          <MenuStepsItem
+            img={eachSteps.image}
+            desc={eachSteps.description}
+            index={eachSteps.index}
+          />
         ))}
+        <MenuStepsItem img={Burger} index={"TEST"}></MenuStepsItem>
       </div>
       <div className="menu-comments-list">
         <MenuCommentItem comment="Comment Test" />
