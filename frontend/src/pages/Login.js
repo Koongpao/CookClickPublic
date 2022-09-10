@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { UserLogin } from "../script/controller"
 import { useState } from "react"
-import { Auth } from "../script/Auth"
+import { useAuth } from "../script/useAuth"
 
 const Login = ({ setToken }) => {
   const [userDetails, setUserDetails] = useState({
@@ -10,7 +10,7 @@ const Login = ({ setToken }) => {
     password: "",
   })
 
-  const { login } = Auth()
+  const { login } = useAuth()
 
   return (
     <>
@@ -33,8 +33,10 @@ const Login = ({ setToken }) => {
             onClick={async (e) => {
               e.preventDefault()
               console.log(userDetails)
-              const token = await UserLogin(userDetails)
-              login(token)
+              const tokenData = await UserLogin(userDetails)
+              login({
+                token: tokenData,
+              });
             }}>
             Log In
           </Button>

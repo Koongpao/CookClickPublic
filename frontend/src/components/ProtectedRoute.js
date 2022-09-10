@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom"
-import { Auth } from "../script/Auth"
+import { useAuth } from "../script/useAuth"
 
 const ProtectedRoute = ({ children }) => {
-  const isAuth = Auth()
+  const isAuth = useAuth()
   if (isAuth) {
     return children
   }

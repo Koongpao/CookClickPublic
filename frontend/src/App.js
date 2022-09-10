@@ -12,6 +12,7 @@ import MenuId from "./pages/MenuId"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { useState } from "react"
+import { AuthProvider } from "./script/useAuth"
 
 function App() {
 
@@ -21,22 +22,24 @@ function App() {
     <>
       <Navbar />
       <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/searchref" element={<SearchRef />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/login" element={<Login setToken={setToken}/>} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/ref" element={<Ref />} />
-          <Route path="/MenuId" element={<MenuId/>} />
-          <Route path="/test"
-            element={
-              <ProtectedRoute>
-                <Test />
-              </ProtectedRoute>
-            } />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/searchref" element={<SearchRef />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/login" element={<Login setToken={setToken}/>} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/ref" element={<Ref />} />
+            <Route path="/MenuId" element={<MenuId/>} />
+            <Route path="/test"
+              element={
+                <ProtectedRoute>
+                  <Test />
+                </ProtectedRoute>
+              } />
+            </Routes>
+        </AuthProvider>
       </Router>
     </>
   )
