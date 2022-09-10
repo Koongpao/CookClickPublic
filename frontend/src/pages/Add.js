@@ -124,14 +124,31 @@ function Add() {
     setPreview(newpic)
   }
   const send = (ready) => {
+    let lastinglist = []
+    inglist.forEach((element) => {
+      let nexting = { ingredientID: element._id, amount: element.amount }
+      lastinglist.push(nexting)
+    })
+    let lastwarelist = []
+    toollist.forEach((element) => {
+      let nextware = { kitchenwareID: element._id }
+      lastwarelist.push(nextware)
+    })
+    let laststeplist = []
+    let i = 0
+    steplist.forEach((element) => {
+      let nextstep = { index: i, description: element.desc, image: element.pic }
+      i += 1
+      laststeplist.push(nextstep)
+    })
     const ingarray = {
-      img: selectedFile,
+      image: selectedFile,
       name: recipename,
-      desc: recipedesc,
+      description: recipedesc,
       status: ready,
-      ing: inglist,
-      tool: toollist,
-      step: steplist,
+      ingredient: lastinglist,
+      kitchenware: lastwarelist,
+      cookingstep: steplist,
     }
     console.log(ingarray)
   }
