@@ -5,8 +5,40 @@ import { FaBan, FaPlus } from "react-icons/fa"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
+import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 
 function Add() {
+  const [token, setToken] = useState(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlheWFAdGVzdGVyYS50eCIsInVzZXJJRCI6IjYzMTJmYzIzM2MwMWE0YjBjNzI1NDkyZCIsInJvbGUiOjMsImlhdCI6MTY2MjE4ODYwOX0.152tDb7Dh7SFfsGmfAOzumleQvqvp5CxIiASXgpdAjw"
+  )
+  const [ingdata, setingdata] = useState([])
+  const [waredata, setwaredata] = useState([])
+  const [ignore, setignore] = useState(false)
+  useEffect(() => {
+    async function fetchdata() {
+      const ingfulldata = await GetAllIngredient(token)
+      const warefulldata = await GetAllKitchenware(token)
+      let i = 0
+      ingfulldata.data.forEach((element) => {
+        element.id = i
+        i += 1
+        element.amount = 0
+      })
+      i = 0
+      warefulldata.data.forEach((element) => {
+        element.id = i
+        i += 1
+      })
+      setwaredata(warefulldata.data)
+      setingdata(ingfulldata.data)
+    }
+    if (!ignore) {
+      fetchdata()
+    }
+    return () => {
+      setignore(true)
+    }
+  })
   const [recipename, setrecipename] = useState("")
   const [recipedesc, setrecipedesc] = useState("")
   const [inglist, setinglist] = useState([])
@@ -48,7 +80,7 @@ function Add() {
     }
   }
   const ingsetamount = (ing, amount) => {
-    ing.ingamount = amount
+    ing.amount = amount
   }
   const removeonClick = (t, element) => {
     if (t === 0) {
@@ -71,7 +103,9 @@ function Add() {
   }
   const [showing, setshowing] = useState(false)
   const handleCloseing = () => setshowing(false)
-  const handleShowing = () => setshowing(true)
+  const handleShowing = () => {
+    setshowing(true)
+  }
   const [keywording, setkeywording] = useState("")
   const [showtool, setshowtool] = useState(false)
   const handleClosetool = () => setshowtool(false)
@@ -79,16 +113,6 @@ function Add() {
   const [keywordtool, setkeywordtool] = useState("")
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview(undefined)
-      return
-    }
-
-    let objectUrl = URL.createObjectURL(selectedFile)
-    setPreview(objectUrl)
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [selectedFile])
 
   const onSelectFile = (event) => {
     if (!event.target.files || event.target.files.length === 0) {
@@ -96,19 +120,8 @@ function Add() {
       return
     }
     setSelectedFile(event.target.files[0])
+    setPreview()
   }
-  const alling = [
-    { ingname: "หมู", ingamount: 0, id: 1 },
-    { ingname: "หมา", ingamount: 0, id: 2 },
-    { ingname: "ไก่", ingamount: 0, id: 3 },
-    { ingname: "ไข่", ingamount: 0, id: 4 },
-  ]
-  const alltool = [
-    { toolname: "หม้อ", id: 1 },
-    { toolname: "กระทะ", id: 2 },
-    { toolname: "กระทะเบิ้มๆ", id: 3 },
-    { toolname: "หม้อกากๆ", id: 4 },
-  ]
   const send = (ready) => {
     const ingarray = {
       img: selectedFile,
@@ -163,14 +176,14 @@ function Add() {
                 type="text"
                 onChange={(e) => setkeywording(e.target.value)}
               />
-              {alling
-                .filter((ing) => ing.ingname.includes(keywording.toLowerCase()))
+              {ingdata
+                .filter((ing) => ing.name.includes(keywording.toLowerCase()))
                 .map((filtereding) => (
                   <Button
                     onClick={() => addEntryClick(0, filtereding)}
                     key={filtereding.id}
                   >
-                    {filtereding.ingname}
+                    {filtereding.name}
                   </Button>
                 ))}
             </Offcanvas.Body>
@@ -179,11 +192,14 @@ function Add() {
             {inglist.map((ing) => (
               <div className="add-ing-item" key={ing.id}>
                 <Card className="add-ing-name">
-                  <Card.Body>{ing.ingname}</Card.Body>
+                  <Card.Body>{ing.name}</Card.Body>
                 </Card>
                 <Form.Control
                   type="number"
-                  placeholder={ing.ingamount}
+                  placeholder={ing.amount
+                    .toString()
+                    .concat(" ")
+                    .concat(ing.unit)}
                   min="0"
                   onChange={(e) => ingsetamount(ing, e.target.value)}
                 />
@@ -216,16 +232,14 @@ function Add() {
                 type="text"
                 onChange={(e) => setkeywordtool(e.target.value)}
               />
-              {alltool
-                .filter((tool) =>
-                  tool.toolname.includes(keywordtool.toLowerCase())
-                )
+              {waredata
+                .filter((tool) => tool.name.includes(keywordtool.toLowerCase()))
                 .map((filteredtool) => (
                   <Button
                     onClick={() => addEntryClick(1, filteredtool)}
                     key={filteredtool.id}
                   >
-                    {filteredtool.toolname}
+                    {filteredtool.name}
                   </Button>
                 ))}
             </Offcanvas.Body>
@@ -234,7 +248,7 @@ function Add() {
             {toollist.map((tool) => (
               <div className="add-tool-item" key={tool.id}>
                 <Card className="add-tool-name">
-                  <Card.Body>{tool.toolname}</Card.Body>
+                  <Card.Body>{tool.name}</Card.Body>
                 </Card>
                 <Button
                   className=""
