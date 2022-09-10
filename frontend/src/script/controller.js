@@ -17,11 +17,11 @@ export const UserLogin = async (item) => {
   const baseURL = "https://cookclick-api.code.in.th/user/login"
   try {
     const response = await axios.post(baseURL, item);
-    console.log(response.data.token);
     return response.data.token;
   }
   catch (err) {
     console.error(err.response.data);
+    alert(err.response.data.message);
     return null;
   }
 }

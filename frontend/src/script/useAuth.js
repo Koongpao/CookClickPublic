@@ -9,8 +9,12 @@ export const AuthProvider = ({ children }) => {
 
   // call this function when you want to authenticate the user
   const login = async (data) => {
-    setToken(data);
-    navigate("/test");
+    if (data.token === null) {
+      navigate("/login");
+    } else {
+      setToken(data.token);
+      navigate("/test", { replace: true });
+    }
   };
 
   // call this function to sign out logged in user

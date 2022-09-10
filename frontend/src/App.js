@@ -10,13 +10,12 @@ import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import MenuId from "./pages/MenuId"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import ProtectedRoute from "./components/ProtectedRoute"
-import { useState } from "react"
+import ProtectedRoute from "./components/ProtectedRoute" 
 import { AuthProvider } from "./script/useAuth"
 
-function App() {
+//* Non logged-in users cannot access ProtectedRoute pages
 
-  const [token, setToken] = useState();
+function App() {
 
   return (
     <>
@@ -28,10 +27,10 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/searchref" element={<SearchRef />} />
             <Route path="/add" element={<Add />} />
-            <Route path="/login" element={<Login setToken={setToken}/>} />
+            <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/ref" element={<Ref />} />
-            <Route path="/MenuId" element={<MenuId/>} />
+            <Route path="/MenuId" element={<MenuId />} />
             <Route path="/test"
               element={
                 <ProtectedRoute>
