@@ -120,7 +120,8 @@ function Add() {
       return
     }
     setSelectedFile(event.target.files[0])
-    setPreview()
+    let newpic = URL.createObjectURL(event.target.files[0])
+    setPreview(newpic)
   }
   const send = (ready) => {
     const ingarray = {
