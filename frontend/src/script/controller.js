@@ -25,3 +25,37 @@ export const UserLogin = async (item) => {
     return null;
   }
 }
+
+export const GetAllIngredient = async (token) => {
+  const baseURL = "https://cookclick-api.code.in.th/member/all_ingredient"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  }
+  catch (err) {
+    console.error(err.response.data);
+    alert(err.response.data.message);
+    return null;
+  }
+}
+
+export const GetAllKitchenware = async (token) => {
+  const baseURL = "https://cookclick-api.code.in.th/member/all_kitchenware"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  }
+  catch (err) {
+    console.error(err.response.data);
+    alert(err.response.data.message);
+    return null;
+  }
+}
