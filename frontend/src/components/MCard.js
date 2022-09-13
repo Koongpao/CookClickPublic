@@ -4,7 +4,19 @@ import {
   TiStarOutline
 } from 'react-icons/ti';
 const MCard = ({ FoodName, FoodImg, Star }) => {
-  let starInt = parseInt(Star-0.01) // Hack for 5 star bug
+  
+  const addStar = (nowStar) => {
+    nowStar = nowStar - 1
+    if (Star - nowStar > 0.8) {
+      return <TiStarFullOutline className='inline'/>
+    }
+    else if (Star - nowStar > 0.3) {
+      return <TiStarHalfOutline className='inline'/>
+    }
+    else {
+      return <TiStarOutline className='inline'/>
+    }
+  }
   
   return (
     
@@ -15,29 +27,11 @@ const MCard = ({ FoodName, FoodImg, Star }) => {
       <div className="food-details">
         <h4>{ FoodName }</h4>
         <span className="hint-star star">
-          {
-            Array(starInt).fill(1).map((el, i) =>
-              <TiStarFullOutline className='inline' key={i} />,
-            )
-          }
-          {
-            (() => {
-              if (Star - starInt > 0.8) {
-                return <TiStarFullOutline className='inline'/>
-              }
-              else if (Star - starInt > 0.3) {
-                return <TiStarHalfOutline className='inline'/>
-              }
-              else {
-                return <TiStarOutline className='inline'/>
-              }
-            })()
-          }
-          {
-            Array(5-(starInt+1)).fill(1).map((el, i) =>
-              <TiStarOutline className='inline' key={i} />,
-            )
-          }
+          {addStar(1)}
+          {addStar(2)}
+          {addStar(3)}
+          {addStar(4)}
+          {addStar(5)}
           <span className="text-muted text-sm"> ({Star})</span>
         </span>
         <p>

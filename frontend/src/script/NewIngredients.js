@@ -97,17 +97,17 @@ const NewIngredients = () => {
     // const newKitchenware = await NewKitchenware(token, kitchenware);
     // const newMenu = await NewMenu(token, menu);
     //! publishMenu Unusable
-    const publishMenu = await PublishMenu(
-      token,
-      menu,
-      "63149bae255e1b5eb3ae4fe0"
-    )
-    // const addIngredient = await AddIngredient(token, oldIngredient);
+    // const publishMenu = await PublishMenu(
+    //   token,
+    //   menu,
+    //   "63149bae255e1b5eb3ae4fe0"
+    // )
+    const addIngredient = await AddIngredient(token, oldIngredient);
     // const getMemberIngredientKitchenware = await GetMemberIngredientKitchenware(token);
     // const addKitchenware = await AddKitchenware(token, oldKitchenware);
     // const addMenuComment = await AddMenuComment(token, comment, "6314b70ae9a619699460af9b");
 
-    console.log(publishMenu)
+    console.log(addIngredient)
   }
 
   return (
