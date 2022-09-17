@@ -44,7 +44,7 @@ export const GetAllIngredient = async (token) => {
 }
 
 export const GetAllKitchenware = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/member/all-kitchenware"
+  const baseURL = "https://cookclick-api.code.in.th/member/all_kitchenware"
   try {
     const response = await axios.get(baseURL, {
       headers: {
