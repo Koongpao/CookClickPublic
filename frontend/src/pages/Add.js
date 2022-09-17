@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { FaBan, FaPlus } from "react-icons/fa"
+import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
@@ -170,33 +171,16 @@ function Add() {
   }
 
   const CustomToggle = ({ children, eventKey }) => {
-    const decoratedOnClick = useAccordionButton(eventKey, () =>
-      console.log('totally custom!'),
-    );
-
+    const decoratedOnClick = useAccordionButton(eventKey)
     return (
-      <button
-        type="button"
-        style={{ backgroundColor: 'pink' }}
+      <Button
+        className="mx-2"
+        variant="outline-dark"
         onClick={decoratedOnClick}
       >
         {children}
-      </button>
+      </Button>
     );
-  }
-
-  const CustomDelete = ({ children, eventKey }, step) => {
-    const remove = useAccordionButton(eventKey, () => removeonClick(2, step))
-
-    return (
-      <Button
-        className=""
-        variant="danger"
-        onClick={() => remove(2, step)}
-      >
-        {" "}
-        <FaBan />{" "}
-      </Button>)
   }
       
 
@@ -344,15 +328,16 @@ function Add() {
               <Card key={step.id}>
                 <Card.Header>
                   {step.desc}
-                  <CustomToggle eventKey={step.id}>Click me!</CustomToggle>
-                  {/* <CustomDelete eventKey={step.id} step={step} /> */}
-                  <Button
-                      className=""
-                      variant="danger"
-                      onClick={() => removeonClick(2, step)}
-                  >
-                    {" "}<FaBan />{" "}
-                  </Button>
+                    <Button
+                        className="py-1.5 px-2.5 mx-2"
+                        variant="outline-dark"
+                        onClick={() => removeonClick(2, step)}
+                    >
+                      <FaBan />
+                    </Button>
+                    <CustomToggle eventKey={step.id}>
+                      <IoIosArrowDown />
+                    </CustomToggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey={step.id} className="accordionitem">
                   <Card.Body>
