@@ -184,6 +184,13 @@
   margin-top: 5px;
 }
 
+
+.add-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .button-box {
   display: flex;
   flex-direction: column;
