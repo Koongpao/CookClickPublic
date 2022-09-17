@@ -8,13 +8,13 @@ const MCard = ({ FoodName, FoodImg, Star }) => {
   const addStar = (nowStar) => {
     nowStar = nowStar - 1
     if (Star - nowStar > 0.8) {
-      return <TiStarFullOutline className='inline'/>
+      return <TiStarFullOutline />
     }
     else if (Star - nowStar > 0.3) {
-      return <TiStarHalfOutline className='inline'/>
+      return <TiStarHalfOutline />
     }
     else {
-      return <TiStarOutline className='inline'/>
+      return <TiStarOutline />
     }
   }
   

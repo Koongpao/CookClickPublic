@@ -7,6 +7,7 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
+import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 import Image from "react-bootstrap/Image"
 
 function Add() {
@@ -168,6 +169,37 @@ function Add() {
     console.log(ingarray)
   }
 
+  const CustomToggle = ({ children, eventKey }) => {
+    const decoratedOnClick = useAccordionButton(eventKey, () =>
+      console.log('totally custom!'),
+    );
+
+    return (
+      <button
+        type="button"
+        style={{ backgroundColor: 'pink' }}
+        onClick={decoratedOnClick}
+      >
+        {children}
+      </button>
+    );
+  }
+
+  const CustomDelete = ({ children, eventKey }, step) => {
+    const remove = useAccordionButton(eventKey, () => removeonClick(2, step))
+
+    return (
+      <Button
+        className=""
+        variant="danger"
+        onClick={() => remove(2, step)}
+      >
+        {" "}
+        <FaBan />{" "}
+      </Button>)
+  }
+      
+
   return (
     <>
       <div className="flex flex-col align-items-center">
@@ -307,8 +339,58 @@ function Add() {
             <FaPlus />
             เพิ่มขั้นตอน
           </Button>
-          <Accordion className="accordion">
+          <Accordion className="accordion" flush>
             {steplist.map((step) => (
+              <Card key={step.id}>
+                <Card.Header>
+                  {step.desc}
+                  <CustomToggle eventKey={step.id}>Click me!</CustomToggle>
+                  {/* <CustomDelete eventKey={step.id} step={step} /> */}
+                  <Button
+                      className=""
+                      variant="danger"
+                      onClick={() => removeonClick(2, step)}
+                  >
+                    {" "}<FaBan />{" "}
+                  </Button>
+                </Card.Header>
+                <Accordion.Collapse eventKey={step.id} className="accordionitem">
+                  <Card.Body>
+                    <div className="stepremovebutton">
+                      <Form.Control
+                        type="file"
+                        onChange={(e) => onSelectstepFile(step, e)}
+                      />
+                      <Button
+                        className=""
+                        variant="danger"
+                        onClick={() => removeonClick(2, step)}
+                      >
+                        {" "}
+                        <FaBan />{" "}
+                      </Button>
+                    </div>
+                    <div className="steppiccenter">
+                      {steppic[steplist.indexOf(step)] && (
+                        <img
+                          src={steppic[steplist.indexOf(step)]}
+                          className="add-pic-pre"
+                          thumbnail="true"
+                          alt="preview"
+                        />
+                      )}
+                    </div>
+                    <FormControl
+                      type="text"
+                      as="textarea"
+                      placeholder="กรุณากรอกขั้นตอนวิธีการทำ"
+                      onChange={(e) => changedesc(step, e.target.value)}
+                    />
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            ))}
+            {/* {steplist.map((step) => (
               <Accordion.Item eventKey={step.id} key={step.id}>
                 <Accordion.Header>{step.desc}</Accordion.Header>
                 <Accordion.Body className="accordionitem">
@@ -344,7 +426,7 @@ function Add() {
                   />
                 </Accordion.Body>
               </Accordion.Item>
-            ))}
+            ))} */}
           </Accordion>
           <div className="button-box">
             <Button

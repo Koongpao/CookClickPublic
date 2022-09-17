@@ -1,7 +1,8 @@
 import Form from "react-bootstrap/Form"
 import { Button } from "react-bootstrap"
 import { useState } from "react"
-function Search() {
+
+const Search = () => {
   const [keyword, setkeyword] = useState("")
   const handlekwchange = (newkw) => {
     setkeyword(newkw)
