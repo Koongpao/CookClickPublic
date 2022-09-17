@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
+import Accordion from "react-bootstrap/Accordion"
 
 function Add() {
   const [token, setToken] = useState(
@@ -47,22 +48,35 @@ function Add() {
   const [uniquetoolid, setuniquetoolid] = useState([])
   const [steplist, setsteplist] = useState([])
   const [steppic, setsteppic] = useState([])
-  const newstep = { desc: "ใส่รายละเอียดขั้นตอน", pic: null }
   const onSelectstepFile = (step, event) => {
     if (!event.target.files || event.target.files.length === 0) {
       return
     }
     step.pic = event.target.files[0]
+    setsteplist([...steplist])
     let newpic = [...steppic]
     newpic[steplist.indexOf(step)] = URL.createObjectURL(step.pic)
     setsteppic(newpic)
   }
+  const [stepindex, setstepindex] = useState(1)
   const addnewstep = () => {
-    setsteplist([...steplist, newstep])
+    let brandnewstep = {
+      desc: "ขั้นตอนลำดับที่ ".concat(stepindex),
+      pic: null,
+      id: stepindex,
+    }
+    setstepindex(stepindex + 1)
+    setsteplist([...steplist, brandnewstep])
     setsteppic([...steppic, ""])
   }
   const changedesc = (step, value) => {
+    if (value === "") {
+      step.desc = "ขั้นตอนลำดับที่ ".concat(step.id)
+      setsteplist([...steplist])
+      return
+    }
     step.desc = value
+    setsteplist([...steplist])
   }
   const addEntryClick = (t, element) => {
     if (t === 0) {
@@ -71,12 +85,14 @@ function Add() {
         setinglist([...inglist, element])
         setuniqueingid([...uniqueingid, element.id])
       }
+      handleCloseing()
     } else {
       const isDuplicate = uniquetoolid.includes(element.id)
       if (!isDuplicate) {
         settoollist([...toollist, element])
         setuniquetoolid([...uniquetoolid, element.id])
       }
+      handleClosetool()
     }
   }
   const ingsetamount = (ing, amount) => {
@@ -103,9 +119,7 @@ function Add() {
   }
   const [showing, setshowing] = useState(false)
   const handleCloseing = () => setshowing(false)
-  const handleShowing = () => {
-    setshowing(true)
-  }
+  const handleShowing = () => setshowing(true)
   const [keywording, setkeywording] = useState("")
   const [showtool, setshowtool] = useState(false)
   const handleClosetool = () => setshowtool(false)
@@ -124,14 +138,31 @@ function Add() {
     setPreview(newpic)
   }
   const send = (ready) => {
+    let lastinglist = []
+    inglist.forEach((element) => {
+      let nexting = { ingredientID: element._id, amount: element.amount }
+      lastinglist.push(nexting)
+    })
+    let lastwarelist = []
+    toollist.forEach((element) => {
+      let nextware = { kitchenwareID: element._id }
+      lastwarelist.push(nextware)
+    })
+    let laststeplist = []
+    let i = 0
+    steplist.forEach((element) => {
+      let nextstep = { id: i, description: element.desc, image: element.pic }
+      i += 1
+      laststeplist.push(nextstep)
+    })
     const ingarray = {
-      img: selectedFile,
+      image: selectedFile,
       name: recipename,
-      desc: recipedesc,
+      description: recipedesc,
       status: ready,
-      ing: inglist,
-      tool: toollist,
-      step: steplist,
+      ingredient: lastinglist,
+      kitchenware: lastwarelist,
+      cookingstep: laststeplist,
     }
     console.log(ingarray)
   }
@@ -140,10 +171,17 @@ function Add() {
     <>
       <div className="flex flex-col align-items-center">
         <Form className="common-home">
-          <input type="file" onChange={onSelectFile} />
-          {selectedFile && (
-            <img src={preview} width="180" height="180" alt="preview" />
-          )}
+          <div className="mb-3 add-pic-recipe">
+            <Form.Control type="file" onChange={onSelectFile} />
+            {selectedFile && (
+              <img
+                src={preview}
+                alt="preview"
+                className="add-pic-pre"
+                thumbnail="true"
+              />
+            )}
+          </div>
           <Form.Group className="mb-3" controlId="AddName">
             <Form.Control
               type="text"
@@ -159,7 +197,7 @@ function Add() {
               onChange={(e) => setrecipedesc(e.target.value)}
             />
           </Form.Group>
-          <Button onClick={handleShowing} className="ingredient-add-button">
+          <Button onClick={handleShowing} className="add-ing-button">
             <FaPlus />
             เพิ่มวัตถุดิบ
           </Button>
@@ -189,7 +227,7 @@ function Add() {
                 ))}
             </Offcanvas.Body>
           </Offcanvas>
-          <div>
+          <div className="add-ing-box">
             {inglist.map((ing) => (
               <div className="add-ing-item" key={ing.id}>
                 <Card className="add-ing-name">
@@ -197,13 +235,15 @@ function Add() {
                 </Card>
                 <Form.Control
                   type="number"
-                  placeholder={ing.amount
-                    .toString()
-                    .concat(" ")
-                    .concat(ing.unit)}
+                  placeholder={"โปรดกรอกปริมาณที่ใช้"}
                   min="0"
                   onChange={(e) => ingsetamount(ing, e.target.value)}
+                  className="add-ing-amount"
                 />
+                <Card className="add-ing-unit">
+                  <Card.Body>{ing.unit}</Card.Body>
+                </Card>
+
                 <Button
                   className=""
                   variant="danger"
@@ -215,7 +255,7 @@ function Add() {
               </div>
             ))}
           </div>
-          <Button onClick={handleShowtool} className="tool-add-button">
+          <Button onClick={handleShowtool} className="add-tool-button">
             <FaPlus />
             เพิ่มอุปกรณ์
           </Button>
@@ -245,7 +285,7 @@ function Add() {
                 ))}
             </Offcanvas.Body>
           </Offcanvas>
-          <div>
+          <div className="add-tool-box">
             {toollist.map((tool) => (
               <div className="add-tool-item" key={tool.id}>
                 <Card className="add-tool-name">
@@ -262,49 +302,56 @@ function Add() {
               </div>
             ))}
           </div>
-          <Button onClick={() => addnewstep()}>
+          <Button onClick={() => addnewstep()} className="add-step-button">
             <FaPlus />
             เพิ่มขั้นตอน
           </Button>
-          <div>
+          <Accordion className="accordion">
             {steplist.map((step) => (
-              <div key={steplist.indexOf(step)}>
-                <input
-                  type="file"
-                  onChange={(e) => onSelectstepFile(step, e)}
-                />
-                {step.pic && (
-                  <img
-                    src={steppic[steplist.indexOf(step)]}
-                    width="180"
-                    height="180"
-                    alt="preview"
+              <Accordion.Item eventKey={step.id} key={step.id}>
+                <Accordion.Header>{step.desc}</Accordion.Header>
+                <Accordion.Body className="accordionitem">
+                  <div className="stepremovebutton">
+                    <Form.Control
+                      type="file"
+                      onChange={(e) => onSelectstepFile(step, e)}
+                    />
+                    <Button
+                      className=""
+                      variant="danger"
+                      onClick={() => removeonClick(2, step)}
+                    >
+                      {" "}
+                      <FaBan />{" "}
+                    </Button>
+                  </div>
+                  <div className="steppiccenter">
+                    {steppic[steplist.indexOf(step)] && (
+                      <img
+                        src={steppic[steplist.indexOf(step)]}
+                        className="add-pic-pre"
+                        thumbnail="true"
+                        alt="preview"
+                      />
+                    )}
+                  </div>
+                  <FormControl
+                    type="text"
+                    as="textarea"
+                    placeholder="กรุณากรอกขั้นตอนวิธีการทำ"
+                    onChange={(e) => changedesc(step, e.target.value)}
                   />
-                )}
-                <Form.Control
-                  type="text"
-                  as="textarea"
-                  placeholder={step.desc}
-                  onChange={(e) => changedesc(step, e.target.value)}
-                />
-                <Button
-                  className=""
-                  variant="danger"
-                  onClick={() => removeonClick(2, step)}
-                >
-                  {" "}
-                  <FaBan />{" "}
-                </Button>
-              </div>
+                </Accordion.Body>
+              </Accordion.Item>
             ))}
-          </div>
+          </Accordion>
           <div className="button-box">
             <Button
               className="savebutton"
               variant="success"
               onClick={() => send(1)}
             >
-              Save
+              บันทึกสูตรอาหาร
             </Button>
             <div className="blank-box"></div>
             <Button
@@ -312,7 +359,7 @@ function Add() {
               variant="success"
               onClick={() => send(2)}
             >
-              Submit
+              ยืนยันการสร้างสูตรอาหาร
             </Button>
           </div>
         </Form>

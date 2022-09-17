@@ -1,4 +1,3 @@
-import GetImg from "../components/GetImg";
 import { useAuth } from "../script/useAuth"
 import NewIngredients from "../script/NewIngredients";
 
