@@ -1,10 +1,10 @@
-import React from "react";
-import "./MenuId.css";
-import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
-import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
-import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem";
-import Burger from "../img/testburger.jpg";
-import { GetAllIngredient, GetAllKitchenware } from "../script/controller";
+import React from "react"
+import "./MenuId.css"
+import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
+import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
+import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem"
+import Burger from "../img/testburger.jpg"
+import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 
 const MenuPage = () => {
   // const [menuDetails, setMenuDetails] = React.useState({
@@ -14,7 +14,7 @@ const MenuPage = () => {
   //   ingredient: [],
   //   kitchenware: [],
   //   cookingstep: [],
-  // });
+  // })
 
   const [menuDetails, setMenuDetails] = React.useState({
     name: "กะเพราโบราณ เผ็ดนรกแตก!",
@@ -59,110 +59,125 @@ const MenuPage = () => {
           "ใส่ใบกะเพรา ตามด้วยซีอิ๊วดำเล็กน้อย ผัดจนเข้ากัน พร้อมเสิร์ฟ",
       },
     ],
-  });
-  // const [ingIdList, setIngIdList] = React.useState("")
-  const [ingIdList, setIngIdList] = React.useState({
-    data: [
-      {
-        _id: "63148ecc1fd415225d9d18e4",
-        name: "หมูสับ",
-        categoryID: "63148bc17afa87e2439351d4",
-        unit: "ขีด",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148ee61fd415225d9d18e7",
-        name: "พริกแห้ง",
-        categoryID: "63148c731fd415225d9d18cd",
-        unit: "เม็ด",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148ef01fd415225d9d18ea",
-        name: "ตะไคร้",
-        categoryID: "63148c731fd415225d9d18cd",
-        unit: "ต้น",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148f011fd415225d9d18ed",
-        name: "กระเทียม",
-        categoryID: "63148c731fd415225d9d18cd",
-        unit: "กลีบ",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148f101fd415225d9d18f0",
-        name: "ใบกระเพรา",
-        categoryID: "63148c731fd415225d9d18cd",
-        unit: "ใบ",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148f341fd415225d9d18f3",
-        name: "น้ำตาล",
-        categoryID: "63148cee1fd415225d9d18d1",
-        unit: "ช้อนโต๊ะ",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148f401fd415225d9d18f6",
-        name: "ซีอิ๊วดำ",
-        categoryID: "63148cee1fd415225d9d18d1",
-        unit: "ช้อนโต๊ะ",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "63148f4a1fd415225d9d18f9",
-        name: "ซีอิ๊วขาว",
-        categoryID: "63148cee1fd415225d9d18d1",
-        unit: "ช้อนโต๊ะ",
-        status: true,
-        __v: 0,
-      },
-      {
-        _id: "631c70f94d569ee32e352e89",
-        name: "หมูยอ",
-        unit: "กรัม",
-        status: true,
-      },
-    ],
-    success: "true",
-  });
+  })
+  const [ingIdList, setIngIdList] = React.useState([])
+  // const [ingIdList, setIngIdList] = React.useState([
+  //   {
+  //     _id: "63148ecc1fd415225d9d18e4",
+  //     name: "หมูสับ",
+  //     categoryID: "63148bc17afa87e2439351d4",
+  //     unit: "ขีด",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148ee61fd415225d9d18e7",
+  //     name: "พริกแห้ง",
+  //     categoryID: "63148c731fd415225d9d18cd",
+  //     unit: "เม็ด",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148ef01fd415225d9d18ea",
+  //     name: "ตะไคร้",
+  //     categoryID: "63148c731fd415225d9d18cd",
+  //     unit: "ต้น",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148f011fd415225d9d18ed",
+  //     name: "กระเทียม",
+  //     categoryID: "63148c731fd415225d9d18cd",
+  //     unit: "กลีบ",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148f101fd415225d9d18f0",
+  //     name: "ใบกระเพรา",
+  //     categoryID: "63148c731fd415225d9d18cd",
+  //     unit: "ใบ",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148f341fd415225d9d18f3",
+  //     name: "น้ำตาล",
+  //     categoryID: "63148cee1fd415225d9d18d1",
+  //     unit: "ช้อนโต๊ะ",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148f401fd415225d9d18f6",
+  //     name: "ซีอิ๊วดำ",
+  //     categoryID: "63148cee1fd415225d9d18d1",
+  //     unit: "ช้อนโต๊ะ",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "63148f4a1fd415225d9d18f9",
+  //     name: "ซีอิ๊วขาว",
+  //     categoryID: "63148cee1fd415225d9d18d1",
+  //     unit: "ช้อนโต๊ะ",
+  //     status: true,
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "631c70f94d569ee32e352e89",
+  //     name: "หมูยอ",
+  //     unit: "กรัม",
+  //     status: true,
+  //   },
+  // ])
 
   const mytoken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBhYWEuYWFhIiwidXNlcklEIjoiNjMxYzI3ODFhNDM4NjM0ZWUwZWMwYmZjIiwicm9sZSI6MSwiaWF0IjoxNjYyODEwOTY3fQ.fYd8O3wm-kXTczREl9Cr2J55uvxdtCTlC258l0jLj5c";
-  
-    const [menuDetails2, setMenuDetails2] = React.useState([{name: "", amount: ""}]);
-  function mapIdtoName() {
-    for (let j = 0; j < menuDetails.ingredient.length; j++) {
-      for (let i = 0; i < ingIdList.data.length; i++) {
-        if (menuDetails.ingredient[j].ingredientID === ingIdList.data[i]._id) {
-          setMenuDetails2((ingName) => [
-            ...ingName,
-            {
-              name: ingIdList.data[i].name,
-              amount: menuDetails.ingredient[j].amount,
-            },
-          ]);
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBhYWEuYWFhIiwidXNlcklEIjoiNjMxYzI3ODFhNDM4NjM0ZWUwZWMwYmZjIiwicm9sZSI6MSwiaWF0IjoxNjYyODEwOTY3fQ.fYd8O3wm-kXTczREl9Cr2J55uvxdtCTlC258l0jLj5c"
+
+  const [menuDetails2, setMenuDetails2] = React.useState([])
+  function mapIdtoName(data) {
+    let l = menuDetails.ingredient.length
+    let ingdetail = []
+    for (let j = 0; j < l; j++) {
+      for (let i = 0; i < data.length; i++) {
+        if (menuDetails.ingredient[j].ingredientID === data[i]._id) {
+          const newmenudetail = {
+            name: data[i].name,
+            amount: menuDetails.ingredient[j].amount,
+            id: data[i].id,
+          }
+          ingdetail.push(newmenudetail)
         }
       }
     }
+    setMenuDetails2(ingdetail)
   }
 
-  const ingAlreadyDisplayed = React.useRef(false);
+  const ingAlreadyDisplayed = React.useRef(false)
   React.useEffect(() => {
-    if (ingAlreadyDisplayed.current) return;
-    ingAlreadyDisplayed.current = true;
-    mapIdtoName()
-  }, []);
+    if (ingAlreadyDisplayed.current) return
+    ingAlreadyDisplayed.current = true
+    async function fetchdata() {
+      const ingfulldata = await GetAllIngredient(mytoken)
+      const warefulldata = await GetAllKitchenware(mytoken)
+      let i = 0
+      ingfulldata.data.forEach((element) => {
+        element.id = i
+        i += 1
+        element.amount = 0
+      })
+      i = 0
+      warefulldata.data.forEach((element) => {
+        element.id = i
+        i += 1
+      })
+      mapIdtoName(ingfulldata.data)
+    }
+    fetchdata()
+  }, [])
 
   return (
     <div className="menupage">
@@ -176,7 +191,13 @@ const MenuPage = () => {
       <div className="menu-ing-list">
         <h1>ส่วนผสม</h1>
         {menuDetails2.map((eachIng) => (
-          <MenuIngItem name={eachIng.name} amount={eachIng.amount} />
+          <div key={eachIng.id}>
+            <MenuIngItem
+              name={eachIng.name}
+              amount={eachIng.amount}
+              id={eachIng.id}
+            />
+          </div>
         ))}
       </div>
       <div className="menu-steps-list">
@@ -187,7 +208,8 @@ const MenuPage = () => {
           <MenuStepsItem
             img={eachSteps.image}
             desc={eachSteps.description}
-            index={eachSteps.index}
+            index={eachSteps.index + 1}
+            key={eachSteps.index}
           />
         ))}
         <MenuStepsItem img={Burger} index={"TEST"}></MenuStepsItem>
@@ -199,7 +221,7 @@ const MenuPage = () => {
         <MenuCommentItem comment="Comment Test" />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MenuPage;
+export default MenuPage
