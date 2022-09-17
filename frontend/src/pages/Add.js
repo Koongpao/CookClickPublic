@@ -7,7 +7,6 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
-import Image from "react-bootstrap/Image"
 
 function Add() {
   const [token, setToken] = useState(
@@ -172,7 +171,7 @@ function Add() {
     <>
       <div className="flex flex-col align-items-center">
         <Form className="common-home">
-          <div className="mb-3">
+          <div className="mb-3 add-pic-recipe">
             <Form.Control type="file" onChange={onSelectFile} />
             {selectedFile && (
               <img
