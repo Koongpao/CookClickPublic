@@ -5,12 +5,12 @@
     margin: auto;
 }
 
-
 @media only screen and (max-width: 600px) {
     .menupage {
       max-width: 90%;
     }
   }
+
 
 .menu-img{
     width: 100%;
@@ -54,12 +54,12 @@
 }
 
 .menu-ing-item-right{
-    width: 70%;
+    width: 80%;
     height: auto;
 }
 
 .menu-ing-item-left{
-    width: 30%;
+    width: 20%;
     height: auto;
 }
 
