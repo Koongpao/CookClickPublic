@@ -1,0 +1,28 @@
+.refpage{
+    width: 50%;
+    margin: auto;
+}
+.ref-ing-item{
+    font-size: 1vw;
+    width: 80%;
+    margin: 2% auto 2% auto;
+}
+.ref-ing-name{
+    width: 120%;
+}
+.ref-ing-amount{
+    width: 20%;
+}
+.ref-ing-unit{
+    width: 40%;
+}
+@media only screen and (max-width: 600px) {
+    .refpage {
+      width: 90%;
+    }
+    .ref-ing-item{
+        font-size: 3vw;
+        width: 100%;
+    }
+}
+

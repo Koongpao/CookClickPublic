@@ -15,7 +15,6 @@ const MenuPage = () => {
   //   kitchenware: [],
   //   cookingstep: [],
   // })
-
   const [menuDetails, setMenuDetails] = React.useState({
     name: "กะเพราโบราณ เผ็ดนรกแตก!",
     image:
@@ -61,79 +60,6 @@ const MenuPage = () => {
     ],
   })
   const [ingIdList, setIngIdList] = React.useState([])
-  // const [ingIdList, setIngIdList] = React.useState([
-  //   {
-  //     _id: "63148ecc1fd415225d9d18e4",
-  //     name: "หมูสับ",
-  //     categoryID: "63148bc17afa87e2439351d4",
-  //     unit: "ขีด",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148ee61fd415225d9d18e7",
-  //     name: "พริกแห้ง",
-  //     categoryID: "63148c731fd415225d9d18cd",
-  //     unit: "เม็ด",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148ef01fd415225d9d18ea",
-  //     name: "ตะไคร้",
-  //     categoryID: "63148c731fd415225d9d18cd",
-  //     unit: "ต้น",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148f011fd415225d9d18ed",
-  //     name: "กระเทียม",
-  //     categoryID: "63148c731fd415225d9d18cd",
-  //     unit: "กลีบ",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148f101fd415225d9d18f0",
-  //     name: "ใบกระเพรา",
-  //     categoryID: "63148c731fd415225d9d18cd",
-  //     unit: "ใบ",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148f341fd415225d9d18f3",
-  //     name: "น้ำตาล",
-  //     categoryID: "63148cee1fd415225d9d18d1",
-  //     unit: "ช้อนโต๊ะ",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148f401fd415225d9d18f6",
-  //     name: "ซีอิ๊วดำ",
-  //     categoryID: "63148cee1fd415225d9d18d1",
-  //     unit: "ช้อนโต๊ะ",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "63148f4a1fd415225d9d18f9",
-  //     name: "ซีอิ๊วขาว",
-  //     categoryID: "63148cee1fd415225d9d18d1",
-  //     unit: "ช้อนโต๊ะ",
-  //     status: true,
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: "631c70f94d569ee32e352e89",
-  //     name: "หมูยอ",
-  //     unit: "กรัม",
-  //     status: true,
-  //   },
-  // ])
-
   const mytoken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBhYWEuYWFhIiwidXNlcklEIjoiNjMxYzI3ODFhNDM4NjM0ZWUwZWMwYmZjIiwicm9sZSI6MSwiaWF0IjoxNjYyODEwOTY3fQ.fYd8O3wm-kXTczREl9Cr2J55uvxdtCTlC258l0jLj5c"
 
