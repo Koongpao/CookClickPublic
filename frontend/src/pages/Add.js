@@ -9,7 +9,6 @@ import { FormControl } from "react-bootstrap"
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
-import Image from "react-bootstrap/Image"
 
 function Add() {
   const [token, setToken] = useState(

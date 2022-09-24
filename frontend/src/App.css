@@ -238,3 +238,55 @@
   justify-content: flex-end;
 }
 
+.staffbar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(55, 161, 153,0.5);
+}
+
+.staffbar-profile {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.staffbar-profile-pic {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  border-radius: 50%;
+}
+
+.staffbar-menubar {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.staffbar-text {
+  color: #000!important;
+}
+
+.staffbar-text a {
+  color: #000!important;
+}
+
+.staffbar-logout-button {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.staffbar-logiut-button {
+  margin: 10px;
+  background-color: rgba(55, 161, 153,1)!important;
+  border: rgba(55, 161, 153,1)!important;
+  width: 80%;
+}
+
+.staffbar-bluebg {
+  background-color: rgba(55, 161, 153,0.5);
+}
