@@ -93,9 +93,10 @@ const SignUp = () => {
               placeholder="name@example.com"
               value={message}
               onChange={(e) => handleEmail(e)}
+              style={{ borderColor: error ? "#ff0033" : "" }}
             />
             {error && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{error}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {error}</div>
             )}
           </Form.Group>
           <Form.Group className="mb-5" controlId="formDisplayName">
@@ -106,13 +107,11 @@ const SignUp = () => {
               maxLength={20}
               value={messageN}
               onChange={(e) => handleDisplayN(e)}
+              style={{ borderColor: errorN ? "#ff0033" : "" }}
             />
             {errorN && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorN}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorN}</div>
             )}
-            <div className="text-sm text-end text-muted">
-              display name must be between 6 and 20 characters.
-            </div>
           </Form.Group>
 
           <Form.Group className="mb-2" controlId="formPassword">
@@ -123,13 +122,11 @@ const SignUp = () => {
               maxLength={20}
               value={messageP}
               onChange={(e) => handlePass(e)}
+              style={{ borderColor: errorP ? "#ff0033" : "" }}
             />
             {errorP && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorP}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorP}</div>
             )}
-            <div className="text-sm text-end text-muted">
-              password must be between 8 and 20 characters.
-            </div>
           </Form.Group>
           <Form.Group className="mb-2" controlId="formConfirmPassword">
             <Form.Label>Confirm Password:</Form.Label>
@@ -139,9 +136,10 @@ const SignUp = () => {
               maxLength={20}
               value={cfMessage}
               onChange={(e) => checkPassword(e.target.value)}
+              style={{ borderColor: errorpw ? "#ff0033" : "" }}
             />
             {errorpw && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorpw}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorpw}</div>
             )}
           </Form.Group>
 

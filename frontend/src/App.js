@@ -39,7 +39,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="staff/dashboard" element={<Dashboard />} />
+            <Route path="/staff/dashboard" element={<Dashboard />} />
           </Routes>
         </AuthProvider>
       </Router>

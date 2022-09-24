@@ -1,3 +1,20 @@
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
 .formbox {
   width: 576px;
   max-width: 95%;
@@ -145,7 +162,7 @@
   width: 100%;
 }
 
-.add-ing-unit{
+.add-ing-unit {
   width: 17rem;
 }
 
@@ -153,7 +170,6 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
 
 .add-ing-button {
   margin-top: 5px;
@@ -183,7 +199,6 @@
 .add-step-button {
   margin-top: 5px;
 }
-
 
 .add-step-header {
   display: flex;
@@ -217,7 +232,7 @@
   min-height: 100%;
 }
 
-.accordion{
+.accordion {
   display: flex;
   flex-direction: column;
   margin-top: 5px;
@@ -244,7 +259,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
-  background-color: rgba(55, 161, 153,0.5);
+  background-color: rgba(55, 161, 153, 0.5);
 }
 
 .staffbar-profile {
@@ -267,11 +282,11 @@
   margin-bottom: 20px;
 }
 .staffbar-text {
-  color: #000!important;
+  color: #000 !important;
 }
 
 .staffbar-text a {
-  color: #000!important;
+  color: #000 !important;
 }
 
 .staffbar-logout-button {
@@ -282,11 +297,11 @@
 
 .staffbar-logiut-button {
   margin: 10px;
-  background-color: rgba(55, 161, 153,1)!important;
-  border: rgba(55, 161, 153,1)!important;
+  background-color: rgba(55, 161, 153, 1) !important;
+  border: rgba(55, 161, 153, 1) !important;
   width: 80%;
 }
 
 .staffbar-bluebg {
-  background-color: rgba(55, 161, 153,0.5);
+  background-color: rgba(55, 161, 153, 0.5);
 }
