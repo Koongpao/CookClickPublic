@@ -114,10 +114,6 @@ label:focus,
   margin: auto;
 }
 
-.ref-page-ingredient-tab {
-  color: black !important;
-  font-size: 18px;
-}
 .ref-ing-item {
   display: flex;
 }

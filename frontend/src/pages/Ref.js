@@ -6,8 +6,9 @@ import Button from "react-bootstrap/Button";
 import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller";
 import Card from "react-bootstrap/Card";
+import Modal from "react-bootstrap/Modal"
 import { Offcanvas } from "react-bootstrap";
-import "./Ref.css"
+import "./Ref.css";
 
 const Ref = () => {
   const [token, setToken] = useState(
@@ -132,15 +133,19 @@ const Ref = () => {
       );
     }
     setuniqueingid((current) =>
-        current.filter((ing) => {
-          return ing !== element._id;
-        })
-      );
+      current.filter((ing) => {
+        return ing !== element._id;
+      })
+    );
   };
 
   const handleSubmit = () => {
-    console.log("submit")
-  }
+    setShowAddIngButton(false)
+    setShowAddWareButton(false)
+    setShowSubmitButton(false)
+    setShowEditButton(true)
+    setSubmitConfirmation(false)
+  };
 
   const [showing, setshowing] = useState(false);
   const [showtool, setshowtool] = useState(false);
@@ -159,17 +164,28 @@ const Ref = () => {
   const [Tool, setTool] = useState([]);
   const [uniquetoolid, setuniquetoolid] = useState([]);
   const [allIng, setAllIng] = useState({});
+  const [IngBeforeEdit, setIngBeforeEdit] = useState("");
+
+  const [showAddIngButton, setShowAddIngButton] = useState(false)
+  const [showAddWareButton, setShowAddWareButton] = useState(false)
+  const [showSubmitButton, setShowSubmitButton] = useState(false)
+  const [showEditButton, setShowEditButton] = useState(true)
+  const [SubmitConfirmation, setSubmitConfirmation] = useState(false)
+
+  const handleEditClick = () => {
+    setShowAddIngButton(true)
+    setShowAddWareButton(true)
+    setShowSubmitButton(true)
+    setShowEditButton(false)
+  }
+
 
   return (
     <div className="refpage">
-      <button onClick={(e) => console.log(meatIng)}>meat</button>
-      <button onClick={(e) => console.log(uniqueingid)}>uniqueing</button>
-      <button onClick={(e) => console.log(Tool)}>tool</button>
-      <button onClick={(e) => console.log(uniquetoolid)}>uniquetool</button>
       <h1 className="text-center">จัดการวัตถุดิบ</h1>
       <div className="ref-page-form-box">
         <Form>
-          <Button onClick={handleShowing} className="ingredient-add-button">
+          <Button onClick={handleShowing} className="button-28" style={{display: showAddIngButton? "block" : "none"}}>
             <FaPlus />
             เพิ่มวัตถุดิบ
           </Button>
@@ -201,7 +217,7 @@ const Ref = () => {
           </Offcanvas>
         </Form>
         <Form>
-          <Button onClick={handleShowtool} className="ingredient-add-button">
+          <Button onClick={handleShowtool} className="button-28" style={{display: showAddIngButton? "block" : "none"}}>
             <FaPlus />
             เพิ่มอุปกรณ์
           </Button>
@@ -241,7 +257,7 @@ const Ref = () => {
         >
           <Tab eventKey="meat" title="เนื้อสัตว์">
             <div>
-            {meatIng.map((ing) => (
+              {meatIng.map((ing) => (
                 <div className="ref-ing-item" key={ing.id}>
                   <Card className="ref-ing-name">
                     <Card.Body>{ing.name}</Card.Body>
@@ -260,6 +276,8 @@ const Ref = () => {
                     className=""
                     variant="danger"
                     onClick={() => removeonClick(0, ing)}
+                    style={{display: showEditButton? "none" :"block"}}
+                    
                   >
                     {" "}
                     <FaBan />{" "}
@@ -404,7 +422,24 @@ const Ref = () => {
             </div>
           </Tab>
         </Tabs>
-        <Button onClick={() => handleSubmit()}>ยืนยันการแก้ไข</Button>
+        
+      </div>
+      <div className="submit-button-section">
+      <Button onClick={() => setSubmitConfirmation(true)} className="button-28-green" style={{display: showAddIngButton? "block" : "none"}}>ยืนยันการแก้ไข</Button>
+      <Button onClick={() => handleEditClick()} className="button-28-green" style={{display: showEditButton? "block" : "none"}}>แก้ไขข้อมูลวัตถุดิบ</Button>
+      <Modal show={SubmitConfirmation} onHide={() => setSubmitConfirmation(false)}>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body style={{fontSize:"28px"}}>ยืนยันการเปลี่ยนแปลงหรือไม่?</Modal.Body>
+        <Modal.Footer>
+          <Button className="button-28-red" onClick={()=>handleSubmit()}>
+            ยกเลิก
+          </Button>
+          <Button className="button-28-green" onClick={()=>handleSubmit()}>
+            ยืนยันการแก้ไข
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </div>
     </div>
   );

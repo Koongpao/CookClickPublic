@@ -14,7 +14,7 @@
     width: 20%;
 }
 .ref-ing-unit{
-    width: 40%;
+    width: 60%;
 }
 @media only screen and (max-width: 600px) {
     .refpage {
@@ -26,3 +26,115 @@
     }
 }
 
+.button-28 {
+  appearance: none;
+  background-color: #E55934  !important;
+  border: 3px solid #E55934 !important;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: white !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 2% 0 2% 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.button-28:disabled {
+  pointer-events: none;
+}
+
+.button-28:hover {
+  color: #E55934 !important;
+  background-color: transparent !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+}
+
+.button-28:active {
+  box-shadow: none;
+}
+
+.button-28-green {
+    background-color: #2bbc3e !important;
+    border: 3px solid #2bbc3e !important;
+    box-sizing: border-box;
+    color: white !important;
+    min-height: 60px;
+    max-width: 40%;
+    outline: none;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    touch-action: manipulation;
+    width: 100% !important;
+    will-change: transform;
+  }
+  
+.button-28-green:disabled {
+    pointer-events: none;
+  }
+  
+.button-28-green:hover {
+    color: #2bbc3e !important;
+    background-color: transparent !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  }
+  
+.button-28-green:active {
+    box-shadow: none;
+}
+
+.submit-button-section{
+    padding: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.ref-page-ingredient-tab{
+    font-size: 1em;
+    color: black !important;
+}
+
+.button-28-red {
+    background-color: #dd2020 !important;
+    border: 3px solid #dd2020 !important;
+    box-sizing: border-box;
+    color: white !important;
+    min-height: 60px;
+    max-width: 40%;
+    outline: none;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    touch-action: manipulation;
+    width: 100% !important;
+    will-change: transform;
+  }
+  
+.button-28-red:disabled {
+    pointer-events: none;
+  }
+  
+.button-28-red:hover {
+    color: #dd2020 !important;
+    background-color: transparent !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  }
+  
+.button-28-red:active {
+    box-shadow: none;
+  }
