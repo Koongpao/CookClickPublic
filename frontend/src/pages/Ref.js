@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller";
 import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal"
+import Modal from "react-bootstrap/Modal";
 import { Offcanvas } from "react-bootstrap";
 import "./Ref.css";
 
@@ -89,62 +89,19 @@ const Ref = () => {
   const ingsetamount = (ing, amount) => {
     ing.ingamount = amount;
   };
-  const removeonClick = (t, element) => {
-    if (t === 0) {
-      setMeatIng((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-    } else if (t === 1) {
-      setVegIng((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-    } else if (t === 2) {
-      setCondIng((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-    } else if (t === 3) {
-      setFlourIng((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-    } else if (t === 4) {
-      setOtherIng((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-    } else if (t === 100) {
-      setTool((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
-      setuniquetoolid((current) =>
-        current.filter((tool) => {
-          return tool !== element._id;
-        })
-      );
-    }
-    setuniqueingid((current) =>
-      current.filter((ing) => {
-        return ing !== element._id;
-      })
-    );
-  };
 
-  const handleSubmit = () => {
-    setShowAddIngButton(false)
-    setShowAddWareButton(false)
-    setShowSubmitButton(false)
-    setShowEditButton(true)
-    setSubmitConfirmation(false)
+  const removeonClick = (setFunc, setUniqueFunc, element) => {
+    setFunc((current) =>
+        current.filter((ing) => {
+          return ing._id !== element._id;
+        })
+      );
+    setUniqueFunc((current) =>
+          current.filter((item) => {
+            return item !== element._id;
+          })
+        );
+    console.log(uniqueingid)
   };
 
   const [showing, setshowing] = useState(false);
@@ -164,28 +121,83 @@ const Ref = () => {
   const [Tool, setTool] = useState([]);
   const [uniquetoolid, setuniquetoolid] = useState([]);
   const [allIng, setAllIng] = useState({});
-  const [IngBeforeEdit, setIngBeforeEdit] = useState("");
+  const [IngBeforeEdit, setIngBeforeEdit] = useState({
+    meat: [],
+    veg: [],
+    flour: [],
+    cond: [],
+    other: [],
+    uniqueing: [],
+    uniquetoolid: [],
+  });
 
-  const [showAddIngButton, setShowAddIngButton] = useState(false)
-  const [showAddWareButton, setShowAddWareButton] = useState(false)
-  const [showSubmitButton, setShowSubmitButton] = useState(false)
-  const [showEditButton, setShowEditButton] = useState(true)
-  const [SubmitConfirmation, setSubmitConfirmation] = useState(false)
+  const [showAddIngButton, setShowAddIngButton] = useState(false);
+  const [showAddWareButton, setShowAddWareButton] = useState(false);
+  const [showSubmitButton, setShowSubmitButton] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(true);
+  const [SubmitConfirmation, setSubmitConfirmation] = useState(false);
+  const [DiscardChange, setDiscardChange] = useState(false);
 
-  const handleEditClick = () => {
-    setShowAddIngButton(true)
-    setShowAddWareButton(true)
-    setShowSubmitButton(true)
-    setShowEditButton(false)
-  }
+  const handleStartEditing = (meat,veg,cond,flour,other,tool,uing,utool) => {
+    setShowAddIngButton(true);
+    setShowAddWareButton(true);
+    setShowSubmitButton(true);
+    setShowEditButton(false);
+    // const mamount = []
+    // console.log(meat)
+    // meat.ForEach((ing) => (
+    //   console.log(ing)
+    // ))
+    setIngBeforeEdit({
+      meat: meat,
+      veg: veg,
+      flour: flour,
+      cond: cond,
+      other: other,
+      tool: tool,
+      uniqueing: uing,
+      uniquetool: utool,
+      // meatamount : mamount,
+    });
+    console.log("start editing")
+  };
 
+  const handleDiscardChange = () => {
+    setShowAddIngButton(false);
+    setShowAddWareButton(false);
+    setShowSubmitButton(false);
+    setShowEditButton(true);
+    setDiscardChange(false);
+    setVegIng(IngBeforeEdit.veg);
+    setFlourIng(IngBeforeEdit.flour);
+    setCondIng(IngBeforeEdit.cond);
+    setOtherIng(IngBeforeEdit.other);
+    setTool(IngBeforeEdit.tool);
+    setuniqueingid(IngBeforeEdit.uniqueing);
+    setuniquetoolid(IngBeforeEdit.uniquetool);
+    console.log(meatIng);
+  };
+
+  const handleSubmit = () => {
+    setShowAddIngButton(false);
+    setShowAddWareButton(false);
+    setShowSubmitButton(false);
+    setShowEditButton(true);
+    setSubmitConfirmation(false);
+  };
 
   return (
     <div className="refpage">
       <h1 className="text-center">จัดการวัตถุดิบ</h1>
+      <button onClick={() => console.log(meatIng)}>meat</button>
+      <button onClick={() => console.log(IngBeforeEdit)}>All ingredient before editing</button>
       <div className="ref-page-form-box">
         <Form>
-          <Button onClick={handleShowing} className="button-28" style={{display: showAddIngButton? "block" : "none"}}>
+          <Button
+            onClick={handleShowing}
+            className="button-28"
+            style={{ display: showAddIngButton ? "block" : "none" }}
+          >
             <FaPlus />
             เพิ่มวัตถุดิบ
           </Button>
@@ -217,7 +229,11 @@ const Ref = () => {
           </Offcanvas>
         </Form>
         <Form>
-          <Button onClick={handleShowtool} className="button-28" style={{display: showAddIngButton? "block" : "none"}}>
+          <Button
+            onClick={handleShowtool}
+            className="button-28"
+            style={{ display: showAddIngButton ? "block" : "none" }}
+          >
             <FaPlus />
             เพิ่มอุปกรณ์
           </Button>
@@ -233,7 +249,9 @@ const Ref = () => {
             <Offcanvas.Body>
               <Form.Control
                 type="text"
-                onChange={(e) => setkeywording(e.target.value)}
+                onChange={(e) => {
+                  setkeywording(e.target.value);
+                }}
               />
               {wareData
                 .filter((ing) => ing.name.includes(keywording.toLowerCase()))
@@ -263,10 +281,11 @@ const Ref = () => {
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Form.Control
+                    disabled={showEditButton ? true : false}
                     type="number"
                     placeholder={ing.ingamount}
                     min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
+                    onChange={(e) => ing.ingamount = e.target.value}
                     className="ref-ing-amount"
                   />
                   <Card className="ref-ing-unit">
@@ -275,9 +294,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(0, ing)}
-                    style={{display: showEditButton? "none" :"block"}}
-                    
+                    onClick={() => removeonClick(setMeatIng, setuniqueingid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -294,6 +312,7 @@ const Ref = () => {
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Form.Control
+                    disabled={showEditButton ? true : false}
                     type="number"
                     placeholder={ing.ingamount}
                     min="0"
@@ -306,7 +325,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(1, ing)}
+                    onClick={() => removeonClick(setVegIng, setuniqueingid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -323,6 +343,7 @@ const Ref = () => {
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Form.Control
+                    disabled={showEditButton ? true : false}
                     type="number"
                     placeholder={ing.ingamount}
                     min="0"
@@ -335,7 +356,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(2, ing)}
+                    onClick={() => removeonClick(setCondIng, setuniqueingid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -352,6 +374,7 @@ const Ref = () => {
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Form.Control
+                    disabled={showEditButton ? true : false}
                     type="number"
                     placeholder={ing.ingamount}
                     min="0"
@@ -364,7 +387,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(3, ing)}
+                    onClick={() => (setFlourIng, setuniqueingid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -381,6 +405,7 @@ const Ref = () => {
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Form.Control
+                    disabled={showEditButton ? true : false}
                     type="number"
                     placeholder={ing.ingamount}
                     min="0"
@@ -393,7 +418,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(4, ing)}
+                    onClick={() => (setOtherIng, setuniqueingid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -412,7 +438,8 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(100, ing)}
+                    onClick={() => (setTool, setuniquetoolid, ing)}
+                    style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
                     <FaBan />{" "}
@@ -422,24 +449,70 @@ const Ref = () => {
             </div>
           </Tab>
         </Tabs>
-        
       </div>
       <div className="submit-button-section">
-      <Button onClick={() => setSubmitConfirmation(true)} className="button-28-green" style={{display: showAddIngButton? "block" : "none"}}>ยืนยันการแก้ไข</Button>
-      <Button onClick={() => handleEditClick()} className="button-28-green" style={{display: showEditButton? "block" : "none"}}>แก้ไขข้อมูลวัตถุดิบ</Button>
-      <Modal show={SubmitConfirmation} onHide={() => setSubmitConfirmation(false)}>
-        <Modal.Header closeButton>
-        </Modal.Header>
-        <Modal.Body style={{fontSize:"28px"}}>ยืนยันการเปลี่ยนแปลงหรือไม่?</Modal.Body>
-        <Modal.Footer>
-          <Button className="button-28-red" onClick={()=>handleSubmit()}>
-            ยกเลิก
-          </Button>
-          <Button className="button-28-green" onClick={()=>handleSubmit()}>
-            ยืนยันการแก้ไข
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Button
+          onClick={() => handleStartEditing(meatIng, vegIng, condIng, flourIng, otherIng, Tool, uniqueingid,uniquetoolid )}
+          className="button-28-green"
+          style={{ display: showEditButton ? "block" : "none" }}
+        >
+          แก้ไขข้อมูลวัตถุดิบ
+        </Button>
+        <Button
+          onClick={() => setDiscardChange(true)}
+          className="button-28-red"
+          style={{
+            display: showEditButton ? "none" : "block",
+            margin: "0 0 0 2%",
+          }}
+        >
+          ยกเลิกการเปลี่ยนแปลง
+        </Button>
+        <Button
+          onClick={() => setSubmitConfirmation(true)}
+          className="button-28-green"
+          style={{ display: showEditButton ? "none" : "block" }}
+        >
+          ยืนยันการแก้ไข
+        </Button>
+        <Modal
+          show={SubmitConfirmation}
+          onHide={() => setSubmitConfirmation(false)}
+        >
+          <Modal.Body style={{ fontSize: "28px" }}>
+            ต้องการยืนยันการเปลี่ยนแปลงหรือไม่?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="button-28-red"
+              onClick={() => setSubmitConfirmation(false)}
+            >
+              ยกเลิก
+            </Button>
+            <Button className="button-28-green" onClick={() => handleSubmit()}>
+              ยืนยันการแก้ไข
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={DiscardChange} onHide={() => setSubmitConfirmation(false)}>
+          <Modal.Body style={{ fontSize: "28px" }}>
+            ต้องการยกเลิกการเปลี่ยนแปลงหรือไม่?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="button-28-red"
+              onClick={() => setDiscardChange(false)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              className="button-28-green"
+              onClick={() => handleDiscardChange()}
+            >
+              ยืนยัน
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
