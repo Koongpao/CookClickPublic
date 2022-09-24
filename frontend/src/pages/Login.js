@@ -17,16 +17,16 @@ const Login = () => {
       <h1 className="m-5 text-center">Login</h1>
       <div className="flex justify-content-center">
         <Form className="flex flex-col formbox p-4" onSubmit={async (e) => {
-              e.preventDefault()
-              const tokenData = await UserLogin(userDetails)
-              await login({
-                token: tokenData,
-              });
-            }}>
+          e.preventDefault()
+          const tokenData = await UserLogin(userDetails)
+          await login({
+            token: tokenData,
+          });
+        }}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address:</Form.Label>
             <Form.Control type="email" placeholder="Enter email"
-              onChange={ (e) => setUserDetails({...userDetails, email: e.target.value }) } />
+              onChange={ (e) => setUserDetails({ ...userDetails, email: e.target.value }) } />
           </Form.Group>
 
           <Form.Group className="mb-5" controlId="formBasicPassword">
