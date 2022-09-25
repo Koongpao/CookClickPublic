@@ -1,20 +1,24 @@
 .refpage{
     width: 50%;
     margin: auto;
+    overflow-y: scroll;
 }
 .ref-ing-item{
     font-size: 1vw;
     width: 80%;
     margin: 2% auto 2% auto;
+    width: 80%;
+    height: 100%;
+    display: flex;
 }
 .ref-ing-name{
-    width: 120%;
+    width: 40%;
 }
 .ref-ing-amount{
-    width: 20%;
+    width: 20% !important;
 }
 .ref-ing-unit{
-    width: 60%;
+    width: 20%;
 }
 @media only screen and (max-width: 600px) {
     .refpage {
@@ -33,7 +37,7 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
-  margin: 2% 5% 2% 5%;
+  margin: 2% 2% 2% 2%;
   text-align: center;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   user-select: none;
@@ -137,4 +141,8 @@
 
 .ref-page-form-box{
   display:flex;
+}
+
+.tab-content{
+  justify-content: center !important;
 }

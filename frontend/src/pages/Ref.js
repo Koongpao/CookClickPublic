@@ -143,13 +143,9 @@ const Ref = () => {
     setShowAddWareButton(true);
     setShowSubmitButton(true);
     setShowEditButton(false);
-    // const mamount = []
-    // console.log(meat)
-    // meat.ForEach((ing) => (
-    //   console.log(ing)
-    // ))
+    const meatCopy = JSON.parse(JSON.stringify(meat));
     setIngBeforeEdit({
-      meat: meat,
+      meat: meatCopy,
       veg: veg,
       flour: flour,
       cond: cond,
@@ -157,7 +153,6 @@ const Ref = () => {
       tool: tool,
       uniqueing: uing,
       uniquetool: utool,
-      // meatamount : mamount,
     });
     console.log("start editing")
   };
@@ -168,6 +163,7 @@ const Ref = () => {
     setShowSubmitButton(false);
     setShowEditButton(true);
     setDiscardChange(false);
+    setMeatIng(IngBeforeEdit.meat);
     setVegIng(IngBeforeEdit.veg);
     setFlourIng(IngBeforeEdit.flour);
     setCondIng(IngBeforeEdit.cond);
@@ -175,7 +171,6 @@ const Ref = () => {
     setTool(IngBeforeEdit.tool);
     setuniqueingid(IngBeforeEdit.uniqueing);
     setuniquetoolid(IngBeforeEdit.uniquetool);
-    console.log(meatIng);
   };
 
   const handleSubmit = () => {
