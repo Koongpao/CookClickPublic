@@ -25,26 +25,25 @@ const Login = () => {
         }}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address:</Form.Label>
-            <Form.Control type="email" placeholder="Enter email"
-              onChange={ (e) => setUserDetails({ ...userDetails, email: e.target.value }) } />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+            />
           </Form.Group>
 
           <Form.Group className="mb-5" controlId="formBasicPassword">
             <Form.Label>Password:</Form.Label>
-            <Form.Control type="password" placeholder="Password"
-            onChange={ (e) => setUserDetails({...userDetails, password: e.target.value }) } />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
+            />
           </Form.Group>
           <Button
             className="mb-1" variant="primary" type="submit">
             Log In
           </Button>
-          <a
-            href="/"
-            className="text-sm text-end text-muted mb-3"
-            id="forget-password"
-          >
-            forgotten password?
-          </a>
           <hr />
           <div className="text-center text-muted mb-3" id="forget-password">
             or

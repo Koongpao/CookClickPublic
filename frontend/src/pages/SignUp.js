@@ -11,9 +11,10 @@ const SignUp = () => {
   })
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(userDetails)
+    if (error || errorN || errorpw || errorP) {
+      return
+    }
     AddUser(userDetails)
-    
   }
   const [error, setError] = useState(null)
   const [errorN, setErrorN] = useState(null)
@@ -24,15 +25,21 @@ const SignUp = () => {
   const [messageP, setMessageP] = useState("")
   const [cfMessage, setcfMessage] = useState("")
 
-  function isValidEmail(email) {
+  const isValidEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email)
   }
-  function isValidLengthN(name) {
-    return name.length >= 6
+  const isValidName = (name) => {
+    return /^[a-zA-Z0-9_]+$/.test(name)
   }
-  function isValidLengthP(password) {
-    return password.length >= 8
+
+  const isValidLengthN = (name) => {
+    return name.length >= 6 && name.length <= 20
   }
+  const isValidLengthP = (password) => {
+    return password.length >= 8 && password.length <= 20
+  }
+
+
   const checkEmail = (event) => {
     if (!isValidEmail(event.target.value)) {
       setError("Email is invalid")
@@ -43,15 +50,19 @@ const SignUp = () => {
   }
   const checkLengthN = (event) => {
     if (!isValidLengthN(event.target.value)) {
-      setErrorN("Display Name must be at least 6 characters long")
-    } else {
+      setErrorN("Display Name must be 6-20 characters long")
+    }
+    else if (!isValidName(event.target.value)) {
+      setErrorN("Display Name must only contain letters, numbers and underscores")
+    }
+    else {
       setErrorN(null)
     }
     setMessageN(event.target.value)
   }
   const checkLengthP = (event) => {
     if (!isValidLengthP(event.target.value)) {
-      setErrorP("Password must be at least 8 characters long")
+      setErrorP("Password must be 8-20 characters long")
     } else {
       setErrorP(null)
     }
