@@ -4,11 +4,12 @@ import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
-import { GetAllIngredient, GetAllKitchenware } from "../script/controller";
+import { GetAllIngredient, GetAllKitchenware, GetMemberIngredientKitchenware } from "../script/controller";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Offcanvas } from "react-bootstrap";
 import "./Ref.css";
+// import MapIngList from "../components/MapIngList";
 
 const Ref = () => {
   const [token, setToken] = useState(
@@ -60,10 +61,13 @@ const Ref = () => {
   const [ignore, setignore] = useState(false);
   const [ingData, setIngData] = useState([]);
   const [wareData, setWareData] = useState([]);
+  const [memberFullInfo, setMemberFullInfo] = useState([]);
   useEffect(() => {
     async function fetchdata() {
       const ingfulldata = await GetAllIngredient(token);
       const warefulldata = await GetAllKitchenware(token);
+      // const fetchedmemberinfo = await GetMemberIngredientKitchenware(token);
+      // console.log(fetchedmemberinfo)
       let i = 0;
       ingfulldata.data.forEach((element) => {
         element.id = i;
@@ -92,16 +96,15 @@ const Ref = () => {
 
   const removeonClick = (setFunc, setUniqueFunc, element) => {
     setFunc((current) =>
-        current.filter((ing) => {
-          return ing._id !== element._id;
-        })
-      );
+      current.filter((ing) => {
+        return ing._id !== element._id;
+      })
+    );
     setUniqueFunc((current) =>
-          current.filter((item) => {
-            return item !== element._id;
-          })
-        );
-    console.log(uniqueingid)
+      current.filter((item) => {
+        return item !== element._id;
+      })
+    );
   };
 
   const [showing, setshowing] = useState(false);
@@ -137,24 +140,41 @@ const Ref = () => {
   const [showEditButton, setShowEditButton] = useState(true);
   const [SubmitConfirmation, setSubmitConfirmation] = useState(false);
   const [DiscardChange, setDiscardChange] = useState(false);
+  const [Dummy, setDummy] = useState(false);
 
-  const handleStartEditing = (meat,veg,cond,flour,other,tool,uing,utool) => {
+  const handleStartEditing = (
+    meat,
+    veg,
+    cond,
+    flour,
+    other,
+    tool,
+    uing,
+    utool
+  ) => {
     setShowAddIngButton(true);
     setShowAddWareButton(true);
     setShowSubmitButton(true);
     setShowEditButton(false);
     const meatCopy = JSON.parse(JSON.stringify(meat));
+    const vegCopy = JSON.parse(JSON.stringify(veg));
+    const condCopy = JSON.parse(JSON.stringify(cond));
+    const flourCopy = JSON.parse(JSON.stringify(flour));
+    const otherCopy = JSON.parse(JSON.stringify(other));
+    const toolCopy = JSON.parse(JSON.stringify(tool));
+    const uingCopy = JSON.parse(JSON.stringify(uing));
+    const utoolCopy = JSON.parse(JSON.stringify(utool));
     setIngBeforeEdit({
       meat: meatCopy,
-      veg: veg,
-      flour: flour,
-      cond: cond,
-      other: other,
-      tool: tool,
-      uniqueing: uing,
-      uniquetool: utool,
+      veg: vegCopy,
+      flour: flourCopy,
+      cond: condCopy,
+      other: otherCopy,
+      tool: toolCopy,
+      uniqueing: uingCopy,
+      uniquetool: utoolCopy,
     });
-    console.log("start editing")
+    console.log("start editing");
   };
 
   const handleDiscardChange = () => {
@@ -183,9 +203,8 @@ const Ref = () => {
 
   return (
     <div className="refpage">
-      <h1 className="text-center">จัดการวัตถุดิบ</h1>
+      <h1 className="text-center">จัดการวัตถุดิบในตู้เย็น</h1>
       <button onClick={() => console.log(meatIng)}>meat</button>
-      <button onClick={() => console.log(IngBeforeEdit)}>All ingredient before editing</button>
       <div className="ref-page-form-box">
         <Form>
           <Button
@@ -269,8 +288,7 @@ const Ref = () => {
           id="uncontrolled-tab-example"
         >
           <Tab eventKey="meat" title="เนื้อสัตว์">
-            <div>
-              {meatIng.map((ing) => (
+          {meatIng.map((ing) => (
                 <div className="ref-ing-item" key={ing.id}>
                   <Card className="ref-ing-name">
                     <Card.Body>{ing.name}</Card.Body>
@@ -278,10 +296,13 @@ const Ref = () => {
                   <Form.Control
                     disabled={showEditButton ? true : false}
                     type="number"
-                    placeholder={ing.ingamount}
                     min="0"
-                    onChange={(e) => ing.ingamount = e.target.value}
+                    onChange={(e) => {
+                      ing.ingamount = e.target.value;
+                      setDummy((dummy) => !dummy);
+                    }}
                     className="ref-ing-amount"
+                    value={ing.ingamount || ""}
                   />
                   <Card className="ref-ing-unit">
                     <Card.Body>{ing.unit}</Card.Body>
@@ -289,7 +310,9 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(setMeatIng, setuniqueingid, ing)}
+                    onClick={() =>
+                      removeonClick(setMeatIng, setuniqueingid, ing)
+                    }
                     style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
@@ -297,7 +320,6 @@ const Ref = () => {
                   </Button>
                 </div>
               ))}
-            </div>
           </Tab>
           <Tab eventKey="veggie" title="ผัก/ผลไม้">
             <div>
@@ -309,10 +331,13 @@ const Ref = () => {
                   <Form.Control
                     disabled={showEditButton ? true : false}
                     type="number"
-                    placeholder={ing.ingamount}
                     min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
+                    onChange={(e) => {
+                      ing.ingamount = e.target.value;
+                      setDummy((dummy) => !dummy);
+                    }}
                     className="ref-ing-amount"
+                    value={ing.ingamount || ""}
                   />
                   <Card className="ref-ing-unit">
                     <Card.Body>{ing.unit}</Card.Body>
@@ -320,7 +345,9 @@ const Ref = () => {
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => removeonClick(setVegIng, setuniqueingid, ing)}
+                    onClick={() =>
+                      removeonClick(setVegIng, setuniqueingid, ing)
+                    }
                     style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
@@ -334,30 +361,35 @@ const Ref = () => {
             <div>
               {condIng.map((ing) => (
                 <div className="ref-ing-item" key={ing.id}>
-                  <Card className="ref-ing-name">
-                    <Card.Body>{ing.name}</Card.Body>
-                  </Card>
-                  <Form.Control
-                    disabled={showEditButton ? true : false}
-                    type="number"
-                    placeholder={ing.ingamount}
-                    min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
-                    className="ref-ing-amount"
-                  />
-                  <Card className="ref-ing-unit">
-                    <Card.Body>{ing.unit}</Card.Body>
-                  </Card>
-                  <Button
-                    className=""
-                    variant="danger"
-                    onClick={() => removeonClick(setCondIng, setuniqueingid, ing)}
-                    style={{ display: showEditButton ? "none" : "block" }}
-                  >
-                    {" "}
-                    <FaBan />{" "}
-                  </Button>
-                </div>
+                <Card className="ref-ing-name">
+                  <Card.Body>{ing.name}</Card.Body>
+                </Card>
+                <Form.Control
+                  disabled={showEditButton ? true : false}
+                  type="number"
+                  min="0"
+                  onChange={(e) => {
+                    ing.ingamount = e.target.value;
+                    setDummy((dummy) => !dummy);
+                  }}
+                  className="ref-ing-amount"
+                  value={ing.ingamount || ""}
+                />
+                <Card className="ref-ing-unit">
+                  <Card.Body>{ing.unit}</Card.Body>
+                </Card>
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() =>
+                    removeonClick(setCondIng, setuniqueingid, ing)
+                  }
+                  style={{ display: showEditButton ? "none" : "block" }}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
               ))}
             </div>
           </Tab>
@@ -365,30 +397,35 @@ const Ref = () => {
             <div>
               {flourIng.map((ing) => (
                 <div className="ref-ing-item" key={ing.id}>
-                  <Card className="ref-ing-name">
-                    <Card.Body>{ing.name}</Card.Body>
-                  </Card>
-                  <Form.Control
-                    disabled={showEditButton ? true : false}
-                    type="number"
-                    placeholder={ing.ingamount}
-                    min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
-                    className="ref-ing-amount"
-                  />
-                  <Card className="ref-ing-unit">
-                    <Card.Body>{ing.unit}</Card.Body>
-                  </Card>
-                  <Button
-                    className=""
-                    variant="danger"
-                    onClick={() => (setFlourIng, setuniqueingid, ing)}
-                    style={{ display: showEditButton ? "none" : "block" }}
-                  >
-                    {" "}
-                    <FaBan />{" "}
-                  </Button>
-                </div>
+                <Card className="ref-ing-name">
+                  <Card.Body>{ing.name}</Card.Body>
+                </Card>
+                <Form.Control
+                  disabled={showEditButton ? true : false}
+                  type="number"
+                  min="0"
+                  onChange={(e) => {
+                    ing.ingamount = e.target.value;
+                    setDummy((dummy) => !dummy);
+                  }}
+                  className="ref-ing-amount"
+                  value={ing.ingamount || ""}
+                />
+                <Card className="ref-ing-unit">
+                  <Card.Body>{ing.unit}</Card.Body>
+                </Card>
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() =>
+                    removeonClick(setFlourIng, setuniqueingid, ing)
+                  }
+                  style={{ display: showEditButton ? "none" : "block" }}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
               ))}
             </div>
           </Tab>
@@ -396,44 +433,49 @@ const Ref = () => {
             <div>
               {otherIng.map((ing) => (
                 <div className="ref-ing-item" key={ing.id}>
-                  <Card className="ref-ing-name">
-                    <Card.Body>{ing.name}</Card.Body>
-                  </Card>
-                  <Form.Control
-                    disabled={showEditButton ? true : false}
-                    type="number"
-                    placeholder={ing.ingamount}
-                    min="0"
-                    onChange={(e) => ingsetamount(ing, e.target.value)}
-                    className="ref-ing-amount"
-                  />
-                  <Card className="ref-ing-unit">
-                    <Card.Body>{ing.unit}</Card.Body>
-                  </Card>
-                  <Button
-                    className=""
-                    variant="danger"
-                    onClick={() => (setOtherIng, setuniqueingid, ing)}
-                    style={{ display: showEditButton ? "none" : "block" }}
-                  >
-                    {" "}
-                    <FaBan />{" "}
-                  </Button>
-                </div>
+                <Card className="ref-ing-name">
+                  <Card.Body>{ing.name}</Card.Body>
+                </Card>
+                <Form.Control
+                  disabled={showEditButton ? true : false}
+                  type="number"
+                  min="0"
+                  onChange={(e) => {
+                    ing.ingamount = e.target.value;
+                    setDummy((dummy) => !dummy);
+                  }}
+                  className="ref-ing-amount"
+                  value={ing.ingamount || ""}
+                />
+                <Card className="ref-ing-unit">
+                  <Card.Body>{ing.unit}</Card.Body>
+                </Card>
+                <Button
+                  className=""
+                  variant="danger"
+                  onClick={() =>
+                    removeonClick(setOtherIng, setuniqueingid, ing)
+                  }
+                  style={{ display: showEditButton ? "none" : "block" }}
+                >
+                  {" "}
+                  <FaBan />{" "}
+                </Button>
+              </div>
               ))}
             </div>
           </Tab>
           <Tab eventKey="tool" title="อุปกรณ์ทำอาหาร">
             <div>
               {Tool.map((ing) => (
-                <div className="ref-ing-item" key={ing.id}>
-                  <Card className="ref-ing-name">
+                <div className="ref-tool-item" key={ing.id}>
+                  <Card className="ref-tool-name">
                     <Card.Body>{ing.name}</Card.Body>
                   </Card>
                   <Button
                     className=""
                     variant="danger"
-                    onClick={() => (setTool, setuniquetoolid, ing)}
+                    onClick={() => removeonClick(setTool, setuniquetoolid, ing)}
                     style={{ display: showEditButton ? "none" : "block" }}
                   >
                     {" "}
@@ -447,7 +489,18 @@ const Ref = () => {
       </div>
       <div className="submit-button-section">
         <Button
-          onClick={() => handleStartEditing(meatIng, vegIng, condIng, flourIng, otherIng, Tool, uniqueingid,uniquetoolid )}
+          onClick={() =>
+            handleStartEditing(
+              meatIng,
+              vegIng,
+              condIng,
+              flourIng,
+              otherIng,
+              Tool,
+              uniqueingid,
+              uniquetoolid
+            )
+          }
           className="button-28-green"
           style={{ display: showEditButton ? "block" : "none" }}
         >
