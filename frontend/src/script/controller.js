@@ -5,10 +5,10 @@ export const AddUser = async (item) => {
   try {
     const response = await axios.post(baseURL, item)
     console.log(response.data)
-    alert("SignUp Success")
+    return 'success'
   } catch (err) {
     console.error(err.response.data)
-    alert(err.response.data.message)
+    return err.response.data
   }
 }
 
