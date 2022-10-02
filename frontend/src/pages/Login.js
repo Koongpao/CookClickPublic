@@ -9,6 +9,7 @@ function Login({ onchangelogin }) {
     email: "",
     password: "",
   })
+  const [error, setError] = useState(false)
 
   const { login } = useAuth()
 
@@ -20,11 +21,12 @@ function Login({ onchangelogin }) {
           className="flex flex-col formbox p-4"
           onSubmit={async (e) => {
             e.preventDefault()
-
             const tokenData = await UserLogin(userDetails)
-            await login({
-              token: tokenData,
-            })
+            if ((await tokenData) === "error") {
+              setError(true)
+            } else {
+              await login({ token: tokenData })
+            }
             onchangelogin(false)
           }}
         >
@@ -36,6 +38,7 @@ function Login({ onchangelogin }) {
               onChange={(e) =>
                 setUserDetails({ ...userDetails, email: e.target.value })
               }
+              style={{ borderColor: error ? "#ff0033" : "" }}
             />
           </Form.Group>
 
@@ -47,7 +50,16 @@ function Login({ onchangelogin }) {
               onChange={(e) =>
                 setUserDetails({ ...userDetails, password: e.target.value })
               }
+              style={{ borderColor: error ? "#ff0033" : "" }}
             />
+            {error && (
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! Incorrect email or password
+              </div>
+            )}
           </Form.Group>
           <Button className="mb-1" variant="primary" type="submit">
             Log In

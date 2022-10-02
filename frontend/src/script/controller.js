@@ -5,10 +5,10 @@ export const AddUser = async (item) => {
   try {
     const response = await axios.post(baseURL, item)
     console.log(response.data)
-    alert("SignUp Success")
+    return 'success'
   } catch (err) {
     console.error(err.response.data)
-    alert(err.response.data.message)
+    return err.response.data
   }
 }
 
@@ -19,8 +19,7 @@ export const UserLogin = async (item) => {
     return response.data.token
   } catch (err) {
     console.error(err.response.data)
-    alert(err.response.data.message)
-    return null
+    return 'error'
   }
 }
 
@@ -283,7 +282,7 @@ export const GetMemberMenu = async (token) => {
 }
 
 export const DelMemberMenu = async (token, menu, menuId) => {
-  const baseURL = `https://cookclick-api.code.in.th/member//delete/member_menu/${menuId}`
+  const baseURL = `https://cookclick-api.code.in.th/member/delete/member_menu/${menuId}`
   try {
     const response = await axios.post(baseURL, menu, {
       headers: {

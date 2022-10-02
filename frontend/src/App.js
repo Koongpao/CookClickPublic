@@ -15,6 +15,8 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./script/useAuth"
 import { useState, useEffect } from "react"
 
+import StaffLogin from "./pages/Staff/StaffLogin"
+
 //* Non logged-in users cannot access ProtectedRoute pages
 
 function App() {
@@ -56,6 +58,7 @@ function App() {
               }
             />
             <Route path="/staff/dashboard" element={<Dashboard />} />
+            <Route path="/staff/login" element={<StaffLogin />} />
           </Routes>
         </AuthProvider>
       </Router>
