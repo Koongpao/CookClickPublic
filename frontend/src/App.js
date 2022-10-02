@@ -2,6 +2,7 @@ import "./App.css"
 import Login from "./pages/Login"
 import Home from "./pages/Home"
 import Navbar from "./components/Navbar"
+import Gnavbar from "./components/Gnavbar"
 import SignUp from "./pages/SignUp"
 import Search from "./pages/Search"
 import SearchRef from "./pages/SearchRef"
@@ -13,22 +14,29 @@ import Dashboard from "./pages/Staff/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./script/useAuth"
-import { useState, useEffect } from "react"
-
+import { useState } from "react"
+import { decodeToken } from "react-jwt"
 import StaffLogin from "./pages/Staff/StaffLogin"
+import Staffbar from "./components/Staffbar"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
 function App() {
-  const [login, setlogin] = useState(false)
+  const [login, setlogin] = useState(0)
   const [ignore, setignore] = useState(false)
+  const [udata, setudata] = useState()
   if (!ignore) {
     let token = JSON.parse(localStorage.getItem("token"))
+    let UserData = decodeToken(token)
+    setudata(UserData)
+    let role = 0
+    console.log(UserData)
     if (token === null) {
-      setlogin(false)
+      role = 0
     } else {
-      setlogin(true)
+      role = UserData.role
     }
+    setlogin(role)
     setignore(true)
   }
 
@@ -36,7 +44,9 @@ function App() {
     <>
       <Router>
         <AuthProvider>
-          {login && <Navbar />}
+          {login === 0 && <Gnavbar />}
+          {login === 1 && <Navbar user={udata} onchangelogout={setignore} />}
+          {login === 3 && <Staffbar user={udata} onchangelogout={setignore} />}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />

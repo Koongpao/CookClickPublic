@@ -2,28 +2,15 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import Offcanvas from "react-bootstrap/Offcanvas"
-import {
-  FaHome,
-  FaSearch,
-  FaSearchPlus,
-  FaPlus,
-  FaDrumstickBite,
-  FaUserCircle,
-} from "react-icons/fa"
+import { FaHome, FaSearch, FaPlus } from "react-icons/fa"
 import React, { useState } from "react"
 import Logonobg from "../img/logonobg.svg"
-import Button from "react-bootstrap/Button"
-import { useAuth } from "../script/useAuth"
 
-function Nbar({ user, onchangelogout }) {
+function GNbar() {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  const { logout } = useAuth()
-  const onlogout = () => {
-    logout()
-    onchangelogout(false)
-  }
+
   return (
     <>
       <div>
@@ -53,36 +40,12 @@ function Nbar({ user, onchangelogout }) {
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/SearchRef">
-                    <FaSearchPlus />
-                    &nbsp;ค้นหาสูตรอาหารจากวัตถุดิบในตู้เย็น
-                  </Nav.Link>
-                </Nav>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Add">
+                  <Nav.Link href="/Login">
                     <FaPlus />
-                    &nbsp;เพิ่มสูตรอาหาร
-                  </Nav.Link>
-                </Nav>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Ref">
-                    <FaDrumstickBite />
-                    &nbsp;จัดการวัตถุดิบ
+                    &nbsp;เข้าสู่ระบบ
                   </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
-              <Offcanvas.Header className="offcanvas-foot flex">
-                <div className="flex space-around">
-                  <FaUserCircle size={50} />
-                  <div className="profilename">
-                    <span>เข้าสู่ระบบด้วย</span>
-                    <br />
-                    <span>{user.email}</span>
-                    <br />
-                  </div>
-                </div>
-                <Button onClick={onlogout}>ออกจากระบบ</Button>
-              </Offcanvas.Header>
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
@@ -91,4 +54,4 @@ function Nbar({ user, onchangelogout }) {
   )
 }
 
-export default Nbar
+export default GNbar

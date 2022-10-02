@@ -1,23 +1,41 @@
-import { FaCheck, FaSearch, FaBan, FaPlus } from "react-icons/fa"
+import {
+  FaHome,
+  FaCheck,
+  FaSearch,
+  FaBan,
+  FaPlus,
+  FaUserCircle,
+} from "react-icons/fa"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import React, { useState } from "react"
-import Mark from "../img/mark.jpg"
 import Button from "react-bootstrap/Button"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import Logonobg from "../img/logonobg.svg"
+import { useAuth } from "../script/useAuth"
 
-function Staffbar() {
-  const staffname = "Mr. Mark Suck"
+function Staffbar({ user, onchangelogout }) {
+  const staffname = user.email
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const { logout } = useAuth()
+  const onlogout = () => {
+    logout()
+    onchangelogout(false)
+  }
 
   return (
-    <Navbar key="false" expand="false" className="mb-3 color-nav">
+    <Navbar key="false" expand="false" className="mb-3 color-staffnav">
       <Container fluid>
         <Navbar.Toggle onClick={handleShow} />
+        <Navbar.Brand href="/">
+          <img src={Logonobg} alt="logo" style={{ width: "150px" }}></img>
+        </Navbar.Brand>
+        <Navbar.Brand href="/">
+          <FaHome />
+        </Navbar.Brand>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-false`}
           aria-labelledby={`offcanvasNavbarLabel-expand-fasle`}
@@ -27,11 +45,11 @@ function Staffbar() {
           <Offcanvas.Header className="staffbar-bluebg" closeButton>
             <img src={Logonobg} alt="logo" style={{ width: "150px" }}></img>
           </Offcanvas.Header>
-          <Offcanvas.Body className="staffbar-bluebg justify-content-center">
+          <Offcanvas.Body className="staffbar-bluebg">
             <div className="staffbar-profile">
-              <img src={Mark} alt="profile" className="staffbar-profile-pic" />
+              <FaUserCircle size="183.5" />
               <div className="staffbar-text">
-                Welcome
+                ยินดีต้อนรับ
                 <br />
                 {staffname}
               </div>
@@ -62,8 +80,12 @@ function Staffbar() {
                 </Nav.Link>
               </Nav>
             </div>
-            <Button className="staffbar-logout-button">Logout</Button>
           </Offcanvas.Body>
+          <Offcanvas.Header className="staffbar-footer">
+            <Button className="staffbar-logout-button" onClick={onlogout}>
+              Logout
+            </Button>
+          </Offcanvas.Header>
         </Navbar.Offcanvas>
       </Container>
     </Navbar>

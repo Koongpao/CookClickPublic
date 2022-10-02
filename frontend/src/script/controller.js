@@ -5,7 +5,7 @@ export const AddUser = async (item) => {
   try {
     const response = await axios.post(baseURL, item)
     console.log(response.data)
-    return 'success'
+    return response.data
   } catch (err) {
     console.error(err.response.data)
     return err.response.data
