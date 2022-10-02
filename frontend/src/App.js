@@ -13,6 +13,7 @@ import MenuId from "./pages/MenuId"
 import Dashboard from "./pages/Staff/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Protectedlogin from "./components/Protectedlogin"
 import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
 import { AuthProvider } from "./script/useAuth"
 import { useState } from "react"
@@ -69,9 +70,20 @@ function App() {
             />
             <Route
               path="/login"
-              element={<Login onchangelogin={setignore} />}
+              element={
+                <Protectedlogin>
+                  <Login onchangelogin={setignore} />
+                </Protectedlogin>
+              }
             />
-            <Route path="/sign-up" element={<SignUp />} />
+            <Route
+              path="/sign-up"
+              element={
+                <Protectedlogin>
+                  <SignUp />
+                </Protectedlogin>
+              }
+            />
             <Route
               path="/ref"
               element={
