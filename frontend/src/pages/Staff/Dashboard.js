@@ -1,11 +1,6 @@
-import React, { useState } from "react"
-import Staffbar from "../../components/Staffbar"
+import React from "react"
 
 function Dashboard() {
-  return (
-    <>
-      <Staffbar />
-    </>
-  )
+  return <></>
 }
 export default Dashboard

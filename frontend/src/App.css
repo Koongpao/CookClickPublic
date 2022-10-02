@@ -62,7 +62,11 @@ label:focus,
   background-color: #2b271f;
   color: #ffff;
   display: flex;
-  justify-content: center !important;
+  justify-content: space-between !important;
+}
+.space-around {
+  width: 45%;
+  justify-content: space-around;
 }
 
 .containoff {
@@ -315,4 +319,10 @@ label:focus,
   background-color: #4bb8af !important;
   border: #4bb8af !important;
   color: #1c524d !important;;
+}
+.staffbar-footer {
+  background-color: #1c524d;
+}
+.color-staffnav {
+  background-color: #1c524d;
 }
