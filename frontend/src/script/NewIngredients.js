@@ -7,7 +7,6 @@ import {
   NewKitchenware,
   NewMenu,
   PublishMenu,
-  AddIngredient,
   AddKitchenware,
   GetMemberIngredientKitchenware,
   AddMenuComment,
@@ -102,12 +101,11 @@ const NewIngredients = () => {
     //   menu,
     //   "63149bae255e1b5eb3ae4fe0"
     // )
-    const addIngredient = await AddIngredient(token, oldIngredient);
+    // const addIngredient = await AddIngredient(token, oldIngredient);
     // const getMemberIngredientKitchenware = await GetMemberIngredientKitchenware(token);
-    // const addKitchenware = await AddKitchenware(token, oldKitchenware);
     // const addMenuComment = await AddMenuComment(token, comment, "6314b70ae9a619699460af9b");
 
-    console.log(addIngredient)
+    // console.log(addIngredient)
   }
 
   return (

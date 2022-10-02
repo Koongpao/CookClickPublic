@@ -30,7 +30,7 @@ function App() {
     let UserData = decodeToken(token)
     setudata(UserData)
     let role = 0
-    console.log(UserData)
+    // console.log(UserData)
     if (token === null) {
       role = 0
     } else {

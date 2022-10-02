@@ -4,10 +4,8 @@ export const AddUser = async (item) => {
   const baseURL = "https://cookclick-api.code.in.th/signup"
   try {
     const response = await axios.post(baseURL, item)
-    console.log(response.data)
     return response.data
   } catch (err) {
-    console.error(err.response.data)
     return err.response.data
   }
 }
@@ -18,7 +16,6 @@ export const UserLogin = async (item) => {
     const response = await axios.post(baseURL, item)
     return response.data.token
   } catch (err) {
-    console.error(err.response.data)
     return 'error'
   }
 }
@@ -597,6 +594,7 @@ export const  DelKitware = async (token, kitwares) => {
     alert(err.response.data.message)
     return null
   }
+<<<<<<< HEAD
 }
 
 export const  ImageUpload = async (token, menu ,menuId) => {
@@ -632,3 +630,6 @@ export const  StepImageUpload = async (token, menu ,menuId , stepnumber) => {
 }
 
 
+=======
+}
+>>>>>>> 414197255f256910b55c566ccdd6873c4bbfa119
