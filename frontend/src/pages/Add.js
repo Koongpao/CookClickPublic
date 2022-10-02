@@ -164,18 +164,15 @@ function Add() {
       kitchenware: lastwarelist,
       cookingstep: laststeplist,
     }
-    console.log(ingarray)
     const response = await AddMenu(token, ingarray)
-    console.log(response)
     if (response.success) {
-      const formData = new FormData(); 
-      formData.append('menu-image', selectedFile, selectedFile.name);
-      const t = await ImageUpload(token, formData, response.id)
-      console.log(t)
+      const menuImage = new FormData(); 
+      menuImage.append('menu_image', selectedFile, selectedFile.name);
+      ImageUpload(token, menuImage, response.id)
       steplist.forEach((element, index) => { 
-        // const formData = new FormData(); 
-        // formData.append('my-menu', element.pic, element.pic.name);
-        // StepImageUpload(token, formData, response.id, index)
+        const stepImage = new FormData(); 
+        stepImage.append('step_image', element.pic, element.pic.name);
+        StepImageUpload(token, stepImage, response.id, index)
       })
     }
     else {
