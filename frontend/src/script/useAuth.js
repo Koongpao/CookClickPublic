@@ -7,7 +7,6 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useLocalStorage("token", null)
-  const [userData, setUserData] = useState(null)
 
   const navigate = useNavigate()
 
@@ -17,7 +16,6 @@ export const AuthProvider = ({ children }) => {
       navigate("/login")
     } else {
       setToken(data.token)
-      setUserData(decodeToken(data.token))
       navigate("/", { replace: true })
     }
   }
@@ -25,12 +23,11 @@ export const AuthProvider = ({ children }) => {
   // call this function to sign out logged in user
   const logout = () => {
     setToken(null)
-    setUserData(null)
     navigate("/", { replace: true })
   }
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, userData }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
