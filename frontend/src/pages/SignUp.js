@@ -13,16 +13,17 @@ const SignUp = () => {
   const [modalShowAccepted, setModalShowAccepted] = useState(false)
   const [modalShowDenied, setModalShowDenied] = useState(false)
   const [deniedMessage, setDeniedMessage] = useState("")
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (error || errorN || errorpw || errorP) {
       setDeniedMessage("Please fill in all fields")
       setModalShowDenied(true)
       return
     }
-    const reqMessage = AddUser(userDetails)
-    if (reqMessage !== 'success') {
-      setDeniedMessage(reqMessage)
+    const reqMessage = await AddUser(userDetails)
+    if (!reqMessage.success) {
+      console.log(reqMessage.message)
+      setDeniedMessage(reqMessage.message)
       setModalShowDenied(true)
     }
     else {
@@ -171,7 +172,7 @@ const SignUp = () => {
             className="my-2"
             variant="primary"
             type="submit"
-            onClick={(e) => handleSubmit(e)}
+            onClick={ (e) => handleSubmit(e) }
           >
             Sign Up
           </Button>

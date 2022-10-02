@@ -4,7 +4,7 @@ import { UserLogin } from "../script/controller"
 import { useState } from "react"
 import { useAuth } from "../script/useAuth"
 
-const Login = () => {
+function Login({ onchangelogin }) {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -17,22 +17,27 @@ const Login = () => {
     <>
       <h1 className="m-5 text-center">Login</h1>
       <div className="flex justify-content-center">
-        <Form className="flex flex-col formbox p-4" onSubmit={async (e) => {
-          e.preventDefault()
-          const tokenData = await UserLogin(userDetails)
-          if (await tokenData === 'error') {
-            setError(true)
-          }
-          else {
-            await login({token: tokenData,});
-          }
-        }}>
+        <Form
+          className="flex flex-col formbox p-4"
+          onSubmit={async (e) => {
+            e.preventDefault()
+            const tokenData = await UserLogin(userDetails)
+            if ((await tokenData) === "error") {
+              setError(true)
+            } else {
+              await login({ token: tokenData })
+            }
+            onchangelogin(false)
+          }}
+        >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address:</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
-              onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, email: e.target.value })
+              }
               style={{ borderColor: error ? "#ff0033" : "" }}
             />
           </Form.Group>
@@ -42,15 +47,21 @@ const Login = () => {
             <Form.Control
               type="password"
               placeholder="Password"
-              onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, password: e.target.value })
+              }
               style={{ borderColor: error ? "#ff0033" : "" }}
             />
             {error && (
-              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! Incorrect email or password</div>
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! Incorrect email or password
+              </div>
             )}
           </Form.Group>
-          <Button
-            className="mb-1" variant="primary" type="submit">
+          <Button className="mb-1" variant="primary" type="submit">
             Log In
           </Button>
           <hr />

@@ -1,24 +1,36 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import Container from "react-bootstrap/Container"
+import Nav from "react-bootstrap/Nav"
+import Navbar from "react-bootstrap/Navbar"
+import Offcanvas from "react-bootstrap/Offcanvas"
 import {
   FaHome,
   FaSearch,
   FaSearchPlus,
   FaPlus,
   FaDrumstickBite,
-} from "react-icons/fa";
-import React, { useState } from "react";
-import Logonobg from "../img/logonobg.svg";
-import Mark from "../img/mark.jpg";
+  FaUserCircle,
+} from "react-icons/fa"
+import React, { useState } from "react"
+import Logonobg from "../img/logonobg.svg"
+import Button from "react-bootstrap/Button"
+import { useAuth } from "../script/useAuth"
+import Modal from "react-bootstrap/Modal"
 
-function Nbar() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+function Nbar({ user, onchangelogout }) {
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+  const { logout } = useAuth()
+  const onlogout = () => {
+    setmodalshow(true)
+  }
+  const [modalshow, setmodalshow] = useState(false)
+  const handlemodalClose = () => setmodalshow(false)
+  const handleConfirmlogout = () => {
+    setmodalshow(false)
+    logout()
+    onchangelogout(false)
+  }
   return (
     <>
       <div>
@@ -67,26 +79,36 @@ function Nbar() {
                 </Nav>
               </Offcanvas.Body>
               <Offcanvas.Header className="offcanvas-foot flex">
-                <img
-                  src={Mark}
-                  alt="profile"
-                  className="profilepic"
-                  width="50"
-                ></img>
-                <div className="profilename">
-                  <span>
-                    Logged in as
+                <div className="flex space-around">
+                  <FaUserCircle size={50} />
+                  <div className="profilename">
+                    <span>เข้าสู่ระบบด้วย</span>
                     <br />
-                  </span>
-                  <span>Mr.Mark Suck</span>
+                    <span>{user.email}</span>
+                    <br />
+                  </div>
                 </div>
+                <Button onClick={onlogout}>ออกจากระบบ</Button>
               </Offcanvas.Header>
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
       </div>
+      <Modal show={modalshow} onHide={handlemodalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>กรุณายืนยันการออกจากระบบ</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlemodalClose}>
+            ยกเลิกการออกจากระบบ
+          </Button>
+          <Button variant="primary" onClick={handleConfirmlogout}>
+            ยืนยันการออกจากระบบ
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
-  );
+  )
 }
 
-export default Nbar;
+export default Nbar

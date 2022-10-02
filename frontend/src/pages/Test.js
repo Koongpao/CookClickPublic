@@ -9,7 +9,6 @@ const Test = () => {
         <h1>Test</h1>
         {/* <GetImg /> */}
         <button onClick={logout}>Test Logout</button>
-        <NewIngredients />
       </div>
     </div>
   )

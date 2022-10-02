@@ -6,21 +6,19 @@ import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
-import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
+import { GetSystemIngredient, GetSystemKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
 
 function Add() {
-  const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlheWFAdGVzdGVyYS50eCIsInVzZXJJRCI6IjYzMTJmYzIzM2MwMWE0YjBjNzI1NDkyZCIsInJvbGUiOjMsImlhdCI6MTY2MjE4ODYwOX0.152tDb7Dh7SFfsGmfAOzumleQvqvp5CxIiASXgpdAjw"
-  )
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
   useEffect(() => {
-    async function fetchdata() {
-      const ingfulldata = await GetAllIngredient(token)
-      const warefulldata = await GetAllKitchenware(token)
+    async function fetchdata(token) {
+      const ingfulldata = await GetSystemIngredient(token)
+      const warefulldata = await GetSystemKitchenware(token)
+      console.log(ingfulldata)
       let i = 0
       ingfulldata.data.forEach((element) => {
         element.id = i
@@ -36,7 +34,8 @@ function Add() {
       setingdata(ingfulldata.data)
     }
     if (!ignore) {
-      fetchdata()
+      let token = JSON.parse(localStorage.getItem("token"))
+      fetchdata(token)
     }
     return () => {
       setignore(true)
