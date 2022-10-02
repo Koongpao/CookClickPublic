@@ -5,9 +5,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
 import {
-  GetAllIngredient,
-  GetAllKitchenware,
-  GetMemberIngredientKitchenware,
+  GetSystemIngredient,
+  GetSystemKitchenware,
 } from "../script/controller";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
@@ -78,8 +77,8 @@ const Ref = () => {
   const [memberIngredientInfo, setMemberIngredientInfo] = useState([]);
   useEffect(() => {
     async function fetchdata() {
-      const ingfulldata = await GetAllIngredient(token);
-      const warefulldata = await GetAllKitchenware(token);
+      const ingfulldata = await GetSystemIngredient(token);
+      const warefulldata = await GetSystemKitchenware(token);
       // const fetchedmemberinfo = await GetMemberIngredientKitchenware(token);
       // console.log(fetchedmemberinfo.data);
       let i = 0;

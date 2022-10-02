@@ -7,6 +7,9 @@
   border-radius: 25px;
 }
 
+.menupage:hover{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
 @media only screen and (max-width: 600px) {
   .menupage {
     max-width: 90%;
