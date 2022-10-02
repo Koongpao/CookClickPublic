@@ -13,6 +13,7 @@ import MenuId from "./pages/MenuId"
 import Dashboard from "./pages/Staff/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
+import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
 import { AuthProvider } from "./script/useAuth"
 import { useState } from "react"
 import { decodeToken } from "react-jwt"
@@ -50,14 +51,35 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/searchref" element={<SearchRef />} />
-            <Route path="/add" element={<Add />} />
+            <Route
+              path="/searchref"
+              element={
+                <ProtectedRoute>
+                  <SearchRef />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add"
+              element={
+                <ProtectedRoute>
+                  <Add />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/login"
               element={<Login onchangelogin={setignore} />}
             />
             <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/ref" element={<Ref />} />
+            <Route
+              path="/ref"
+              element={
+                <ProtectedRoute>
+                  <Ref />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/MenuId" element={<MenuId />} />
             <Route
               path="/test"
@@ -67,8 +89,22 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/staff/dashboard" element={<Dashboard />} />
-            <Route path="/staff/login" element={<StaffLogin />} />
+            <Route
+              path="/staff/dashboard"
+              element={
+                <ProtectedStaffRoute>
+                  <Dashboard />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/login"
+              element={
+                <ProtectedStaffRoute>
+                  <StaffLogin />
+                </ProtectedStaffRoute>
+              }
+            />
           </Routes>
         </AuthProvider>
       </Router>
