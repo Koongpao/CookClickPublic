@@ -6,11 +6,13 @@ import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
-import { GetSystemIngredient, GetSystemKitchenware } from "../script/controller"
+import { GetSystemIngredient, GetSystemKitchenware, ImageUpload, AddMenu, StepImageUpload } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
+import { useAuth } from "../script/useAuth"
 
 function Add() {
+  const { token } = useAuth()
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
@@ -138,7 +140,7 @@ function Add() {
     let newpic = URL.createObjectURL(event.target.files[0])
     setPreview(newpic)
   }
-  const send = (ready) => {
+  const send = async (ready) => {
     let lastinglist = []
     inglist.forEach((element) => {
       let nexting = { ingredientID: element._id, amount: element.amount }
@@ -150,14 +152,11 @@ function Add() {
       lastwarelist.push(nextware)
     })
     let laststeplist = []
-    let i = 0
-    steplist.forEach((element) => {
-      let nextstep = { id: i, description: element.desc, image: element.pic }
-      i += 1
+    steplist.forEach((element, index) => {
+      let nextstep = { index: index, description: element.desc }
       laststeplist.push(nextstep)
     })
     const ingarray = {
-      image: selectedFile,
       name: recipename,
       description: recipedesc,
       status: ready,
@@ -165,7 +164,20 @@ function Add() {
       kitchenware: lastwarelist,
       cookingstep: laststeplist,
     }
-    console.log(ingarray)
+    const response = await AddMenu(token, ingarray)
+    if (response.success) {
+      const menuImage = new FormData(); 
+      menuImage.append('menu_image', selectedFile, selectedFile.name);
+      ImageUpload(token, menuImage, response.id)
+      steplist.forEach((element, index) => { 
+        const stepImage = new FormData(); 
+        stepImage.append('step_image', element.pic, element.pic.name);
+        StepImageUpload(token, stepImage, response.id, index)
+      })
+    }
+    else {
+      console.log("error")
+    }
   }
 
   const CustomToggle = ({ children, eventKey }) => {

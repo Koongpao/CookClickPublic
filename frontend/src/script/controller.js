@@ -16,7 +16,8 @@ export const UserLogin = async (item) => {
     const response = await axios.post(baseURL, item)
     return response.data.token
   } catch (err) {
-    return 'error'
+    console.log(err.response.data)
+    return "error"
   }
 }
 
@@ -96,7 +97,7 @@ export const AddMenu = async (token, menu) => {
   } catch (err) {
     console.error(err.response.data)
     alert(err.response.data.message)
-    return null
+    return err.response.data
   }
 }
 
@@ -197,15 +198,14 @@ export const GetAllMeIngredient = async (token) => {
   try {
     const response = await axios.get(baseURL, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
@@ -214,15 +214,14 @@ export const GetAllMeKitware = async (token) => {
   try {
     const response = await axios.get(baseURL, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
@@ -231,19 +230,18 @@ export const GetAllMeMenuStatus = async (token) => {
   try {
     const response = await axios.get(baseURL, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  DelMeMenu = async (token, menu, menuId) => {
+export const DelMeMenu = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/me/menu/${menuId}`
   try {
     const response = await axios.post(baseURL, menu, {
@@ -259,7 +257,7 @@ export const  DelMeMenu = async (token, menu, menuId) => {
   }
 }
 
-export const  RatingMenu = async (token, menu, menuId) => {
+export const RatingMenu = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/rating`
   try {
     const response = await axios.post(baseURL, menu, {
@@ -275,7 +273,7 @@ export const  RatingMenu = async (token, menu, menuId) => {
   }
 }
 
-export const  MenuApproveOrUnapprove = async (token, menu, menuId) => {
+export const MenuApproveOrUnapprove = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/requests/menu/${menuId}`
   try {
     const response = await axios.put(baseURL, menu, {
@@ -291,7 +289,7 @@ export const  MenuApproveOrUnapprove = async (token, menu, menuId) => {
   }
 }
 
-export const  CommentReport = async (token, comment, menuId , commentId) => {
+export const CommentReport = async (token, comment, menuId, commentId) => {
   const baseURL = `https://cookclick-api.code.in.th/reports/menu/${menuId}/comments/${commentId}`
   try {
     const response = await axios.post(baseURL, comment, {
@@ -307,7 +305,7 @@ export const  CommentReport = async (token, comment, menuId , commentId) => {
   }
 }
 
-export const  MemberMenuReport = async (token, menu, menuId) => {
+export const MemberMenuReport = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/reports/menu/${menuId}`
   try {
     const response = await axios.post(baseURL, menu, {
@@ -339,7 +337,7 @@ export const MenuRequest = async (token) => {
   }
 }
 
-export const  DelMenu = async (token, menu, menuId) => {
+export const DelMenu = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}`
   try {
     const response = await axios.post(baseURL, menu, {
@@ -355,7 +353,7 @@ export const  DelMenu = async (token, menu, menuId) => {
   }
 }
 
-export const  DelComment = async (token, menu, menuId ,commentId) => {
+export const DelComment = async (token, menu, menuId, commentId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/comments/${commentId}`
   try {
     const response = await axios.post(baseURL, menu, {
@@ -384,7 +382,8 @@ export const SearchMenu = async () => {
 }
 
 export const SearchAdvance = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/menu/ingredients_kitchenwares"
+  const baseURL =
+    "https://cookclick-api.code.in.th/menu/ingredients_kitchenwares"
   try {
     const response = await axios.get(baseURL, {
       headers: {
@@ -463,7 +462,7 @@ export const GetAllMemberInfo = async (token) => {
   }
 }
 
-export const  AddMember = async (token, member) => {
+export const AddMember = async (token, member) => {
   const baseURL = `https://cookclick-api.code.in.th/member`
   try {
     const response = await axios.post(baseURL, member, {
@@ -495,92 +494,87 @@ export const GetAdsList = async (token) => {
   }
 }
 
-export const  AdsEditing = async (token, adscontent) => {
+export const AdsEditing = async (token, adscontent) => {
   const baseURL = `https://cookclick-api.code.in.th/adscontents`
   try {
     const response = await axios.post(baseURL, adscontent, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  MemberBan = async (token, member ,memberId) => {
+export const MemberBan = async (token, member, memberId) => {
   const baseURL = `https://cookclick-api.code.in.th/member/${memberId}/ban`
   try {
     const response = await axios.put(baseURL, member, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  AddIngredientCategory = async (token, category) => {
+export const AddIngredientCategory = async (token, category) => {
   const baseURL = `https://cookclick-api.code.in.th/systems/categories`
   try {
     const response = await axios.post(baseURL, category, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  DelIngredientCategory = async (token, category) => {
+export const DelIngredientCategory = async (token, category) => {
   const baseURL = `https://cookclick-api.code.in.th/systems/categories`
   try {
     const response = await axios.post(baseURL, category, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  DelIngredient = async (token, ingredient) => {
+export const DelIngredient = async (token, ingredient) => {
   const baseURL = `https://cookclick-api.code.in.th/systems/ingredients`
   try {
     const response = await axios.post(baseURL, ingredient, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  }
-  catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
-    return null;
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
   }
 }
 
-export const  DelKitware = async (token, kitwares) => {
+export const DelKitware = async (token, kitwares) => {
   const baseURL = `https://cookclick-api.code.in.th/systems/kitchenwares`
   try {
     const response = await axios.post(baseURL, kitwares, {
@@ -588,6 +582,40 @@ export const  DelKitware = async (token, kitwares) => {
         Authorization: `Bearer ${token}`,
       },
     })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const ImageUpload = async (token, menu, menuId) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/image`
+  try {
+    const response = await axios.post(baseURL, menu, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const StepImageUpload = async (token, menu, menuId, stepnumber) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/step_image/${stepnumber}`
+  try {
+    const response = await axios.post(baseURL, menu, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    console.log(response.data)
     return response.data
   } catch (err) {
     console.error(err.response.data)
