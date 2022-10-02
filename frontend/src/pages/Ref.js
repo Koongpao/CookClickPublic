@@ -5,6 +5,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
 import {
+  AddorEditIngredient,
+  AddorEditKitchenware,
+  GetAllMeIngredient,
+  GetAllMeKitware,
   GetSystemIngredient,
   GetSystemKitchenware,
 } from "../script/controller";
@@ -15,9 +19,6 @@ import "./Ref.css";
 // import MapIngList from "../components/MapIngList";
 
 const Ref = () => {
-  const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNpbW9ueXNAZ21haWwuY29tIiwidXNlcklEIjoiNjMzOTJkYjZiMWMwYjdjOGQ4OGE3ZTQxIiwicm9sZSI6MSwiaWF0IjoxNjY0NjkxNjY4fQ.IHR4i1e-zXMgOEix8keJwh8PRz5DVLOu_w_pTC-mGOw"
-  );
   // email: simonys@gmail.com
   // password: simonys
 
@@ -63,51 +64,73 @@ const Ref = () => {
     handleClosetool();
   };
 
-  const filterIngByCategory = (data) => {
-    console.log("filtering ingredient");
-    console.log("ingData" + ingData);
-    // data
-    //   .filter((eachIng) => eachIng.categoryID === "63148bc17afa87e2439351d4")
-    //   .map((filteredIng) => console.log(filteredIng));
+  const filterIngByCategory = (IngData, ToolData) => {
+    let i = 0;
+    IngData.map((eachIng) => {
+      const newIngEntry = {
+        _id: eachIng.ingredientID,
+        categoryID: eachIng.categoryID,
+        ingamount: eachIng.amount,
+        name: eachIng.ingredientName,
+        id: i,
+      };
+      i += 1;
+      if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
+        setMeatIng((meatIng) => [...meatIng, newIngEntry]);
+      } else if (eachIng.categoryID === "63148c731fd415225d9d18cd") {
+        setVegIng((vegIng) => [...vegIng, newIngEntry]);
+      } else if (eachIng.categoryID === "63148cee1fd415225d9d18d1") {
+        setCondIng((condIng) => [...condIng, newIngEntry]);
+      } else if (eachIng.categoryID === "6326f032899f2ff5706099a7") {
+        setFlourIng((flourIng) => [...flourIng, newIngEntry]);
+      } else if (eachIng.categoryID === "6326f0b9899f2ff5706099ab") {
+        setOtherIng((otherIng) => [...otherIng, newIngEntry]);
+      }
+    });
+    i = 0;
+    ToolData.map((eachTool) => {
+      const newToolEntry = {
+        _id: eachTool.kitchenwareID,
+        name: eachTool.kitchenwareName,
+        id : i
+      }
+      setTool((prevTool) => [...prevTool, newToolEntry])
+    })
   };
 
-  const [ignore, setignore] = useState(false);
+  // const [ignore, setignore] = useState(false);
   const [ingData, setIngData] = useState([]);
   const [wareData, setWareData] = useState([]);
-  const [memberIngredientInfo, setMemberIngredientInfo] = useState([]);
-  useEffect(() => {
-    async function fetchdata() {
-      const ingfulldata = await GetSystemIngredient(token);
-      const warefulldata = await GetSystemKitchenware(token);
-      // const fetchedmemberinfo = await GetMemberIngredientKitchenware(token);
-      // console.log(fetchedmemberinfo.data);
-      let i = 0;
-      ingfulldata.data.forEach((element) => {
-        element.id = i;
-        i += 1;
-        element.amount = 0;
-      });
-      i = 0;
-      warefulldata.data.forEach((element) => {
-        element.id = i;
-        i += 1;
-      });
-      // setMemberIngredientInfo(fetchedmemberinfo.data.ingredient);
-      setWareData(warefulldata.data);
-      setIngData(ingfulldata.data);
-    }
+  const [token, setToken] = useState("");
 
-    if (!ignore) {
-      fetchdata();
-    }
-    return () => {
-      setignore(true);
-    };
-  });
-
-  const ingsetamount = (ing, amount) => {
-    ing.ingamount = amount;
+  const UpdateCurrentIngredientKitchenware = async () => {
+    if (ignore.current) return;
+    ignore.current = true;
+    setToken(JSON.parse(localStorage.getItem("token")));
+    let myToken = JSON.parse(localStorage.getItem("token"));
+    const ingfulldata = await GetSystemIngredient(myToken);
+    const warefulldata = await GetSystemKitchenware(myToken);
+    const myingredient = await GetAllMeIngredient(myToken);
+    const mytool = await GetAllMeKitware(myToken);
+    let i = 0;
+    ingfulldata.data.forEach((element) => {
+      element.id = i;
+      i += 1;
+    });
+    i = 0;
+    warefulldata.data.forEach((element) => {
+      element.id = i;
+      i += 1;
+    });
+    setWareData(warefulldata.data);
+    setIngData(ingfulldata.data);
+    filterIngByCategory(myingredient.ingredient, mytool.kitchenware);
   };
+
+  const ignore = React.useRef(false);
+  useEffect(() => {
+    UpdateCurrentIngredientKitchenware();
+  });
 
   const removeonClick = (setFunc, setUniqueFunc, element) => {
     setFunc((current) =>
@@ -138,7 +161,6 @@ const Ref = () => {
   const [uniqueingid, setuniqueingid] = useState([]);
   const [Tool, setTool] = useState([]);
   const [uniquetoolid, setuniquetoolid] = useState([]);
-  const [allIng, setAllIng] = useState({});
   const [IngBeforeEdit, setIngBeforeEdit] = useState({
     meat: [],
     veg: [],
@@ -154,6 +176,7 @@ const Ref = () => {
   const [showSubmitButton, setShowSubmitButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
   const [SubmitConfirmation, setSubmitConfirmation] = useState(false);
+  const [nullAmountAlert, setNullAmountAlert] = useState(false);
   const [DiscardChange, setDiscardChange] = useState(false);
   const [Dummy, setDummy] = useState(false);
 
@@ -192,12 +215,7 @@ const Ref = () => {
     console.log("start editing");
   };
 
-  const handleDiscardChange = () => {
-    setShowAddIngButton(false);
-    setShowAddWareButton(false);
-    setShowSubmitButton(false);
-    setShowEditButton(true);
-    setDiscardChange(false);
+  const handleRevertChange = () => {
     setMeatIng(IngBeforeEdit.meat);
     setVegIng(IngBeforeEdit.veg);
     setFlourIng(IngBeforeEdit.flour);
@@ -208,61 +226,66 @@ const Ref = () => {
     setuniquetoolid(IngBeforeEdit.uniquetool);
   };
 
-  const handleSubmit = () => {
+  const handleDiscardChange = () => {
+    setShowAddIngButton(false);
+    setShowAddWareButton(false);
+    setShowSubmitButton(false);
+    setShowEditButton(true);
+    setDiscardChange(false);
+    handleRevertChange();
+  };
+
+  const handleSubmit = async () => {
+    let IngList = [];
+    let ToolList = [];
+    Tool.forEach((eachTool) => {
+      ToolList.push(eachTool._id);
+    });
+    const handleIngList = (IngCategory) => {
+      IngCategory.forEach((eachIng) => {
+        IngList.push({
+          ingredientID: eachIng._id,
+          amount: parseInt(eachIng.ingamount),
+        });
+      });
+    };
+    handleIngList(meatIng);
+    handleIngList(vegIng);
+    handleIngList(condIng);
+    handleIngList(flourIng);
+    handleIngList(otherIng);
+    let isIngAmountNull = false;
+    IngList.forEach((eachIng) => {
+      if (isNaN(eachIng.amount)) {
+        console.log(isNaN(eachIng.amount));
+        setNullAmountAlert(true);
+        isIngAmountNull = true;
+      }
+    });
+    if (isIngAmountNull) return;
     setShowAddIngButton(false);
     setShowAddWareButton(false);
     setShowSubmitButton(false);
     setShowEditButton(true);
     setSubmitConfirmation(false);
+    let IngListForSubmit = {
+      ingredient: IngList,
+    };
+    let ToolListForSubmit = {
+      kitchenware: ToolList,
+    };
+    console.log(ToolList)
+    const response = await AddorEditIngredient(token, IngListForSubmit);
+    const response2 = await AddorEditKitchenware(token, ToolListForSubmit);
+    console.log(response);
+    console.log(response2);
+    UpdateCurrentIngredientKitchenware();
   };
 
   return (
     <div className="refpage">
       <h1 className="text-center">จัดการวัตถุดิบในตู้เย็น</h1>
-      <button onClick={() => console.log(meatIng)}>meat</button>
-      <button
-        onClick={() =>
-          Object.keys(categoryData).forEach((category) => console.log(category))
-        }
-      >
-        categoryData
-      </button>
-      <button
-        onClick={() =>
-          meatIng
-            .filter((ing) => {
-              return ing.categoryID === "63148bc17afa87e2439351d4";
-            })
-            .map((filteredIng) => console.log(filteredIng))
-        }
-      >
-        filter test
-      </button>
-      <button onClick={() => console.log(memberIngredientInfo)}>
-        memberFullInfo
-      </button>
-      <button
-        onClick={() =>
-          memberIngredientInfo.forEach((eachIng) =>
-            ingData.forEach((allIng) => {
-              if (allIng._id === eachIng.IngredientID) {
-                // console.log(allIng.categoryID);
-                // console.log(allIng.name);
-                // console.log(eachIng.amount);
-                const newingdata = {
-                  name: allIng.name,
-                  categoryID: allIng.categoryID,
-                  ingamount: eachIng.amount,
-                };
-                console.log(newingdata);
-                console.log([...meatIng, newingdata])
-              }
-            })
-          )
-        }
-      >
-        test
-      </button>
+      <button onClick={() => console.log(Tool)}> Tool </button>
       <div className="ref-page-form-box">
         <Form>
           <Button
@@ -614,6 +637,22 @@ const Ref = () => {
               onClick={() => handleDiscardChange()}
             >
               ยืนยัน
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={nullAmountAlert} onHide={() => setNullAmountAlert(false)}>
+          <Modal.Body style={{ fontSize: "28px" }}>
+            กรุณาใส่ปริมาณวัตถุดิบที่ต้องการ
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="button-28-green"
+              onClick={() => {
+                setNullAmountAlert(false);
+                setSubmitConfirmation(false);
+              }}
+            >
+              กลับ
             </Button>
           </Modal.Footer>
         </Modal>
