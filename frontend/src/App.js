@@ -13,21 +13,37 @@ import Dashboard from "./pages/Staff/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./script/useAuth"
+import { useState, useEffect } from "react"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
 function App() {
+  const [login, setlogin] = useState(false)
+  const [ignore, setignore] = useState(false)
+  if (!ignore) {
+    let token = JSON.parse(localStorage.getItem("token"))
+    if (token === null) {
+      setlogin(false)
+    } else {
+      setlogin(true)
+    }
+    setignore(true)
+  }
+
   return (
     <>
-      <Navbar />
       <Router>
         <AuthProvider>
+          {login && <Navbar />}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/searchref" element={<SearchRef />} />
             <Route path="/add" element={<Add />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Login onchangelogin={setignore} />}
+            />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/ref" element={<Ref />} />
             <Route path="/MenuId" element={<MenuId />} />

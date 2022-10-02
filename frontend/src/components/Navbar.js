@@ -1,23 +1,36 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import Container from "react-bootstrap/Container"
+import Nav from "react-bootstrap/Nav"
+import Navbar from "react-bootstrap/Navbar"
+import Offcanvas from "react-bootstrap/Offcanvas"
 import {
   FaHome,
   FaSearch,
   FaSearchPlus,
   FaPlus,
   FaDrumstickBite,
-} from "react-icons/fa";
-import React, { useState } from "react";
-import Logonobg from "../img/logonobg.svg";
-import Mark from "../img/mark.jpg";
+} from "react-icons/fa"
+import React, { useState } from "react"
+import Logonobg from "../img/logonobg.svg"
+import Mark from "../img/mark.jpg"
+import Modal from "react-bootstrap/Modal"
+import Button from "react-bootstrap/Button"
+import { useNavigate } from "react-router-dom"
 
 function Nbar() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  let navigate = useNavigate()
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+  const [modalshow, setmodalshow] = useState(false)
+  const handlemodalClose = () => setmodalshow(false)
+  const handlemodalShow = () => setmodalshow(true)
+  const testfunc = (tlink) => {
+    if (true) {
+      navigate(tlink)
+    } else {
+      handlemodalShow()
+    }
+  }
 
   return (
     <>
@@ -42,7 +55,7 @@ function Nbar() {
               </Offcanvas.Header>
               <Offcanvas.Body className="offcanvas-violet" placement="start">
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Search">
+                  <Nav.Link onClick={() => testfunc("/Search")}>
                     <FaSearch />
                     &nbsp;ค้นหาสูตรอาหารทั้งหมด
                   </Nav.Link>
@@ -84,9 +97,20 @@ function Nbar() {
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
+        <Modal show={modalshow} onHide={handlemodalClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handlemodalClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
-  );
+  )
 }
 
-export default Nbar;
+export default Nbar
