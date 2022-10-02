@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const AddUser = async (item) => {
-  const baseURL = "https://cookclick-api.code.in.th/signup"
+  const baseURL = "https://cookclick-api.code.in.th/user/signup"
   try {
     const response = await axios.post(baseURL, item)
     return response.data
@@ -11,11 +11,12 @@ export const AddUser = async (item) => {
 }
 
 export const UserLogin = async (item) => {
-  const baseURL = "https://cookclick-api.code.in.th/login"
+  const baseURL = "https://cookclick-api.code.in.th/user/login"
   try {
     const response = await axios.post(baseURL, item)
     return response.data.token
   } catch (err) {
+    console.log(err.response.data)
     return "error"
   }
 }
@@ -96,7 +97,7 @@ export const AddMenu = async (token, menu) => {
   } catch (err) {
     console.error(err.response.data)
     alert(err.response.data.message)
-    return null
+    return err.response.data
   }
 }
 
@@ -597,6 +598,7 @@ export const ImageUpload = async (token, menu, menuId) => {
         Authorization: `Bearer ${token}`,
       },
     })
+    console.log(response.data)
     return response.data
   } catch (err) {
     console.error(err.response.data)
@@ -613,6 +615,7 @@ export const StepImageUpload = async (token, menu, menuId, stepnumber) => {
         Authorization: `Bearer ${token}`,
       },
     })
+    console.log(response.data)
     return response.data
   } catch (err) {
     console.error(err.response.data)
