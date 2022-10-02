@@ -14,6 +14,7 @@ import React, { useState } from "react"
 import Logonobg from "../img/logonobg.svg"
 import Button from "react-bootstrap/Button"
 import { useAuth } from "../script/useAuth"
+import Modal from "react-bootstrap/Modal"
 
 function Nbar({ user, onchangelogout }) {
   const [show, setShow] = useState(false)
@@ -21,6 +22,12 @@ function Nbar({ user, onchangelogout }) {
   const handleShow = () => setShow(true)
   const { logout } = useAuth()
   const onlogout = () => {
+    setmodalshow(true)
+  }
+  const [modalshow, setmodalshow] = useState(false)
+  const handlemodalClose = () => setmodalshow(false)
+  const handleConfirmlogout = () => {
+    setmodalshow(false)
     logout()
     onchangelogout(false)
   }
@@ -87,6 +94,19 @@ function Nbar({ user, onchangelogout }) {
           </Container>
         </Navbar>
       </div>
+      <Modal show={modalshow} onHide={handlemodalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>กรุณายืนยันการออกจากระบบ</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlemodalClose}>
+            ยกเลิกการออกจากระบบ
+          </Button>
+          <Button variant="primary" onClick={handleConfirmlogout}>
+            ยืนยันการออกจากระบบ
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }
