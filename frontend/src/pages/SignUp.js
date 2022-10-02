@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState } from "react"
 import { AddUser } from "../script/controller"
+import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
@@ -9,11 +10,24 @@ const SignUp = () => {
     email: "",
     password: "",
   })
+  const [modalShowAccepted, setModalShowAccepted] = useState(false)
+  const [modalShowDenied, setModalShowDenied] = useState(false)
+  const [deniedMessage, setDeniedMessage] = useState("")
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(userDetails)
-    AddUser(userDetails)
-    
+    if (error || errorN || errorpw || errorP) {
+      setDeniedMessage("Please fill in all fields")
+      setModalShowDenied(true)
+      return
+    }
+    const reqMessage = AddUser(userDetails)
+    if (reqMessage !== 'success') {
+      setDeniedMessage(reqMessage)
+      setModalShowDenied(true)
+    }
+    else {
+      setModalShowAccepted(true)
+    }
   }
   const [error, setError] = useState(null)
   const [errorN, setErrorN] = useState(null)
@@ -24,15 +38,21 @@ const SignUp = () => {
   const [messageP, setMessageP] = useState("")
   const [cfMessage, setcfMessage] = useState("")
 
-  function isValidEmail(email) {
+  const isValidEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email)
   }
-  function isValidLengthN(name) {
-    return name.length >= 6
+  const isValidName = (name) => {
+    return /^[a-zA-Z0-9_]+$/.test(name)
   }
-  function isValidLengthP(password) {
-    return password.length >= 8
+
+  const isValidLengthN = (name) => {
+    return name.length >= 6 && name.length <= 20
   }
+  const isValidLengthP = (password) => {
+    return password.length >= 8 && password.length <= 20
+  }
+
+
   const checkEmail = (event) => {
     if (!isValidEmail(event.target.value)) {
       setError("Email is invalid")
@@ -43,15 +63,19 @@ const SignUp = () => {
   }
   const checkLengthN = (event) => {
     if (!isValidLengthN(event.target.value)) {
-      setErrorN("Display Name must be at least 6 characters long")
-    } else {
+      setErrorN("Display Name must be 6-20 characters long")
+    }
+    else if (!isValidName(event.target.value)) {
+      setErrorN("Display Name must only contain letters, numbers and underscores")
+    }
+    else {
       setErrorN(null)
     }
     setMessageN(event.target.value)
   }
   const checkLengthP = (event) => {
     if (!isValidLengthP(event.target.value)) {
-      setErrorP("Password must be at least 8 characters long")
+      setErrorP("Password must be 8-20 characters long")
     } else {
       setErrorP(null)
     }
@@ -93,9 +117,10 @@ const SignUp = () => {
               placeholder="name@example.com"
               value={message}
               onChange={(e) => handleEmail(e)}
+              style={{ borderColor: error ? "#ff0033" : "" }}
             />
             {error && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{error}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {error}</div>
             )}
           </Form.Group>
           <Form.Group className="mb-5" controlId="formDisplayName">
@@ -106,13 +131,11 @@ const SignUp = () => {
               maxLength={20}
               value={messageN}
               onChange={(e) => handleDisplayN(e)}
+              style={{ borderColor: errorN ? "#ff0033" : "" }}
             />
             {errorN && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorN}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorN}</div>
             )}
-            <div className="text-sm text-end text-muted">
-              display name must be between 6 and 20 characters.
-            </div>
           </Form.Group>
 
           <Form.Group className="mb-2" controlId="formPassword">
@@ -123,13 +146,11 @@ const SignUp = () => {
               maxLength={20}
               value={messageP}
               onChange={(e) => handlePass(e)}
+              style={{ borderColor: errorP ? "#ff0033" : "" }}
             />
             {errorP && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorP}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorP}</div>
             )}
-            <div className="text-sm text-end text-muted">
-              password must be between 8 and 20 characters.
-            </div>
           </Form.Group>
           <Form.Group className="mb-2" controlId="formConfirmPassword">
             <Form.Label>Confirm Password:</Form.Label>
@@ -139,9 +160,10 @@ const SignUp = () => {
               maxLength={20}
               value={cfMessage}
               onChange={(e) => checkPassword(e.target.value)}
+              style={{ borderColor: errorpw ? "#ff0033" : "" }}
             />
             {errorpw && (
-              <h6 style={{ color: "white", marginTop: "5px" }}>{errorpw}</h6>
+              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorpw}</div>
             )}
           </Form.Group>
 
@@ -154,6 +176,15 @@ const SignUp = () => {
             Sign Up
           </Button>
         </Form>
+        <AcceptedPopup
+          show={modalShowAccepted}
+          onHide={() => setModalShowAccepted(false)}
+        />
+        <DeniedPopup
+          show={modalShowDenied}
+          onHide={() => setModalShowDenied(false)}
+          message={deniedMessage}
+        />
       </div>
     </>
   )

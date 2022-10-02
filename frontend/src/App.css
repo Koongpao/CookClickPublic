@@ -1,7 +1,31 @@
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
 .formbox {
   width: 576px;
   max-width: 95%;
   background-color: #f0ac9a;
+  border-radius: 10px;
+}
+
+.formboxAdmin {
+  width: 576px;
+  max-width: 95%;
+  background-color: #9BD0CC;
   border-radius: 10px;
 }
 
@@ -97,13 +121,6 @@
   margin: auto;
 }
 
-.ref-page-ingredient-tab {
-  color: black !important;
-  font-size: 18px;
-}
-.ref-ing-item {
-  display: flex;
-}
 
 .ref-page-dropdown-box {
   display: flex;
@@ -145,7 +162,7 @@
   width: 100%;
 }
 
-.add-ing-unit{
+.add-ing-unit {
   width: 17rem;
 }
 
@@ -153,7 +170,6 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
 
 .add-ing-button {
   margin-top: 5px;
@@ -184,6 +200,12 @@
   margin-top: 5px;
 }
 
+.add-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .button-box {
   display: flex;
   flex-direction: column;
@@ -210,7 +232,7 @@
   min-height: 100%;
 }
 
-.accordion{
+.accordion {
   display: flex;
   flex-direction: column;
   margin-top: 5px;
@@ -229,4 +251,68 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+}
+
+.staffbar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(55, 161, 153, 0.5);
+}
+
+.staffbar-profile {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.staffbar-profile-pic {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  border-radius: 50%;
+}
+
+.staffbar-menubar {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.staffbar-text {
+  color: #000 !important;
+}
+
+.staffbar-text a {
+  color: #000 !important;
+}
+
+.staffbar-logout-button {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.staffbar-logiut-button {
+  margin: 10px;
+  background-color: rgba(55, 161, 153, 1) !important;
+  border: rgba(55, 161, 153, 1) !important;
+  width: 80%;
+}
+
+.staffbar-bluebg {
+  background-color: rgba(55, 161, 153, 0.5);
+}
+
+.staff-button {
+  background-color: #37A199!important;
+  border: #37A199 !important;
+}
+
+.staff-button:hover {
+  background-color: #4bb8af !important;
+  border: #4bb8af !important;
+  color: #1c524d !important;;
 }

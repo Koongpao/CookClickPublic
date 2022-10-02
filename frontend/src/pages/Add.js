@@ -8,13 +8,10 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
 import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
-import { useAccordionButton } from 'react-bootstrap/AccordionButton';
-import Image from "react-bootstrap/Image"
+import { useAccordionButton } from "react-bootstrap/AccordionButton"
 
 function Add() {
-  const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlheWFAdGVzdGVyYS50eCIsInVzZXJJRCI6IjYzMTJmYzIzM2MwMWE0YjBjNzI1NDkyZCIsInJvbGUiOjMsImlhdCI6MTY2MjE4ODYwOX0.152tDb7Dh7SFfsGmfAOzumleQvqvp5CxIiASXgpdAjw"
-  )
+  const token = JSON.parse(localStorage.getItem("token"))
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
@@ -180,9 +177,8 @@ function Add() {
       >
         {children}
       </Button>
-    );
+    )
   }
-      
 
   return (
     <>
@@ -326,34 +322,31 @@ function Add() {
           <Accordion className="accordion" flush>
             {steplist.map((step) => (
               <Card key={step.id}>
-                <Card.Header>
-                  {step.desc}
+                <Card.Header className="add-step-header">
+                  <span>{step.desc}</span>
+                  <div>
                     <Button
-                        className="py-1.5 px-2.5 mx-2"
-                        variant="outline-dark"
-                        onClick={() => removeonClick(2, step)}
+                      className="py-1.5 px-2.5 mx-2"
+                      variant="outline-dark"
+                      onClick={() => removeonClick(2, step)}
                     >
                       <FaBan />
                     </Button>
                     <CustomToggle eventKey={step.id}>
                       <IoIosArrowDown />
                     </CustomToggle>
+                  </div>
                 </Card.Header>
-                <Accordion.Collapse eventKey={step.id} className="accordionitem">
+                <Accordion.Collapse
+                  eventKey={step.id}
+                  className="accordionitem"
+                >
                   <Card.Body>
                     <div className="stepremovebutton">
                       <Form.Control
                         type="file"
                         onChange={(e) => onSelectstepFile(step, e)}
                       />
-                      <Button
-                        className=""
-                        variant="danger"
-                        onClick={() => removeonClick(2, step)}
-                      >
-                        {" "}
-                        <FaBan />{" "}
-                      </Button>
                     </div>
                     <div className="steppiccenter">
                       {steppic[steplist.indexOf(step)] && (
