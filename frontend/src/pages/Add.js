@@ -6,7 +6,7 @@ import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
-import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
+import { GetSystemIngredient, GetSystemKitchenware } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
 
@@ -16,8 +16,8 @@ function Add() {
   const [ignore, setignore] = useState(false)
   useEffect(() => {
     async function fetchdata(token) {
-      const ingfulldata = await GetAllIngredient(token)
-      const warefulldata = await GetAllKitchenware(token)
+      const ingfulldata = await GetSystemIngredient(token)
+      const warefulldata = await GetSystemKitchenware(token)
       console.log(ingfulldata)
       let i = 0
       ingfulldata.data.forEach((element) => {
