@@ -10,7 +10,6 @@ const Test = () => {
         {/* <GetImg /> */}
         <button onClick={logout}>Test Logout</button>
         <button onClick={ () => console.log(userData) }>Data</button>
-        <NewIngredients />
       </div>
     </div>
   )
