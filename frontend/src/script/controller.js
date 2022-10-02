@@ -24,7 +24,7 @@ export const UserLogin = async (item) => {
 }
 
 export const GetAllIngredient = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/member/all_ingredient"
+  const baseURL = "https://cookclick-api.code.in.th/systems/ingredients"
   try {
     const response = await axios.get(baseURL, {
       headers: {
@@ -40,7 +40,7 @@ export const GetAllIngredient = async (token) => {
 }
 
 export const GetAllKitchenware = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/member/all_kitchenware"
+  const baseURL = "https://cookclick-api.code.in.th/systems/kitchenwares"
   try {
     const response = await axios.get(baseURL, {
       headers: {

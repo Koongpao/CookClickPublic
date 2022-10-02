@@ -1,7 +1,6 @@
 .refpage{
     width: 50%;
     margin: auto;
-    overflow-y: scroll;
 }
 .ref-ing-item{
     font-size: 2vh;
@@ -157,4 +156,5 @@
 
 .tab-content{
   justify-content: center !important;
+  overflow-y: scroll;
 }
