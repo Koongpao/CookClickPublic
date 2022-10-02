@@ -168,10 +168,14 @@ function Add() {
     const response = await AddMenu(token, ingarray)
     console.log(response)
     if (response.success) {
-      const t = await ImageUpload(token, selectedFile, response.id)
+      const formData = new FormData(); 
+      formData.append('menu-image', selectedFile, selectedFile.name);
+      const t = await ImageUpload(token, formData, response.id)
       console.log(t)
       steplist.forEach((element, index) => { 
-        StepImageUpload(token, element.pic, response.id, index)
+        // const formData = new FormData(); 
+        // formData.append('my-menu', element.pic, element.pic.name);
+        // StepImageUpload(token, formData, response.id, index)
       })
     }
     else {
