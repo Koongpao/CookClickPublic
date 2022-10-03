@@ -4,8 +4,10 @@ import { useState } from "react"
 import { AddUser, UserLogin } from "../script/controller"
 import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
 import { useAuth } from "../script/useAuth"
+import { useNavigate } from "react-router-dom"
 
-const SignUp = () => {
+const SignUp = ({ onchangelogin }) => {
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     displayname: "",
     email: "",
@@ -182,10 +184,8 @@ const SignUp = () => {
       </div>
       <AcceptedPopup
         show={modalShowAccepted}
-        onHide={async () => {
-          const tokenData = await UserLogin({ email: userDetails.email, password: userDetails.password })
-          await login({ token: tokenData })
-          setModalShowAccepted(false)
+        onHide={() => {
+          navigate("/login")
         }}
       />
       <DeniedPopup

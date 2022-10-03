@@ -25,7 +25,7 @@ label:focus,
 .formboxAdmin {
   width: 576px;
   max-width: 95%;
-  background-color: #9BD0CC;
+  background-color: #9bd0cc;
   border-radius: 10px;
 }
 
@@ -124,7 +124,6 @@ label:focus,
   margin-bottom: 5% !important;
   margin: auto;
 }
-
 
 .ref-page-dropdown-box {
   display: flex;
@@ -311,18 +310,22 @@ label:focus,
 }
 
 .staff-button {
-  background-color: #37A199!important;
-  border: #37A199 !important;
+  background-color: #37a199 !important;
+  border: #37a199 !important;
 }
 
 .staff-button:hover {
   background-color: #4bb8af !important;
   border: #4bb8af !important;
-  color: #1c524d !important;;
+  color: #1c524d !important;
 }
 .staffbar-footer {
   background-color: #1c524d;
 }
 .color-staffnav {
   background-color: #1c524d;
+}
+
+.heart {
+  margin: 0.5rem;
 }

@@ -1,9 +1,10 @@
 import {
   TiStarFullOutline,
   TiStarHalfOutline,
-  TiStarOutline
+  TiStarOutline,
+  TiHeartFullOutline
 } from 'react-icons/ti';
-const MCard = ({ FoodName, FoodImg, Star }) => {
+const MCard = ({ FoodName, FoodImg, Star, Fav }) => {
   
   const addStar = (nowStar) => {
     nowStar = nowStar - 1
@@ -34,6 +35,7 @@ const MCard = ({ FoodName, FoodImg, Star }) => {
           {addStar(5)}
           <span className="text-muted text-sm"> ({Star})</span>
         </span>
+        <span className="heart text-sm"><TiHeartFullOutline /> { Fav }</span>
         <p>
           lorem ipsum dolor sit amet consectetur adipisicing elit.
         </p>
