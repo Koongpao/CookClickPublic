@@ -20,13 +20,13 @@ function Login({ onchangelogin }) {
         <Form
           className="flex flex-col formbox p-4"
           onSubmit={async (e) => {
-            e.preventDefault()
-            const tokenData = await UserLogin(userDetails)
+          e.preventDefault()
+          const tokenData = await UserLogin(userDetails)
             if ((await tokenData) === "error") {
-              setError(true)
+            setError(true)
             } else {
               await login({ token: tokenData })
-            }
+          }
             onchangelogin(false)
           }}
         >

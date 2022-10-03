@@ -84,7 +84,7 @@ function Nbar({ user, onchangelogout }) {
                   <div className="profilename">
                     <span>เข้าสู่ระบบด้วย</span>
                     <br />
-                    <span>{user.email}</span>
+                    <span>{user.displayname}</span>
                     <br />
                   </div>
                 </div>

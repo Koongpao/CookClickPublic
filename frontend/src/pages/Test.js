@@ -1,5 +1,4 @@
 import { useAuth } from "../script/useAuth"
-import NewIngredients from "../script/NewIngredients";
 
 const Test = () => {
   const { logout } = useAuth()

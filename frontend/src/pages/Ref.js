@@ -3,7 +3,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { FaPassport, FaPlus, FaBan } from "react-icons/fa";
+import { FaPlus, FaBan } from "react-icons/fa";
 import {
   AddorEditIngredient,
   AddorEditKitchenware,
@@ -66,7 +66,7 @@ const Ref = () => {
 
   const filterIngByCategory = (IngData, ToolData) => {
     let i = 0;
-    IngData.map((eachIng) => {
+    IngData.forEach((eachIng) => {
       const newIngEntry = {
         _id: eachIng.ingredientID,
         categoryID: eachIng.categoryID,
@@ -88,7 +88,7 @@ const Ref = () => {
       }
     });
     i = 0;
-    ToolData.map((eachTool) => {
+    ToolData.forEach((eachTool) => {
       const newToolEntry = {
         _id: eachTool.kitchenwareID,
         name: eachTool.kitchenwareName,
@@ -606,10 +606,10 @@ const Ref = () => {
           show={SubmitConfirmation}
           onHide={() => setSubmitConfirmation(false)}
         >
-          <Modal.Body style={{ fontSize: "28px" }}>
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
             ต้องการยืนยันการเปลี่ยนแปลงหรือไม่?
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="content-center">
             <Button
               className="button-28-red"
               onClick={() => setSubmitConfirmation(false)}
@@ -622,10 +622,10 @@ const Ref = () => {
           </Modal.Footer>
         </Modal>
         <Modal show={DiscardChange} onHide={() => setSubmitConfirmation(false)}>
-          <Modal.Body style={{ fontSize: "28px" }}>
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
             ต้องการยกเลิกการเปลี่ยนแปลงหรือไม่?
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="content-center">
             <Button
               className="button-28-red"
               onClick={() => setDiscardChange(false)}
@@ -641,10 +641,10 @@ const Ref = () => {
           </Modal.Footer>
         </Modal>
         <Modal show={nullAmountAlert} onHide={() => setNullAmountAlert(false)}>
-          <Modal.Body style={{ fontSize: "28px" }}>
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
             กรุณาใส่ปริมาณวัตถุดิบที่ต้องการ
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="content-center">
             <Button
               className="button-28-green"
               onClick={() => {

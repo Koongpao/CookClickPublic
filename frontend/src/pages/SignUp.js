@@ -1,8 +1,9 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState } from "react"
-import { AddUser } from "../script/controller"
+import { AddUser, UserLogin } from "../script/controller"
 import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
+import { useAuth } from "../script/useAuth"
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
@@ -13,6 +14,7 @@ const SignUp = () => {
   const [modalShowAccepted, setModalShowAccepted] = useState(false)
   const [modalShowDenied, setModalShowDenied] = useState(false)
   const [deniedMessage, setDeniedMessage] = useState("")
+  const { login } = useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (error || errorN || errorpw || errorP) {
@@ -177,16 +179,21 @@ const SignUp = () => {
             Sign Up
           </Button>
         </Form>
-        <AcceptedPopup
-          show={modalShowAccepted}
-          onHide={() => setModalShowAccepted(false)}
-        />
-        <DeniedPopup
-          show={modalShowDenied}
-          onHide={() => setModalShowDenied(false)}
-          message={deniedMessage}
-        />
       </div>
+      <AcceptedPopup
+        show={modalShowAccepted}
+        onHide={async () => {
+          const tokenData = await UserLogin({ email: userDetails.email, password: userDetails.password })
+          await login({ token: tokenData })
+          setModalShowAccepted(false)
+        }}
+      />
+      <DeniedPopup
+        className="text-center"
+        show={modalShowDenied}
+        onHide={() => setModalShowDenied(false)}
+        message={deniedMessage}
+      />
     </>
   )
 }

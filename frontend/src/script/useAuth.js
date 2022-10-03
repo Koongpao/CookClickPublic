@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { useLocalStorage } from "./useLocalStorage"
-import { useState } from "react"
-import { decodeToken } from "react-jwt"
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
