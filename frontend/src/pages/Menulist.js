@@ -5,13 +5,40 @@ import MCard from "../components/MCard"
 import { GetAllMeMenuStatus } from "../script/controller"
 
 function Menulist() {
-  const [foods, setfoods] = useState([])
+  const [pubfoods, setpubfoods] = useState([])
+  const [waitfoods, setwaitfoods] = useState([])
+  const [draftfoods, setdraftfoods] = useState([])
+  const [rejfoods, setrejfoods] = useState([])
   const [ignore, setignore] = useState(false)
+  function typeset(allmenu) {
+    let newdraft = []
+    let newwait = []
+    let newpub = []
+    let newrej = []
+    allmenu.forEach((data) => {
+      if (data.status === 1) {
+        console.log(data, 1)
+        newdraft.push(data)
+      } else if (data.status === 2) {
+        console.log(data, 2)
+        newwait.push(data)
+      } else if (data.status === 3) {
+        console.log(data, 3)
+        newpub.push(data)
+      } else if (data.status === 4) {
+        console.log(data, 4)
+        newrej.push(data)
+      }
+    })
+    setdraftfoods(newdraft)
+    setpubfoods(newpub)
+    setwaitfoods(newwait)
+    setrejfoods(newrej)
+  }
   useEffect(() => {
     async function fetchdata(token) {
       const allmenu = await GetAllMeMenuStatus(token)
-      console.log(allmenu)
-      setfoods(allmenu.data)
+      typeset(allmenu.data)
     }
     if (!ignore) {
       let token = JSON.parse(localStorage.getItem("token"))
@@ -95,7 +122,7 @@ function Menulist() {
         <div className="common-home flex flex-col align-items-center">
           <Collapse in={open0}>
             <div className="flex flex-col width-100" id="today-collapse-text">
-              {foods.map((food, index) => {
+              {pubfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
@@ -110,7 +137,7 @@ function Menulist() {
           </Collapse>
           <Collapse in={open1}>
             <div className="flex flex-col width-100" id="week-collapse-text">
-              {foods.map((food, index) => {
+              {waitfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
@@ -123,7 +150,7 @@ function Menulist() {
           </Collapse>
           <Collapse in={open2}>
             <div className="flex flex-col width-100" id="month-collapse-text">
-              {foods.map((food, index) => {
+              {draftfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
@@ -136,7 +163,7 @@ function Menulist() {
           </Collapse>
           <Collapse in={open3}>
             <div className="flex flex-col width-100" id="month-collapse-text">
-              {foods.map((food, index) => {
+              {rejfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
