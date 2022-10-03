@@ -20,6 +20,7 @@ import { useState } from "react"
 import { decodeToken } from "react-jwt"
 import StaffLogin from "./pages/Staff/StaffLogin"
 import Staffbar from "./components/Staffbar"
+import Menulist from "./pages/Menulist"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -48,7 +49,7 @@ function App() {
         <AuthProvider>
           {login === 0 && <Gnavbar />}
           {login === 1 && <Navbar user={udata} onchangelogout={setignore} />}
-          {login === 3 && <Staffbar user={udata} onchangelogout={setignore} />}
+          {login >= 2 && <Staffbar user={udata} onchangelogout={setignore} />}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
@@ -98,6 +99,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Test />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Mymenu"
+              element={
+                <ProtectedRoute>
+                  <Menulist />
                 </ProtectedRoute>
               }
             />

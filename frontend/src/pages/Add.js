@@ -6,13 +6,18 @@ import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FormControl } from "react-bootstrap"
-import { GetSystemIngredient, GetSystemKitchenware, ImageUpload, AddMenu, StepImageUpload } from "../script/controller"
+import {
+  GetSystemIngredient,
+  GetSystemKitchenware,
+  ImageUpload,
+  AddMenu,
+  StepImageUpload,
+} from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
-import { useAuth } from "../script/useAuth"
 
 function Add() {
-  const { token } = useAuth()
+  const token = JSON.parse(localStorage.getItem("token"))
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
@@ -166,16 +171,15 @@ function Add() {
     }
     const response = await AddMenu(token, ingarray)
     if (response.success) {
-      const menuImage = new FormData(); 
-      menuImage.append('menu_image', selectedFile, selectedFile.name);
+      const menuImage = new FormData()
+      menuImage.append("menu_image", selectedFile, selectedFile.name)
       ImageUpload(token, menuImage, response.id)
-      steplist.forEach((element, index) => { 
-        const stepImage = new FormData(); 
-        stepImage.append('step_image', element.pic, element.pic.name);
+      steplist.forEach((element, index) => {
+        const stepImage = new FormData()
+        stepImage.append("step_image", element.pic, element.pic.name)
         StepImageUpload(token, stepImage, response.id, index)
       })
-    }
-    else {
+    } else {
       console.log("error")
     }
   }

@@ -10,11 +10,13 @@ import {
   FaDrumstickBite,
   FaUserCircle,
 } from "react-icons/fa"
+import { BsList } from "react-icons/bs"
 import React, { useState } from "react"
 import Logonobg from "../img/logonobg.svg"
 import Button from "react-bootstrap/Button"
 import { useAuth } from "../script/useAuth"
 import Modal from "react-bootstrap/Modal"
+import { Navigate } from "react-router-dom"
 
 function Nbar({ user, onchangelogout }) {
   const [show, setShow] = useState(false)
@@ -31,6 +33,10 @@ function Nbar({ user, onchangelogout }) {
     logout()
     onchangelogout(false)
   }
+  const mymenunavigate = () => {
+    Navigate("/Mymenu")
+  }
+
   return (
     <>
       <div>
@@ -75,6 +81,12 @@ function Nbar({ user, onchangelogout }) {
                   <Nav.Link href="/Ref">
                     <FaDrumstickBite />
                     &nbsp;จัดการวัตถุดิบ
+                  </Nav.Link>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/Mymenu">
+                    <BsList />
+                    &nbsp;สูตรอาหารของฉัน
                   </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
