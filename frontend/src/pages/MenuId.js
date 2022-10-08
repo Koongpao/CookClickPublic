@@ -4,7 +4,7 @@ import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
 import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem"
 import Burger from "../img/testburger.jpg"
-import { GetAllIngredient, GetAllKitchenware } from "../script/controller"
+import { GetSystemIngredient, GetSystemKitchenware } from "../script/controller"
 
 const MenuPage = () => {
   // const [menuDetails, setMenuDetails] = React.useState({
@@ -87,8 +87,8 @@ const MenuPage = () => {
     if (ingAlreadyDisplayed.current) return
     ingAlreadyDisplayed.current = true
     async function fetchdata() {
-      const ingfulldata = await GetAllIngredient(mytoken)
-      const warefulldata = await GetAllKitchenware(mytoken)
+      const ingfulldata = await GetSystemIngredient(mytoken)
+      const warefulldata = await GetSystemKitchenware(mytoken)
       let i = 0
       ingfulldata.data.forEach((element) => {
         element.id = i

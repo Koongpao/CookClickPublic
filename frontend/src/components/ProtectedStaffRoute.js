@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { decodeToken } from "react-jwt"
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedStaffRoute = ({ children }) => {
   let token = JSON.parse(localStorage.getItem("token"))
   let UserData = decodeToken(token)
   let role
@@ -10,11 +10,11 @@ const ProtectedRoute = ({ children }) => {
   } else {
     role = UserData.role
   }
-  if (role !== 0) {
+  if (role === 3) {
     return children
   } else {
-    return <Navigate to="/login" />
+    return <Navigate to="/" />
   }
 }
 
-export default ProtectedRoute
+export default ProtectedStaffRoute

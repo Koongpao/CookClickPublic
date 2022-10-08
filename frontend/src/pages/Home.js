@@ -8,27 +8,32 @@ function Home() {
     {
       "foodName": "Steak",
       "foodImgURL": "https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      "star": 3.2
+      "star": 3.2,
+      "fav": 10000,
     },
     {
       "foodName": "Chocolate Cake",
       "foodImgURL": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80",
-      "star": 4.9
+      "star": 4.9,
+      "fav": 2000,
     },
     {
       "foodName": "Hamburger",
       "foodImgURL": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=699&q=80",
-      "star": 1.9
+      "star": 1.9,
+      "fav": 300,
     },
     {
       "foodName": "Pepperoni Pizza",
       "foodImgURL": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      "star": 3.3
+      "star": 3.3,
+      "fav": 40,
     },
     {
       "foodName": "Blueberry Icicle",
       "foodImgURL": "https://images.unsplash.com/photo-1488900128323-21503983a07e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "star": 4.7
+      "star": 4.7,
+      "fav": 5,
     },
   ])
   const [open0, setOpen0] = useState(true)
@@ -46,6 +51,7 @@ function Home() {
   return (
     <>
       <div className="flex flex-col align-items-center">
+        <h1>Popular Menu</h1>
         <div className="common-home flex justify-content-evenly">
           <Button
             className="featurebutton feature-active shadow-none"
@@ -90,7 +96,7 @@ function Home() {
               {
                 foods.map((food, index) => {
                   return (
-                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } Fav={food.fav}/>
                   )
                 })
               }
@@ -101,7 +107,7 @@ function Home() {
               {
                 foods.map((food, index) => {
                   return (
-                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={food.star} Fav={food.fav} />
                   )
                 })
               }
@@ -112,7 +118,7 @@ function Home() {
               {
                 foods.map((food, index) => {
                   return (
-                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } />
+                    <MCard key={index} FoodName={food.foodName} FoodImg={food.foodImgURL} Star={ food.star } Fav={food.fav}/>
                   )
                 })
               }

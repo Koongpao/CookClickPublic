@@ -1,10 +1,13 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState } from "react"
-import { AddUser } from "../script/controller"
+import { AddUser, UserLogin } from "../script/controller"
 import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
+import { useAuth } from "../script/useAuth"
+import { useNavigate } from "react-router-dom"
 
-const SignUp = () => {
+const SignUp = ({ onchangelogin }) => {
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     displayname: "",
     email: "",
@@ -13,16 +16,18 @@ const SignUp = () => {
   const [modalShowAccepted, setModalShowAccepted] = useState(false)
   const [modalShowDenied, setModalShowDenied] = useState(false)
   const [deniedMessage, setDeniedMessage] = useState("")
-  const handleSubmit = (e) => {
+  const { login } = useAuth()
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (error || errorN || errorpw || errorP) {
       setDeniedMessage("Please fill in all fields")
       setModalShowDenied(true)
       return
     }
-    const reqMessage = AddUser(userDetails)
-    if (reqMessage !== 'success') {
-      setDeniedMessage(reqMessage)
+    const reqMessage = await AddUser(userDetails)
+    if (!reqMessage.success) {
+      console.log(reqMessage.message)
+      setDeniedMessage(reqMessage.message)
       setModalShowDenied(true)
     }
     else {
@@ -171,21 +176,24 @@ const SignUp = () => {
             className="my-2"
             variant="primary"
             type="submit"
-            onClick={(e) => handleSubmit(e)}
+            onClick={ (e) => handleSubmit(e) }
           >
             Sign Up
           </Button>
         </Form>
-        <AcceptedPopup
-          show={modalShowAccepted}
-          onHide={() => setModalShowAccepted(false)}
-        />
-        <DeniedPopup
-          show={modalShowDenied}
-          onHide={() => setModalShowDenied(false)}
-          message={deniedMessage}
-        />
       </div>
+      <AcceptedPopup
+        show={modalShowAccepted}
+        onHide={() => {
+          navigate("/login")
+        }}
+      />
+      <DeniedPopup
+        className="text-center"
+        show={modalShowDenied}
+        onHide={() => setModalShowDenied(false)}
+        message={deniedMessage}
+      />
     </>
   )
 }

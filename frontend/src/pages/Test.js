@@ -1,5 +1,4 @@
 import { useAuth } from "../script/useAuth"
-import NewIngredients from "../script/NewIngredients";
 
 const Test = () => {
   const { logout } = useAuth()
@@ -9,7 +8,6 @@ const Test = () => {
         <h1>Test</h1>
         {/* <GetImg /> */}
         <button onClick={logout}>Test Logout</button>
-        <NewIngredients />
       </div>
     </div>
   )
