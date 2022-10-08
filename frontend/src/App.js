@@ -23,6 +23,7 @@ import { decodeToken } from "react-jwt"
 import Staffbar from "./components/Staffbar"
 import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
+import Report from "./pages/Staff/Report"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -142,6 +143,14 @@ function App() {
               element={
                 <ProtectedStaffRoute>
                   <User />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/Report"
+              element={
+                <ProtectedStaffRoute>
+                  <Report />
                 </ProtectedStaffRoute>
               }
             />
