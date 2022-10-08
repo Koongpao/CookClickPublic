@@ -121,7 +121,7 @@ function Menulist() {
         </div>
         <div className="common-home flex flex-col align-items-center">
           <Collapse in={open0}>
-            <div className="flex flex-col width-100" id="today-collapse-text">
+            <div className="flex flex-col width-100">
               {pubfoods.map((food, index) => {
                 return (
                   <MCard
@@ -136,7 +136,7 @@ function Menulist() {
             </div>
           </Collapse>
           <Collapse in={open1}>
-            <div className="flex flex-col width-100" id="week-collapse-text">
+            <div className="flex flex-col width-100">
               {waitfoods.map((food, index) => {
                 return (
                   <MCard
@@ -149,7 +149,7 @@ function Menulist() {
             </div>
           </Collapse>
           <Collapse in={open2}>
-            <div className="flex flex-col width-100" id="month-collapse-text">
+            <div className="flex flex-col width-100">
               {draftfoods.map((food, index) => {
                 return (
                   <MCard
@@ -162,7 +162,7 @@ function Menulist() {
             </div>
           </Collapse>
           <Collapse in={open3}>
-            <div className="flex flex-col width-100" id="month-collapse-text">
+            <div className="flex flex-col width-100">
               {rejfoods.map((food, index) => {
                 return (
                   <MCard
