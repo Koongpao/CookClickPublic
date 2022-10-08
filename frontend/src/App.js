@@ -24,6 +24,7 @@ import Staffbar from "./components/Staffbar"
 import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
 import Report from "./pages/Staff/Report"
+import StaffLogin from "./pages/Staff/StaffLogin"
 
 //test modal
 import ReportUserModal from "./components/Report/Modal/ReportUser"
