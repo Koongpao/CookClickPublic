@@ -575,3 +575,25 @@ label:focus,
 .report-first {
   position: relative; left: 50px;
 }
+
+.reportModal-primary {
+  background-color: #37a199 !important;
+  border: #37a199 !important;
+}
+
+.reportModal-primary:hover {
+  background-color: #4bb8af !important;
+  border: #4bb8af !important;
+  color: #1c524d !important;
+}
+
+.reportModal-secondary {
+  background-color: #9BD0CC !important;
+  border: #9BD0CC !important;
+}
+
+.reportModal-secondary:hover {
+  background-color: #bed7d5 !important;
+  border: #bed7d5 !important;
+  color: #1c524d !important;
+}
