@@ -1,6 +1,6 @@
-import { FaPlus } from "react-icons/fa"
 import Userbox from "../../components/Userbox"
-import Dashboard from "./Dashboard"
+import { useState } from "react"
+
 const User = () => {
   const Exmem = [
     {
@@ -33,14 +33,11 @@ const User = () => {
       email: "Yakkin_kao@gmail.com",
     },
   ]
+
   return (
     <>
       <div className="user-top">
         <h1 className="user-title-txt">USER</h1>
-        <button className="user-adduser-btn">
-          <FaPlus />
-          &nbsp;ADD USER
-        </button>
       </div>
       <div className="user-member-info">
         <h4 className="user-mem-txt">Member</h4>
@@ -52,6 +49,7 @@ const User = () => {
                 uid={info.uid}
                 username={info.username}
                 email={info.email}
+                role={1}
               />
             )
           })}
@@ -67,6 +65,7 @@ const User = () => {
                 uid={info.uid}
                 username={info.username}
                 email={info.email}
+                role={2}
               />
             )
           })}
@@ -82,6 +81,7 @@ const User = () => {
                 uid={info.uid}
                 username={info.username}
                 email={info.email}
+                role={3}
               />
             )
           })}
