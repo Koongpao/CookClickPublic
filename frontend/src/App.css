@@ -603,3 +603,99 @@ label:focus,
   width: 30px;
   height: 30px;
 }
+.reportBox-box{
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  padding-left: 10px;
+  margin-left: 100px;
+  margin-right: 85px;
+  border: 1px solid rgb(235, 234, 234);
+  box-shadow: 0px 2px rgb(235, 234, 234);
+}
+
+.reportBox-username, .reportBox-email, .reportBox-reportTime, .reportBox-menu, .reportBox-description-btn{
+  display: inline-block;
+}
+
+.reportBox-reportTime{
+  width: 330px;
+}
+
+.reportBox-username{
+  width: 300px;
+}
+
+.reportBox-email{
+  width: 370px;
+}
+
+.reportBox-menu{
+  width: 380px;
+}
+
+.reportBox-description-btn{
+  font-size: 25px;
+  /* border-radius: 12px; */
+  /* background-color: #37a199; */
+  /* border-width: 0px; */
+  color: #37a199;
+  display: flex;
+  float: right;
+  background:none;
+  border:none;
+}
+
+.approve-title-txt{
+  font-size: 40px;
+  position: absolute; left: 100px; top: 80px;
+  font-weight: 400;
+}
+
+.approve-top{
+  margin-bottom: 120px;
+}
+
+.report-appsel-btn, .report-rejsel-btn{
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 12px;
+  padding: 8px;
+  border-width: 0px;
+  color: white;
+  width: 170px;
+
+}
+.report-appsel-btn{
+  position: absolute; top: 87px; right: 300px;
+}
+
+.report-rejsel-btn {
+  position: absolute; top: 87px; right: 90px;
+}
+
+.report-first {
+  position: relative; left: 50px;
+}
+
+.reportModal-primary {
+  background-color: #37a199 !important;
+  border: #37a199 !important;
+}
+
+.reportModal-primary:hover {
+  background-color: #4bb8af !important;
+  border: #4bb8af !important;
+  color: #1c524d !important;
+}
+
+.reportModal-secondary {
+  background-color: #9BD0CC !important;
+  border: #9BD0CC !important;
+}
+
+.reportModal-secondary:hover {
+  background-color: #bed7d5 !important;
+  border: #bed7d5 !important;
+  color: #1c524d !important;
+}
