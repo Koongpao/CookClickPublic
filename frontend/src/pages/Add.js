@@ -23,8 +23,8 @@ function Add() {
   const [ignore, setignore] = useState(false)
   useEffect(() => {
     async function fetchdata(token) {
-      const ingfulldata = await GetSystemIngredient(token)
-      const warefulldata = await GetSystemKitchenware(token)
+      const ingfulldata = await GetSystemIngredient()
+      const warefulldata = await GetSystemKitchenware()
       console.log(ingfulldata)
       let i = 0
       ingfulldata.data.forEach((element) => {

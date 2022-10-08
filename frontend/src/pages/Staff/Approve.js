@@ -2,7 +2,7 @@ import Approvalbox from "../../components/Approvalbox"
 import React, { useState } from "react"
 
 const Approve = () => {
-  const Exapproval = [
+  const [Exapproval, setExapproval] = useState([
     {
       menuname: "Spaghetti",
       cookername: "Mr. YakkinPasta",
@@ -28,13 +28,26 @@ const Approve = () => {
       cookername: "ถถถถถถถถถถถถถถถถถถถถ",
       menuid: "5",
     },
-  ]
+  ])
   const [checklist, setchecklist] = useState([])
+  function removefromcheck() {
+    let left = []
+    for (let i = 0; i < Exapproval.length; i++) {
+      if (!checklist.includes(Exapproval[i].menuid)) {
+        left.push(Exapproval[i])
+      }
+    }
+    setExapproval(left)
+  }
   const handlerejcheck = () => {
     console.log(checklist)
+    removefromcheck()
+    setchecklist([])
   }
   const handleappcheck = () => {
     console.log(checklist)
+    removefromcheck()
+    setchecklist([])
   }
 
   return (
