@@ -1,38 +1,52 @@
-import Dashboard from "./Dashboard"
 import Approvalbox from "../../components/Approvalbox"
-import React from "react"
+import React, { useState } from "react"
 
 const Approve = () => {
   const Exapproval = [
     {
       menuname: "Spaghetti",
       cookername: "Mr. YakkinPasta",
+      menuid: "1",
     },
     {
       menuname: "Hamburger",
       cookername: "I Love Junk Food",
+      menuid: "2",
     },
     {
       menuname: "Papaya Salad",
       cookername: "T",
+      menuid: "3",
     },
     {
       menuname: "Spaghetti Bologna in Tomato Sauce",
       cookername: "ยืนกินปากกาที่ท่าพระ",
+      menuid: "4",
     },
     {
       menuname: "Cake",
       cookername: "ถถถถถถถถถถถถถถถถถถถถ",
+      menuid: "5",
     },
   ]
+  const [checklist, setchecklist] = useState([])
+  const handlerejcheck = () => {
+    console.log(checklist)
+  }
+  const handleappcheck = () => {
+    console.log(checklist)
+  }
 
-  //<Dashboard />
   return (
     <>
       <div className="approve-top">
         <h1 className="approve-title-txt">สูตรอาหารที่รอการอนุมัติ</h1>
-        <button className="approve-rejsel-btn">REJECT SELECTED</button>
-        <button className="approve-appsel-btn">APPROVE SELECTED</button>
+        <button className="approve-rejsel-btn" onClick={handlerejcheck}>
+          REJECT SELECTED
+        </button>
+        <button className="approve-appsel-btn" onClick={handleappcheck}>
+          APPROVE SELECTED
+        </button>
       </div>
       <div className="approve-list">
         {Exapproval.map((approval, index) => {
@@ -41,6 +55,9 @@ const Approve = () => {
               key={index}
               menuname={approval.menuname}
               cookername={approval.cookername}
+              menuid={approval.menuid}
+              checklist={checklist}
+              setchecklist={setchecklist}
             />
           )
         })}
