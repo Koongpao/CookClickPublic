@@ -13,6 +13,8 @@ import Dashboard from "./pages/Staff/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./script/useAuth"
+import Approve from "./pages/Staff/Approve"
+import User from "./pages/Staff/User"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -40,6 +42,8 @@ function App() {
               }
             />
             <Route path="/staff/dashboard" element={<Dashboard />} />
+            <Route path="/staff/approve" element={<Approve />} />
+            <Route path="/staff/User" element={<User />} />
           </Routes>
         </AuthProvider>
       </Router>

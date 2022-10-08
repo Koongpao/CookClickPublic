@@ -1,4 +1,4 @@
-import { FaCheck, FaSearch, FaBan, FaPlus } from "react-icons/fa"
+import { FaCheck, FaSearch, FaBan, FaPlus, FaUser } from "react-icons/fa"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
@@ -15,7 +15,7 @@ function Staffbar() {
   const handleShow = () => setShow(true)
 
   return (
-    <Navbar key="false" expand="false" className="mb-3 color-nav">
+    <Navbar key="false" expand="false" className="mb-3 color-nav-blue">
       <Container fluid>
         <Navbar.Toggle onClick={handleShow} />
         <Navbar.Offcanvas
@@ -53,6 +53,12 @@ function Staffbar() {
                 <Nav.Link href="/Staff/Approve">
                   <FaCheck />
                   &nbsp;อนุมัติสูตรอาหาร
+                </Nav.Link>
+              </Nav>
+              <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav.Link href="/Staff/user">
+                  <FaUser />
+                  &nbsp;User ทั้งหมด
                 </Nav.Link>
               </Nav>
               <Nav className="justify-content-end flex-grow-1 pe-3">
