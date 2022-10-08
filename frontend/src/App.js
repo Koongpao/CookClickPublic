@@ -122,14 +122,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/staff/dashboard"
               element={
                 <ProtectedStaffRoute>
                   <Dashboard />
                 </ProtectedStaffRoute>
               }
-            />
+            /> */}
+            <Route path="/staff/dashboard" element={<Dashboard />} />
             <Route
               path="/staff/approve"
               element={
