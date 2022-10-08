@@ -23,8 +23,8 @@ function Add() {
   const [ignore, setignore] = useState(false)
   useEffect(() => {
     async function fetchdata(token) {
-      const ingfulldata = await GetSystemIngredient(token)
-      const warefulldata = await GetSystemKitchenware(token)
+      const ingfulldata = await GetSystemIngredient()
+      const warefulldata = await GetSystemKitchenware()
       console.log(ingfulldata)
       let i = 0
       ingfulldata.data.forEach((element) => {
@@ -55,16 +55,17 @@ function Add() {
   const [uniqueingid, setuniqueingid] = useState([])
   const [uniquetoolid, setuniquetoolid] = useState([])
   const [steplist, setsteplist] = useState([])
-  const [steppic, setsteppic] = useState([])
+  const [steppic, setsteppic] = useState({})
   const onSelectstepFile = (step, event) => {
     if (!event.target.files || event.target.files.length === 0) {
       return
     }
     step.pic = event.target.files[0]
     setsteplist([...steplist])
-    let newpic = [...steppic]
-    newpic[steplist.indexOf(step)] = URL.createObjectURL(step.pic)
-    setsteppic(newpic)
+    let numid = step.id
+    let newpic = {}
+    newpic[numid] = URL.createObjectURL(step.pic)
+    setsteppic({ ...steppic, ...newpic })
   }
   const [stepindex, setstepindex] = useState(1)
   const addnewstep = () => {
@@ -75,7 +76,6 @@ function Add() {
     }
     setstepindex(stepindex + 1)
     setsteplist([...steplist, brandnewstep])
-    setsteppic([...steppic, ""])
   }
   const changedesc = (step, value) => {
     if (value === "") {
@@ -122,7 +122,6 @@ function Add() {
     } else {
       let index = steplist.indexOf(element)
       setsteplist(steplist.slice(0, index).concat(steplist.slice(index + 1)))
-      setsteppic(steplist.slice(0, index).concat(steplist.slice(index + 1)))
     }
   }
   const [showing, setshowing] = useState(false)
@@ -366,9 +365,9 @@ function Add() {
                       />
                     </div>
                     <div className="steppiccenter">
-                      {steppic[steplist.indexOf(step)] && (
+                      {steppic[step.id] && (
                         <img
-                          src={steppic[steplist.indexOf(step)]}
+                          src={steppic[step.id]}
                           className="add-pic-pre"
                           thumbnail="true"
                           alt="preview"
