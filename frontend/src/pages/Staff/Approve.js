@@ -71,6 +71,8 @@ const Approve = () => {
               menuid={approval.menuid}
               checklist={checklist}
               setchecklist={setchecklist}
+              setExapproval={setExapproval}
+              Exapproval={Exapproval}
             />
           )
         })}

@@ -6,6 +6,8 @@ const Approvalbox = ({
   menuid,
   checklist,
   setchecklist,
+  setExapproval,
+  Exapproval,
 }) => {
   const [check, setcheck] = useState(false)
   const handleClick = () => {
@@ -20,6 +22,8 @@ const Approvalbox = ({
   const handleappclick = () => {
     console.log(menuid)
     console.log(check)
+    const i = Exapproval.map((item) => item.menuid).indexOf(menuid)
+    setExapproval(Exapproval.slice(0, i).concat(Exapproval.slice(i + 1)))
   }
   const handlerejclick = () => {
     console.log(menuid)
