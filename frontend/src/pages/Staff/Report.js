@@ -2,51 +2,45 @@ import { FaPlus } from "react-icons/fa"
 import Userbox from "../../components/Userbox"
 import ReportBox from "../../components/Report/ReportBox"
 import ReportUserBox from "../../components/Report/ReportUserBox"
-import Dashboard from "./Dashboard"
-import testBox from "../../components/Report/testBox"
 
 const Report = () => {
   const ReportUser = [
     {
       username: "Mr. Yakkinkao",
       email: "Yakkin_kao@gmail.com",
-      reportTime: 78
+      reportTime: 78,
     },
     {
       username: "MarkMai",
       email: "MarkSuckSeed@gmail.com",
-      reportTime: 5
+      reportTime: 5,
     },
   ]
   const ReportComment = [
     {
       menu: "Tomyam Kung Spicy",
       username: "DnD mee Maew",
-      reportTime: 2
+      reportTime: 2,
     },
   ]
   const ReportMenu = [
     {
       menu: "Pad Thai with Kuncha",
       username: "KaoPOD",
-      reportTime: 4
+      reportTime: 4,
     },
     {
       menu: "Masala Chicken",
       username: "SETYOR",
-      reportTime: 11
+      reportTime: 11,
     },
   ]
   return (
     <>
       <div className="user-top">
         <h1 className="approve-title-txt">Report Show</h1>
-        <button className="report-appsel-btn">
-          DELETE
-        </button>
-        <button className="report-rejsel-btn">
-          REJECT
-        </button>
+        <button className="report-appsel-btn">DELETE</button>
+        <button className="report-rejsel-btn">REJECT</button>
       </div>
       <div className="user-member-info">
         <h4 className="user-mem-txt">Reported USER</h4>
