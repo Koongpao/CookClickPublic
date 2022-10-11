@@ -3,7 +3,6 @@ import Userbox from "../../components/Userbox"
 import ReportBox from "../../components/Report/ReportBox"
 import ReportUserBox from "../../components/Report/ReportUserBox"
 import Dashboard from "./Dashboard"
-import testBox from "../../components/Report/testBox"
 
 const Report = () => {
   const ReportUser = [

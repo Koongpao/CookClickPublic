@@ -369,8 +369,8 @@ export const DelComment = async (token, menu, menuId, commentId) => {
   }
 }
 
-export const SearchMenu = async () => {
-  const baseURL = `https://cookclick-api.code.in.th/search/menu`
+export const SearchMenu = async (name) => {
+  const baseURL = `https://cookclick-api.code.in.th/search/menu?name=${name}`
   try {
     const response = await axios.get(baseURL)
     return response.data
