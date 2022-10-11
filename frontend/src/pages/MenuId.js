@@ -5,10 +5,12 @@ import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
 import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem";
 import Burger from "../img/testburger.jpg";
 import {
+  GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
   SearchMenu,
 } from "../script/controller";
+import { useParams } from "react-router-dom";
 
 const MenuPage = () => {
   const [menuDetails, setMenuDetails] = useState({
@@ -20,35 +22,16 @@ const MenuPage = () => {
     cookingstep: [],
   });
 
+  const {id} = useParams()
   const [token, setToken] = useState("")
+
   useEffect(() => {
     const TestFetchMenu = async () => {
-      let response = await SearchMenu("ข้าวผัด");
-      setMenuDetails(response.menulist[0]);
+      let response = await GetMenuInfo(id);
+      setMenuDetails(response.query[0]);
     };
     TestFetchMenu();
-    mapIdtoName(menuDetails)
   }, []);
-  const [ingIdList, setIngIdList] = React.useState([]);
-  const [menuDetails2, setMenuDetails2] = React.useState([]);
-
-  const mapIdtoName = (data) => {
-    let l = menuDetails.ingredient.length;
-    let ingdetail = [];
-    for (let j = 0; j < l; j++) {
-      for (let i = 0; i < data.length; i++) {
-        if (menuDetails.ingredient[j].ingredientID === data[i]._id) {
-          const newmenudetail = {
-            name: data[i].name,
-            amount: menuDetails.ingredient[j].amount,
-            id: data[i].id,
-          };
-          ingdetail.push(newmenudetail);
-        }
-      }
-    }
-    setMenuDetails2(ingdetail);
-  };
 
   const ingAlreadyDisplayed = React.useRef(false);
   React.useEffect(() => {
@@ -70,14 +53,12 @@ const MenuPage = () => {
         element.id = i;
         i += 1;
       });
-      mapIdtoName(ingFullData.data);
     };
     FetchData();
   }, []);
 
   return (
     <div className="menupage">
-      <button onClick={() => console.log(menuDetails)}></button>
       <div className="menu-img">
         <img src={menuDetails.image} alt="testburger"></img>
       </div>
@@ -87,10 +68,10 @@ const MenuPage = () => {
       </div>
       <div className="menu-ing-list">
         <h1>ส่วนผสม</h1>
-        {menuDetails2.map((eachIng) => (
+        {menuDetails.ingredient.map((eachIng) => (
           <div key={eachIng.id}>
             <MenuIngItem
-              name={eachIng.name}
+              name={eachIng.ingredientID}
               amount={eachIng.amount}
               id={eachIng.id}
             />

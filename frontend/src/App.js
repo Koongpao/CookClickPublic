@@ -105,7 +105,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/MenuId" element={<MenuId />} />
+            <Route path="/menuId/:id" element={<MenuId />} />
             <Route
               path="/test"
               element={
