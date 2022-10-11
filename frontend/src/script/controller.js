@@ -383,7 +383,7 @@ export const SearchMenu = async (name) => {
 
 export const SearchAdvance = async (token) => {
   const baseURL =
-    "https://cookclick-api.code.in.th/menu/ingredients_kitchenwares"
+    "https://cookclick-api.code.in.th/search/ingredients_kitchenwares"
   try {
     const response = await axios.get(baseURL, {
       headers: {
@@ -616,6 +616,45 @@ export const StepImageUpload = async (token, menu, menuId, stepnumber) => {
       },
     })
     console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetPopularMenuDay = async () => {
+  const baseURL =
+    "https://cookclick-api.code.in.th/search/menu/popular?type=day"
+  try {
+    const response = await axios.get(baseURL)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetPopularMenuMonth = async () => {
+  const baseURL =
+    "https://cookclick-api.code.in.th/search/menu/popular?type=month"
+  try {
+    const response = await axios.get(baseURL)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetPopularMenuAll = async () => {
+  const baseURL =
+    "https://cookclick-api.code.in.th/search/menu/popular?type=all"
+  try {
+    const response = await axios.get(baseURL)
     return response.data
   } catch (err) {
     console.error(err.response.data)

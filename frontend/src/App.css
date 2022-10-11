@@ -500,7 +500,109 @@ label:focus,
   margin: 0.5rem;
 }
 
+.dashboard-top-title, .dashboard-top-subtitle, .dashboard-approve-title , .dashboard-user-title{
+  font-weight: 400;
+}
 
+.dashboard-top-title{
+  position: absolute; left: 90px;
+}
+
+.dashboard-top-subtitle{
+  position: absolute; left: 90px; top: 140px;
+}
+
+.dashboard-reportmenu, .dashboard-reportuser, .dashboard-reportcomment{
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  padding: 15px;
+  width: 400px;
+  display: inline-block;
+}
+
+.dashboard-reportmenu{
+  position: relative; left: 110px; top: 130px; 
+  box-shadow: -20px 0px #E54854, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-reportuser{
+  position: relative; left: 170px; top: 130px;
+  box-shadow: -20px 0px #F8BE28, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-reportcomment{
+  position: relative; left: 230px; top: 130px;
+  box-shadow: -20px 0px #554971, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-report-txt {
+  font-weight: 400;
+}
+
+.dashboard-approve-title{
+  position: absolute; left: 90px; top: 380px;
+}
+.dashboard-user-title{
+  position: absolute; right: 400px; top: 380px;
+}
+
+.approvelst-menu, .approvelst-cooker{
+  display: inline;
+  font-weight: 300;
+}
+
+.dashboard-approve{
+  position: absolute; left: 90px; top: 430px;
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  box-shadow: 5px 10px 15px rgb(172, 171, 171);
+  padding: 20px;
+  width: 930px;
+}
+
+.approvelst-cooker{
+  position: absolute; left: 500px;
+  width: 300px;
+}
+
+.approvelst-box{
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.dashboard-approve hr{
+  border-top: 2px solid black;
+}
+
+.userlst-userpic{
+  width: 40px;
+}
+
+.userlst-box{
+  position: relative;left: 1050px; top: 215px;
+  border: 1px solid;
+  padding: 10px;
+  width: 380px;
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  box-shadow: 5px 10px 15px rgb(172, 171, 171);
+  margin-bottom: 10px;
+  height: 100px;
+}
+
+.userlst-adduser-btn, .userlst-userpic{
+  border-radius: 50%;
+}
+
+.userlst-adduser-btn{
+  background-color: #37A199;
+  color: white;
+  border-width: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
 .reportBox-box{
   margin-bottom: 20px;
   border-radius: 8px;
@@ -574,4 +676,26 @@ label:focus,
 
 .report-first {
   position: relative; left: 50px;
+}
+
+.reportModal-primary {
+  background-color: #37a199 !important;
+  border: #37a199 !important;
+}
+
+.reportModal-primary:hover {
+  background-color: #4bb8af !important;
+  border: #4bb8af !important;
+  color: #1c524d !important;
+}
+
+.reportModal-secondary {
+  background-color: #9BD0CC !important;
+  border: #9BD0CC !important;
+}
+
+.reportModal-secondary:hover {
+  background-color: #bed7d5 !important;
+  border: #bed7d5 !important;
+  color: #1c524d !important;
 }

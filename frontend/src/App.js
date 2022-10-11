@@ -24,6 +24,15 @@ import Staffbar from "./components/Staffbar"
 import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
 import Report from "./pages/Staff/Report"
+import StaffLogin from "./pages/Staff/StaffLogin"
+
+//test modal
+import ReportUserModal from "./components/Report/Modal/ReportUser"
+import ReportCommentModal from "./components/Report/Modal/ReportComment"
+import ReportMenuModal from "./components/Report/Modal/ReportMenu"
+import DeleteUserModal from "./components/Report/Modal/DeleteUser"
+import DeleteCommentModal from "./components/Report/Modal/DeleteComment"
+import DeleteMenuModal from "./components/Report/Modal/DeleteMenu"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -122,6 +131,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/staff/login" element={<StaffLogin />} />
             <Route
               path="/staff/dashboard"
               element={
@@ -130,6 +140,7 @@ function App() {
                 </ProtectedStaffRoute>
               }
             />
+            {/* <Route path="/staff/dashboard" element={<Dashboard />} /> */}
             <Route
               path="/staff/approve"
               element={
@@ -152,6 +163,16 @@ function App() {
                 <ProtectedStaffRoute>
                   <Report />
                 </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/testmodal"
+              element={
+                <>
+                  <ReportUserModal />
+                  <ReportCommentModal />
+                  <ReportMenuModal />
+                </>
               }
             />
           </Routes>

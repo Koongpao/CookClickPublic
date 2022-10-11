@@ -41,7 +41,6 @@ function Add() {
       setingdata(ingfulldata.data)
     }
     if (!ignore) {
-      let token = JSON.parse(localStorage.getItem("token"))
       fetchdata(token)
     }
     return () => {
