@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef }  from "react";
+import { useEffect, useState }  from "react";
 import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
 import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem";
-import Burger from "../img/testburger.jpg";
 import {
   GetMenuInfo,
   GetSystemIngredient,
