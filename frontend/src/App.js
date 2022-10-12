@@ -11,6 +11,7 @@ import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import MenuId from "./pages/MenuId"
 import Dashboard from "./pages/Staff/Dashboard"
+import Menu from "./pages/Menu"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Protectedlogin from "./components/Protectedlogin"
@@ -53,6 +54,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/menu/:menuId" element={<Menu />} />
             <Route
               path="/searchref"
               element={

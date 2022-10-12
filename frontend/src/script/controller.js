@@ -21,14 +21,10 @@ export const UserLogin = async (item) => {
   }
 }
 
-export const GetSystemIngredient = async (token) => {
+export const GetSystemIngredient = async () => {
   const baseURL = "https://cookclick-api.code.in.th/systems/ingredients"
   try {
-    const response = await axios.get(baseURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const response = await axios.get(baseURL)
     return response.data
   } catch (err) {
     console.error(err.response.data)
@@ -40,11 +36,7 @@ export const GetSystemIngredient = async (token) => {
 export const GetSystemKitchenware = async (token) => {
   const baseURL = "https://cookclick-api.code.in.th/systems/kitchenwares"
   try {
-    const response = await axios.get(baseURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const response = await axios.get(baseURL)
     return response.data
   } catch (err) {
     console.error(err.response.data)
