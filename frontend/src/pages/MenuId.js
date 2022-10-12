@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import { useEffect, useState, useRef }  from "react";
 import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
@@ -22,7 +22,7 @@ const MenuPage = () => {
     cookingstep: [],
   });
 
-  const {id} = useParams()
+  const { id } = useParams()
   const [token, setToken] = useState("")
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const MenuPage = () => {
     TestFetchMenu();
   }, []);
 
-  const ingAlreadyDisplayed = React.useRef(false);
-  React.useEffect(() => {
+  const ingAlreadyDisplayed = useRef(false);
+  useEffect(() => {
     if (ingAlreadyDisplayed.current) return;
     ingAlreadyDisplayed.current = true;
     setToken(JSON.parse(localStorage.getItem("token")));

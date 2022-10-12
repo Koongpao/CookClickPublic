@@ -28,15 +28,14 @@ const MCard = ({
       return <TiStarOutline />
     }
   }
-  let type = ""
+  let linkwarp = ""
   if (Status == null || Status === 3) {
-    type = "/menuid/"
+    linkwarp = `menuId/${UserID}/${MenuID}`
   } else if (Status === 2) {
-    type = "/menuid/waiting/"
+    linkwarp = "/menuid/waiting/"
   } else {
-    type = "/add/".concat(UserID).concat("/")
+    linkwarp = `/add/${UserID}/${MenuID}`
   }
-  const linkwarp = type.concat(MenuID)
 
   return (
     <a href={linkwarp} className="link-dark mcard-a-nounderline">

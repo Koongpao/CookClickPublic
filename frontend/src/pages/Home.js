@@ -91,6 +91,8 @@ function Home() {
                     Star={food.rating}
                     Fav={food.favCount}
                     Desc={food.description}
+                    MenuID={food._id}
+                    UserID={food.userID}
                   />
                 )
               })}
@@ -107,6 +109,8 @@ function Home() {
                     Star={food.rating}
                     Fav={food.favCount}
                     Desc={food.description}
+                    MenuID={food._id}
+                    UserID={food.userID}
                   />
                 )
               })}
@@ -123,6 +127,8 @@ function Home() {
                     Star={food.rating}
                     Fav={food.favCount}
                     Desc={food.description}
+                    MenuID={food._id}
+                    UserID={food.userID}
                   />
                 )
               })}
