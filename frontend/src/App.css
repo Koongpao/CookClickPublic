@@ -52,6 +52,9 @@ label:focus,
 .color-nav {
   background-color: #4a7c59;
 }
+.color-nav-blue{
+  background-color: rgba(55, 161, 153, 0.5);
+}
 
 .offcanvas-violet {
   background-color: #554971;
@@ -309,6 +312,173 @@ label:focus,
   background-color: rgba(55, 161, 153, 0.5);
 }
 
+.approve-appsel-btn, .approve-rejsel-btn{
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 12px;
+  padding: 8px;
+  border-width: 0px;
+  color: white;
+
+}
+.approve-appsel-btn{
+  position: absolute; top: 87px; right: 300px;
+}
+
+.approve-rejsel-btn {
+  position: absolute; top: 87px; right: 90px;
+  width: 200px;
+}
+
+.approve-title-txt{
+  font-size: 40px;
+  position: absolute; left: 100px; top: 80px;
+  font-weight: 400;
+}
+
+.approve-top{
+  margin-bottom: 120px;
+}
+
+.approvebox-menu, .approvebox-cooker{
+  font-weight: 400;
+}
+
+.approvebox-checkbox input{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  background-color: white ;
+  border: 2px solid;
+  position: relative; left: 20px; bottom: -2px;
+}
+
+.approvebox-checkbox input:checked{
+  background-color: black;
+}
+
+.approvebox-menu{
+  position: relative; left: 50px;
+  width: 700px;
+}
+
+.approvebox-cooker{
+  position: relative; 
+  width: 400px; 
+}
+
+.approvebox-app-btn{
+  position: relative; 
+  background-color: #37a199;
+}
+
+.approvebox-rej-btn{
+  position: relative; left: 10px;
+  background-color: #89cbc5;
+  width: 110px;
+}
+
+.approvebox-app-btn, .approvebox-rej-btn{
+  font-size: 20px;
+  border-radius: 12px;
+  border-width: 0px;
+  color: white;
+  padding: 8px;
+}
+
+.approvebox-checkbox, .approvebox-cooker, .approvebox-menu, .approvebox-app-btn, .approvebox-rej-btn{
+  display: inline-block;
+}
+
+.approvebox-box{
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  padding-left: 10px;
+  margin-left: 100px;
+  margin-right: 50px;
+  border: 1px solid rgb(235, 234, 234);
+  box-shadow: 0px 2px rgb(235, 234, 234);
+}
+.user-adduser-btn {
+  position: absolute; right: 100px; 
+  font-size: 20px;
+  padding: 15px; padding-top: 11px; padding-bottom: 11px;
+  border-radius: 12px;
+  background-color: #37a199;
+  color: white;
+  border-width: 0px;
+}
+
+.user-title-txt{
+  font-weight: 400;
+  font-size: 45px;
+  position: absolute; left: 100px;
+}
+
+.user-adduser-btn, .user-title-txt{
+  display: inline;
+}
+
+.user-mem-txt, .user-mod-txt, .user-admin-txt{
+  background-color: #f8be28;
+  padding: 13px;
+  padding-left: 25px;
+  width: 1335px;
+  font-weight: 400;
+}
+
+.user-mem-txt{
+  position: relative; top: 70px; left: 100px;
+}
+.user-mod-txt, .user-admin-txt{
+  position: relative; left: 100px;
+}
+
+.userbox-box{
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  padding-left: 10px;
+  margin-left: 100px;
+  margin-right: 85px;
+  border: 1px solid rgb(235, 234, 234);
+  box-shadow: 0px 2px rgb(235, 234, 234);
+}
+
+.userbox-uid, .userbox-username, .userbox-email, .userbox-deluser-btn{
+  display: inline-block;
+}
+
+.user-memlist{
+  margin-top: 80px;
+}
+
+.userbox-uid{
+  width: 380px;
+}
+
+.userbox-username{
+  width: 350px;
+}
+
+.userbox-email{
+  width: 400px;
+}
+
+.userbox-deluser-btn{
+  font-size: 20px;
+  padding: 15px; padding-top: 9px; padding-bottom: 9px;
+  border-radius: 12px;
+  background-color: #37a199;
+  color: white;
+  border-width: 0px;
+}
+
 .staff-button {
   background-color: #37a199 !important;
   border: #37a199 !important;
@@ -328,4 +498,230 @@ label:focus,
 
 .heart {
   margin: 0.5rem;
+}
+
+.dashboard-top-title, .dashboard-top-subtitle, .dashboard-approve-title , .dashboard-user-title{
+  font-weight: 400;
+}
+
+.dashboard-top-title{
+  position: absolute; left: 90px;
+}
+
+.dashboard-top-subtitle{
+  position: absolute; left: 90px; top: 140px;
+}
+
+.dashboard-reportmenu, .dashboard-reportuser, .dashboard-reportcomment{
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  padding: 15px;
+  width: 400px;
+  display: inline-block;
+}
+
+.dashboard-reportmenu{
+  position: relative; left: 110px; top: 130px; 
+  box-shadow: -20px 0px #E54854, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-reportuser{
+  position: relative; left: 170px; top: 130px;
+  box-shadow: -20px 0px #F8BE28, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-reportcomment{
+  position: relative; left: 230px; top: 130px;
+  box-shadow: -20px 0px #554971, 5px 10px 15px rgb(172, 171, 171);
+}
+
+.dashboard-report-txt {
+  font-weight: 400;
+}
+
+.dashboard-approve-title{
+  position: absolute; left: 90px; top: 380px;
+}
+.dashboard-user-title{
+  position: absolute; right: 400px; top: 380px;
+}
+
+.approvelst-menu, .approvelst-cooker{
+  display: inline;
+  font-weight: 300;
+}
+
+.dashboard-approve{
+  position: absolute; left: 90px; top: 430px;
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  box-shadow: 5px 10px 15px rgb(172, 171, 171);
+  padding: 20px;
+  width: 930px;
+}
+
+.approvelst-cooker{
+  position: absolute; left: 500px;
+  width: 300px;
+}
+
+.approvelst-box{
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.dashboard-approve hr{
+  border-top: 2px solid black;
+}
+
+.userlst-userpic{
+  width: 40px;
+}
+
+.userlst-box{
+  position: relative;left: 1050px; top: 215px;
+  border: 1px solid;
+  padding: 10px;
+  width: 380px;
+  border: 2px solid rgb(235, 234, 234);
+  border-radius: 12px;
+  box-shadow: 5px 10px 15px rgb(172, 171, 171);
+  margin-bottom: 10px;
+  height: 100px;
+}
+
+.userlst-adduser-btn, .userlst-userpic{
+  border-radius: 50%;
+}
+
+.userlst-adduser-btn{
+  background-color: #37A199;
+  color: white;
+  border-width: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+.reportBox-box{
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  padding-left: 10px;
+  margin-left: 100px;
+  margin-right: 85px;
+  border: 1px solid rgb(235, 234, 234);
+  box-shadow: 0px 2px rgb(235, 234, 234);
+}
+
+.reportBox-username, .reportBox-email, .reportBox-reportTime, .reportBox-menu, .reportBox-description-btn{
+  display: inline-block;
+}
+
+.reportBox-reportTime{
+  width: 330px;
+}
+
+.reportBox-username{
+  width: 300px;
+}
+
+.reportBox-email{
+  width: 370px;
+}
+
+.reportBox-menu{
+  width: 380px;
+}
+
+.reportBox-description-btn{
+  font-size: 25px;
+  /* border-radius: 12px; */
+  /* background-color: #37a199; */
+  /* border-width: 0px; */
+  color: #37a199;
+  display: flex;
+  float: right;
+  background:none;
+  border:none;
+}
+
+.approve-title-txt{
+  font-size: 40px;
+  position: absolute; left: 100px; top: 80px;
+  font-weight: 400;
+}
+
+.approve-top{
+  margin-bottom: 120px;
+}
+
+.report-appsel-btn, .report-rejsel-btn{
+  background-color: #d9d9d9;
+  font-size: 20px;
+  border-radius: 12px;
+  padding: 8px;
+  border-width: 0px;
+  color: white;
+  width: 170px;
+
+}
+.report-appsel-btn{
+  position: absolute; top: 87px; right: 300px;
+}
+
+.report-rejsel-btn {
+  position: absolute; top: 87px; right: 90px;
+}
+
+.report-first {
+  position: relative; left: 50px;
+}
+
+.reportModal-primary {
+  background-color: #37a199 !important;
+  border: #37a199 !important;
+}
+
+.reportModal-primary:hover {
+  background-color: #4bb8af !important;
+  border: #4bb8af !important;
+  color: #1c524d !important;
+}
+
+.reportModal-secondary {
+  background-color: #9BD0CC !important;
+  border: #9BD0CC !important;
+}
+
+.reportModal-secondary:hover {
+  background-color: #bed7d5 !important;
+  border: #bed7d5 !important;
+  color: #1c524d !important;
+}
+.mcard{
+  background: rgba(255, 255, 255, 0.90);
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 576px;
+  max-width: 95%;
+  margin: 0.25rem auto
+}
+
+.mcard > a{
+  width:40%
+}
+
+.mcard-image{
+  height: 100%;
+}
+.mcard-image > img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mcard-a-nounderline{
+  text-decoration: none;
 }

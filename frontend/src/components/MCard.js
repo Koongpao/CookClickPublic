@@ -2,45 +2,69 @@ import {
   TiStarFullOutline,
   TiStarHalfOutline,
   TiStarOutline,
-  TiHeartFullOutline
-} from 'react-icons/ti';
-const MCard = ({ FoodName, FoodImg, Star, Fav }) => {
-  
+  TiHeartFullOutline,
+} from "react-icons/ti"
+
+const MCard = ({
+  FoodName,
+  FoodImg,
+  Star,
+  Fav,
+  Desc,
+  MenuID,
+  Status,
+  UserID,
+}) => {
   const addStar = (nowStar) => {
+    if (Star == null) {
+      return
+    }
     nowStar = nowStar - 1
     if (Star - nowStar > 0.8) {
       return <TiStarFullOutline />
-    }
-    else if (Star - nowStar > 0.3) {
+    } else if (Star - nowStar > 0.3) {
       return <TiStarHalfOutline />
-    }
-    else {
+    } else {
       return <TiStarOutline />
     }
   }
-  
+  let type = ""
+  if (Status == null || Status === 3) {
+    type = "/menuid/"
+  } else if (Status === 2) {
+    type = "/menuid/waiting/"
+  } else {
+    type = "/add/".concat(UserID).concat("/")
+  }
+  const linkwarp = type.concat(MenuID)
+
   return (
-    
-    <div className="flex menu-card">
-      <div className="food-image">
-        <img src={ FoodImg } alt="food"></img>
+    <a href={linkwarp} className="link-dark mcard-a-nounderline">
+      <div className="flex menu-card">
+        <div className="food-image">
+          <img src={FoodImg} alt="food"></img>
+        </div>
+        <div className="food-details">
+          <h4>{FoodName}</h4>
+          <span className="hint-star star">
+            {addStar(1)}
+            {addStar(2)}
+            {addStar(3)}
+            {addStar(4)}
+            {addStar(5)}
+            {Star != null && (
+              <span className="text-muted text-sm"> ({Star.toFixed(1)})</span>
+            )}
+          </span>
+          {Fav != null && (
+            <span className="heart text-sm">
+              <TiHeartFullOutline /> {Fav}
+            </span>
+          )}
+          <p>{Desc}</p>
+        </div>
       </div>
-      <div className="food-details">
-        <h4>{ FoodName }</h4>
-        <span className="hint-star star">
-          {addStar(1)}
-          {addStar(2)}
-          {addStar(3)}
-          {addStar(4)}
-          {addStar(5)}
-          <span className="text-muted text-sm"> ({Star})</span>
-        </span>
-        <span className="heart text-sm"><TiHeartFullOutline /> { Fav }</span>
-        <p>
-          lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
-      </div>
-    </div>
+    </a>
   )
 }
 

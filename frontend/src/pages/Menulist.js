@@ -17,16 +17,12 @@ function Menulist() {
     let newrej = []
     allmenu.forEach((data) => {
       if (data.status === 1) {
-        console.log(data, 1)
         newdraft.push(data)
       } else if (data.status === 2) {
-        console.log(data, 2)
         newwait.push(data)
       } else if (data.status === 3) {
-        console.log(data, 3)
         newpub.push(data)
       } else if (data.status === 4) {
-        console.log(data, 4)
         newrej.push(data)
       }
     })
@@ -121,7 +117,7 @@ function Menulist() {
         </div>
         <div className="common-home flex flex-col align-items-center">
           <Collapse in={open0}>
-            <div className="flex flex-col width-100" id="today-collapse-text">
+            <div className="flex flex-col width-100">
               {pubfoods.map((food, index) => {
                 return (
                   <MCard
@@ -130,45 +126,56 @@ function Menulist() {
                     FoodImg={food.image}
                     Star={food.rating}
                     Fav={food.favCount}
+                    MenuID={food._id}
+                    Status={food.status}
                   />
                 )
               })}
             </div>
           </Collapse>
           <Collapse in={open1}>
-            <div className="flex flex-col width-100" id="week-collapse-text">
+            <div className="flex flex-col width-100">
               {waitfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}
             </div>
           </Collapse>
           <Collapse in={open2}>
-            <div className="flex flex-col width-100" id="month-collapse-text">
+            <div className="flex flex-col width-100">
               {draftfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}
             </div>
           </Collapse>
           <Collapse in={open3}>
-            <div className="flex flex-col width-100" id="month-collapse-text">
+            <div className="flex flex-col width-100">
               {rejfoods.map((food, index) => {
                 return (
                   <MCard
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}

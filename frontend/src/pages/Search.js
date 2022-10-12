@@ -1,14 +1,16 @@
 import Form from "react-bootstrap/Form"
 import { Button } from "react-bootstrap"
 import { useState } from "react"
+import { SearchMenu } from "../script/controller"
+import MCardTest from "../components/MCardTest"
 
 const Search = () => {
-  const [keyword, setkeyword] = useState("")
-  const handlekwchange = (newkw) => {
-    setkeyword(newkw)
-  }
-  const handlesearchbutton = () => {
-    console.log(keyword)
+  const [keyword, setKeyword] = useState("")
+  const [menuList, setMenulist] = useState([])
+  const onSearchClick = async () => {
+    let response = await SearchMenu(keyword)
+    console.log(response)
+    setMenulist(response.menulist)
   }
 
   return (
@@ -22,11 +24,21 @@ const Search = () => {
               type="search"
               placeholder="ใส่คำที่ต้องการค้นหา"
               value={keyword}
-              onChange={(e) => handlekwchange(e.target.value)}
+              onChange={(e) => setKeyword(e.target.value)}
             />
-            <Button onClick={handlesearchbutton}>ค้นหา</Button>
+            <Button className="button-28" onClick={() => onSearchClick()}>ค้นหา</Button>
           </Form.Group>
         </Form>
+      </div>
+      <div>
+        {menuList.map((eachMenu) => <MCardTest
+        FoodName={eachMenu.name}
+        FoodImg={eachMenu.image}
+        Star={eachMenu.rating}
+        Fav={eachMenu.favCount}
+        Desc={eachMenu.description}
+        MenuId={eachMenu._id}>
+        </MCardTest>)}
       </div>
     </>
   )

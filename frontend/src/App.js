@@ -1,8 +1,20 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { AuthProvider } from "./script/useAuth"
+import { useState } from "react"
+import { decodeToken } from "react-jwt"
+
 import "./App.css"
-import Login from "./pages/Login"
-import Home from "./pages/Home"
+
 import Navbar from "./components/Navbar"
 import Gnavbar from "./components/Gnavbar"
+import Staffbar from "./components/Staffbar"
+import ProtectedRoute from "./components/ProtectedRoute"
+import Protectedlogin from "./components/Protectedlogin"
+import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
+import ProtectedOwnerRoute from "./components/ProtectedOwnerRoute"
+
+import Login from "./pages/Login"
+import Home from "./pages/Home"
 import SignUp from "./pages/SignUp"
 import Search from "./pages/Search"
 import SearchRef from "./pages/SearchRef"
@@ -11,17 +23,20 @@ import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import MenuId from "./pages/MenuId"
 import Dashboard from "./pages/Staff/Dashboard"
-import Menu from "./pages/Menu"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import ProtectedRoute from "./components/ProtectedRoute"
-import Protectedlogin from "./components/Protectedlogin"
-import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
-import { AuthProvider } from "./script/useAuth"
-import { useState } from "react"
-import { decodeToken } from "react-jwt"
-import StaffLogin from "./pages/Staff/StaffLogin"
-import Staffbar from "./components/Staffbar"
+import Approve from "./pages/Staff/Approve"
+import User from "./pages/Staff/User"
 import Menulist from "./pages/Menulist"
+import Myfav from "./pages/Myfav"
+import Report from "./pages/Staff/Report"
+import StaffLogin from "./pages/Staff/StaffLogin"
+
+//test modal
+import ReportUserModal from "./components/Report/Modal/ReportUser"
+import ReportCommentModal from "./components/Report/Modal/ReportComment"
+import ReportMenuModal from "./components/Report/Modal/ReportMenu"
+import DeleteUserModal from "./components/Report/Modal/DeleteUser"
+import DeleteCommentModal from "./components/Report/Modal/DeleteComment"
+import DeleteMenuModal from "./components/Report/Modal/DeleteMenu"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -72,6 +87,14 @@ function App() {
               }
             />
             <Route
+              path="/add/:uid/:mid"
+              element={
+                <ProtectedOwnerRoute>
+                  <Add />
+                </ProtectedOwnerRoute>
+              }
+            />
+            <Route
               path="/login"
               element={
                 <Protectedlogin>
@@ -95,7 +118,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/MenuId" element={<MenuId />} />
+            <Route path="/menuId/:uid/:mid" element={<MenuId />} />
             <Route
               path="/test"
               element={
@@ -104,6 +127,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/Mymenu"
               element={
@@ -113,6 +137,15 @@ function App() {
               }
             />
             <Route
+              path="/Myfav"
+              element={
+                <ProtectedRoute>
+                  <Myfav />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/staff/login" element={<StaffLogin />} />
+            <Route
               path="/staff/dashboard"
               element={
                 <ProtectedStaffRoute>
@@ -120,12 +153,39 @@ function App() {
                 </ProtectedStaffRoute>
               }
             />
+            {/* <Route path="/staff/dashboard" element={<Dashboard />} /> */}
             <Route
-              path="/staff/login"
+              path="/staff/approve"
               element={
                 <ProtectedStaffRoute>
-                  <StaffLogin />
+                  <Approve />
                 </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/User"
+              element={
+                <ProtectedStaffRoute>
+                  <User />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/Report"
+              element={
+                <ProtectedStaffRoute>
+                  <Report />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/testmodal"
+              element={
+                <>
+                  <ReportUserModal />
+                  <ReportCommentModal />
+                  <ReportMenuModal />
+                </>
               }
             />
           </Routes>
