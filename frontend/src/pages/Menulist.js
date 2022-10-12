@@ -17,16 +17,12 @@ function Menulist() {
     let newrej = []
     allmenu.forEach((data) => {
       if (data.status === 1) {
-        console.log(data, 1)
         newdraft.push(data)
       } else if (data.status === 2) {
-        console.log(data, 2)
         newwait.push(data)
       } else if (data.status === 3) {
-        console.log(data, 3)
         newpub.push(data)
       } else if (data.status === 4) {
-        console.log(data, 4)
         newrej.push(data)
       }
     })
@@ -130,6 +126,8 @@ function Menulist() {
                     FoodImg={food.image}
                     Star={food.rating}
                     Fav={food.favCount}
+                    MenuID={food._id}
+                    Status={food.status}
                   />
                 )
               })}
@@ -143,6 +141,9 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}
@@ -156,6 +157,9 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}
@@ -169,6 +173,9 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    MenuID={food._id}
+                    Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}

@@ -1,8 +1,20 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { AuthProvider } from "./script/useAuth"
+import { useState } from "react"
+import { decodeToken } from "react-jwt"
+
 import "./App.css"
-import Login from "./pages/Login"
-import Home from "./pages/Home"
+
 import Navbar from "./components/Navbar"
 import Gnavbar from "./components/Gnavbar"
+import Staffbar from "./components/Staffbar"
+import ProtectedRoute from "./components/ProtectedRoute"
+import Protectedlogin from "./components/Protectedlogin"
+import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
+import ProtectedOwnerRoute from "./components/ProtectedOwnerRoute"
+
+import Login from "./pages/Login"
+import Home from "./pages/Home"
 import SignUp from "./pages/SignUp"
 import Search from "./pages/Search"
 import SearchRef from "./pages/SearchRef"
@@ -11,16 +23,8 @@ import Ref from "./pages/Ref"
 import Test from "./pages/Test"
 import MenuId from "./pages/MenuId"
 import Dashboard from "./pages/Staff/Dashboard"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import ProtectedRoute from "./components/ProtectedRoute"
-import Protectedlogin from "./components/Protectedlogin"
-import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
-import { AuthProvider } from "./script/useAuth"
 import Approve from "./pages/Staff/Approve"
 import User from "./pages/Staff/User"
-import { useState } from "react"
-import { decodeToken } from "react-jwt"
-import Staffbar from "./components/Staffbar"
 import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
 import Report from "./pages/Staff/Report"
@@ -82,6 +86,14 @@ function App() {
               }
             />
             <Route
+              path="/add/:uid/:mid"
+              element={
+                <ProtectedOwnerRoute>
+                  <Add />
+                </ProtectedOwnerRoute>
+              }
+            />
+            <Route
               path="/login"
               element={
                 <Protectedlogin>
@@ -105,7 +117,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/menuId/:id" element={<MenuId />} />
+            <Route path="/menuId/:uid/:mid" element={<MenuId />} />
             <Route
               path="/test"
               element={

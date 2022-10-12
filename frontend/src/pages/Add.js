@@ -12,20 +12,71 @@ import {
   ImageUpload,
   AddMenu,
   StepImageUpload,
+  GetMenuInfo,
 } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
+import { useParams } from "react-router-dom"
 
 function Add() {
   const token = JSON.parse(localStorage.getItem("token"))
+  const { mid } = useParams()
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
+  function setup(data, fulling, fullware) {
+    setrecipename(data.name)
+    setrecipedesc(data.description)
+    setPreview(data.image)
+    let olding = []
+    let olduing = []
+    data.ingredient.forEach((ing) => {
+      for (let i = 0; i < fulling.length; i++) {
+        if (fulling[i]._id === ing.ingredientID) {
+          let nexting = {}
+          nexting.id = fulling[i].id
+          nexting.amount = ing.amount
+          nexting.name = fulling[i].name
+          nexting.unit = fulling[i].unit
+          olding.push(nexting)
+          olduing.push(fulling[i].id)
+          break
+        }
+      }
+    })
+    setinglist(olding)
+    setuniqueingid(olduing)
+    let oldware = []
+    let olduware = []
+    data.kitchenware.forEach((ware) => {
+      for (let i = 0; i < fullware.length; i++) {
+        if (fullware[i]._id === ware.kitchenwareID) {
+          let nextware = {}
+          nextware.id = fullware[i].id
+          nextware.name = fullware[i].name
+          oldware.push(nextware)
+          olduware.push(fullware[i].id)
+          break
+        }
+      }
+    })
+    settoollist(oldware)
+    setuniquetoolid(olduware)
+    let oldstep = []
+    let oldpicstep = {}
+    data.cookingstep.forEach((step) => {
+      let newstep = { pic: null, id: step.index, desc: step.description }
+      oldpicstep[step.index] = step.image
+      oldstep.push(newstep)
+    })
+    setsteplist(oldstep)
+    setsteppic(oldpicstep)
+    setstepindex(oldstep.length)
+  }
   useEffect(() => {
-    async function fetchdata(token) {
+    async function fetchdata() {
       const ingfulldata = await GetSystemIngredient()
       const warefulldata = await GetSystemKitchenware()
-      console.log(ingfulldata)
       let i = 0
       ingfulldata.data.forEach((element) => {
         element.id = i
@@ -39,9 +90,13 @@ function Add() {
       })
       setwaredata(warefulldata.data)
       setingdata(ingfulldata.data)
+      if (mid) {
+        const recipedata = await GetMenuInfo(mid)
+        setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
+      }
     }
     if (!ignore) {
-      fetchdata(token)
+      fetchdata()
     }
     return () => {
       setignore(true)
@@ -201,7 +256,7 @@ function Add() {
         <Form className="common-home">
           <div className="mb-3 add-pic-recipe">
             <Form.Control type="file" onChange={onSelectFile} />
-            {selectedFile && (
+            {preview && (
               <img
                 src={preview}
                 alt="preview"
@@ -215,6 +270,7 @@ function Add() {
               type="text"
               placeholder="ใส่ชื่อสูตรอาหาร"
               onChange={(e) => setrecipename(e.target.value)}
+              value={recipename}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="AddDesc">
@@ -223,6 +279,7 @@ function Add() {
               placeholder="ใส่คำอธิบายของสูตรอาหาร"
               as="textarea"
               onChange={(e) => setrecipedesc(e.target.value)}
+              value={recipedesc}
             />
           </Form.Group>
           <Button onClick={handleShowing} className="add-ing-button">
@@ -266,6 +323,7 @@ function Add() {
                   placeholder={"โปรดกรอกปริมาณที่ใช้"}
                   min="0"
                   onChange={(e) => ingsetamount(ing, e.target.value)}
+                  value={ing.amount}
                   className="add-ing-amount"
                 />
                 <Card className="add-ing-unit">
@@ -378,6 +436,7 @@ function Add() {
                       as="textarea"
                       placeholder="กรุณากรอกขั้นตอนวิธีการทำ"
                       onChange={(e) => changedesc(step, e.target.value)}
+                      value={step.desc}
                     />
                   </Card.Body>
                 </Accordion.Collapse>

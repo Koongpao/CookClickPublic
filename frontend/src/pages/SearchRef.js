@@ -9,6 +9,7 @@ const SearchRef = () => {
   useEffect(() => {
     async function fetchdata(token) {
       const d = await SearchAdvance(token)
+      console.log(d.menu)
       setMenulist(d.menu)
     }
     if (!ignore) {
@@ -33,6 +34,7 @@ const SearchRef = () => {
                 Star={food.rating}
                 Fav={food.favCount}
                 Desc={food.description}
+                MenuID={food.menuID}
               />
             )
           })}
