@@ -12,6 +12,7 @@ function Home() {
   const [dfoods, setdfoods] = useState([])
   const [mfoods, setmfoods] = useState([])
   const [afoods, setafoods] = useState([])
+
   useEffect(() => {
     const fetchdata = async () => {
       const day = await GetPopularMenuDay()
@@ -25,6 +26,7 @@ function Home() {
     fetchdata()
     
   }, [])
+  
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
   const [open2, setOpen2] = useState(false)

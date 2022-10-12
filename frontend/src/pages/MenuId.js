@@ -22,36 +22,29 @@ const MenuPage = () => {
     cookingstep: [],
   });
 
-  const { id } = useParams()
-  const [token, setToken] = useState("")
-
+  const { mid } = useParams();
   useEffect(() => {
-    const TestFetchMenu = async () => {
-      let response = await GetMenuInfo(id);
-      setMenuDetails(response.query[0]);
-    };
-    TestFetchMenu();
-  }, []);
-
-  const ingAlreadyDisplayed = useRef(false);
-  useEffect(() => {
-    if (ingAlreadyDisplayed.current) return;
-    ingAlreadyDisplayed.current = true;
-    setToken(JSON.parse(localStorage.getItem("token")));
-    let myToken = JSON.parse(localStorage.getItem("token"));
     const FetchData = async () => {
-      const ingFullData = await GetSystemIngredient(myToken);
-      const wareFullData = await GetSystemKitchenware(myToken);
-      let i = 0;
-      ingFullData.data.forEach((element) => {
+      const ingFullData = await GetSystemIngredient();
+      const wareFullData = await GetSystemKitchenware();
+      const menuInfo = await GetMenuInfo(mid);
+      setMenuDetails(menuInfo.query[0]);
+      const menuIngredients = menuInfo.query[0].ingredient
+        .map((ing) => ({
+          ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID), "amount": ing.amount
+        }));
+      const menuKitchenware = menuInfo.query[0].kitchenware
+        .map((ware) => ({
+          ...wareFullData.data.find((wareFull) => wareFull._id === ware.kitchenwareID)
+        }));
+      // console.log(menuIngredients);
+      setMenuDetails((prev) => ({ ...prev, ingredient: menuIngredients, kitchenware: menuKitchenware }));
+      ingFullData.data.forEach((element, i) => {
         element.id = i;
-        i += 1;
         element.amount = 0;
       });
-      i = 0;
-      wareFullData.data.forEach((element) => {
+      wareFullData.data.forEach((element, i) => {
         element.id = i;
-        i += 1;
       });
     };
     FetchData();
@@ -68,12 +61,20 @@ const MenuPage = () => {
       </div>
       <div className="menu-ing-list">
         <h1>ส่วนผสม</h1>
-        {menuDetails.ingredient.map((eachIng) => (
-          <div key={eachIng.id}>
+        {menuDetails.ingredient.map((eachIng, index) => (
+          <div key={index}>
             <MenuIngItem
-              name={eachIng.ingredientID}
+              name={eachIng.name}
               amount={eachIng.amount}
-              id={eachIng.id}
+              unit={eachIng.unit}
+            />
+          </div>
+        ))}
+        <h1 className="pt-4">อุปกรณ์</h1>
+        {menuDetails.kitchenware.map((eachWare, index) => (
+          <div key={index}>
+            <MenuIngItem
+              name={eachWare.name}
             />
           </div>
         ))}
@@ -90,7 +91,6 @@ const MenuPage = () => {
             key={eachSteps.index}
           />
         ))}
-        <MenuStepsItem img={Burger} index={"TEST"}></MenuStepsItem>
       </div>
       <div className="menu-comments-list">
         <MenuCommentItem comment="Comment Test" />

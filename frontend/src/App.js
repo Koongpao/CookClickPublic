@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { AuthProvider } from "./script/useAuth"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { decodeToken } from "react-jwt"
 
 import "./App.css"
@@ -44,9 +44,9 @@ function App() {
   const [login, setlogin] = useState(0)
   const [ignore, setignore] = useState(false)
   const [udata, setudata] = useState()
-  if (!ignore) {
-    let token = JSON.parse(localStorage.getItem("token"))
-    let UserData = decodeToken(token)
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"))
+    const UserData = decodeToken(token)
     setudata(UserData)
     let role = 0
     // console.log(UserData)
@@ -57,7 +57,7 @@ function App() {
     }
     setlogin(role)
     setignore(true)
-  }
+  }, [ignore])
 
   return (
     <>
