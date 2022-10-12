@@ -12,23 +12,19 @@ function Home() {
   const [dfoods, setdfoods] = useState([])
   const [mfoods, setmfoods] = useState([])
   const [afoods, setafoods] = useState([])
-  const [ignore, setignore] = useState(false)
   useEffect(() => {
-    async function fetchdata() {
+    const fetchdata = async () => {
       const day = await GetPopularMenuDay()
       const month = await GetPopularMenuMonth()
       const all = await GetPopularMenuAll()
+      console.log(day)
       setdfoods(day.data)
       setmfoods(month.data)
       setafoods(all.data)
     }
-    if (!ignore) {
-      fetchdata()
-    }
-    return () => {
-      setignore(true)
-    }
-  })
+    fetchdata()
+    
+  }, [])
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
   const [open2, setOpen2] = useState(false)
