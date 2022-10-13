@@ -8,10 +8,12 @@ import "./App.css"
 import Navbar from "./components/Navbar"
 import Gnavbar from "./components/Gnavbar"
 import Staffbar from "./components/Staffbar"
+
 import ProtectedRoute from "./components/ProtectedRoute"
 import Protectedlogin from "./components/Protectedlogin"
 import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
 import ProtectedOwnerRoute from "./components/ProtectedOwnerRoute"
+import ProtectedOwnerStaff from "./components/ProtectedOwnerStaff"
 
 import Login from "./pages/Login"
 import Home from "./pages/Home"
@@ -121,9 +123,9 @@ function App() {
             <Route
               path="/menuId/waiting/:uid/:mid"
               element={
-                <ProtectedOwnerRoute>
+                <ProtectedOwnerStaff>
                   <MenuId />
-                </ProtectedOwnerRoute>
+                </ProtectedOwnerStaff>
               }
             />
             <Route
