@@ -1,6 +1,8 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import { FaPlus } from "react-icons/fa"
 import Userpic from "../../img/user.jpg"
+import { MenuReportedList, MemberReportedList, CommentReportedList } from "../../script/controller"
+
 
 function Dashboard() {
   const reportmenuLine1 = "Butter Chicken With Starch"
@@ -9,6 +11,17 @@ function Dashboard() {
   const reportuserLine1 = "Mr. Yakkinkao"
   const reportuserLine2 = "Yakkin_kao@gmail.com"
   const reportuserLine3 = 3
+
+  useState(() => {
+    const fetchdata = async () => {
+      const token = JSON.parse(localStorage.getItem("token"))
+      const menuReportData = await MenuReportedList(token)
+      const commentReportData = await CommentReportedList(token)
+      const memberReportData = await MemberReportedList(token)
+      console.log(memberReportData)
+    }
+    fetchdata()
+  }, [])
 
   const Approvelst = ({ menuname, cookername }) => {
     return (
@@ -41,16 +54,14 @@ function Dashboard() {
   const cooker4 = "ถถถถถถถถถถถถถถถถถถถถ"
   return (
     <>
-      <div className="dashboard-top">
-        <h1 className="dashboard-top-title">DASHBOARD</h1>
-        <h3 className="dashboard-top-subtitle">REPORT SHOW</h3>
-        <div className="dashboard-reportlist">
+      <div className="flex flex-col align-items-center">
+        <h1 className="my-3">Dashboard</h1>
+        <div className="common-home flex flex-col">
+          <div className="text-md my-3">Most Reported</div>
           <div className="dashboard-reportmenu">
-            <h4 className="dashboard-report-l1">{reportmenuLine1}</h4>
-            <h4 className="dashboard-report-txt">{reportmenuLine2}</h4>
-            <h4 className="dashboard-report-txt">
-              REPORTED {reportmenuLine3} TIME(S)
-            </h4>
+            <div>{reportmenuLine1}</div>
+            <div>{reportmenuLine2}</div>
+            <div>REPORTED {reportmenuLine3} TIME(S)</div>
           </div>
           <div className="dashboard-reportuser">
             <h4 className="dashboard-report-l1">{reportuserLine1}</h4>

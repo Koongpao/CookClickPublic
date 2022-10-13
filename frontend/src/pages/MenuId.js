@@ -7,7 +7,6 @@ import {
   GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
-  SearchMenu,
 } from "../script/controller";
 import { useParams } from "react-router-dom";
 
@@ -36,7 +35,7 @@ const MenuPage = () => {
         .map((ware) => ({
           ...wareFullData.data.find((wareFull) => wareFull._id === ware.kitchenwareID)
         }));
-      // console.log(menuIngredients);
+      console.log(menuInfo.query[0]);
       setMenuDetails((prev) => ({ ...prev, ingredient: menuIngredients, kitchenware: menuKitchenware }));
       ingFullData.data.forEach((element, i) => {
         element.id = i;

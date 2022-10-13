@@ -10,7 +10,7 @@ const ProtectedStaffRoute = ({ children }) => {
   } else {
     role = UserData.role
   }
-  if (role === 3) {
+  if (role >= 2) {
     return children
   } else {
     return <Navigate to="/" />
