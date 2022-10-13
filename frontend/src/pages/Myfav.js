@@ -27,7 +27,16 @@ function Myfav() {
           <div className="flex flex-col width-100">
             {favmenu.map((food, index) => {
               return (
-                <MCard key={index} FoodName={food.name} FoodImg={food.image} />
+                <MCard
+                  key={index}
+                  FoodName={food.name}
+                  FoodImg={food.image}
+                  Star={food.rating}
+                  Fav={food.favCount}
+                  MenuID={food._id}
+                  Status={food.status}
+                  UserID={food.userID}
+                />
               )
             })}
           </div>

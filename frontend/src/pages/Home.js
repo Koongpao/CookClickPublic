@@ -18,15 +18,13 @@ function Home() {
       const day = await GetPopularMenuDay()
       const month = await GetPopularMenuMonth()
       const all = await GetPopularMenuAll()
-      console.log(day)
       setdfoods(day.data)
       setmfoods(month.data)
       setafoods(all.data)
     }
     fetchdata()
-    
   }, [])
-  
+
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
   const [open2, setOpen2] = useState(false)

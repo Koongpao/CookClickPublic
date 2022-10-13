@@ -124,10 +124,12 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    Desc={food.description}
                     Star={food.rating}
                     Fav={food.favCount}
                     MenuID={food._id}
                     Status={food.status}
+                    UserID={food.userID}
                   />
                 )
               })}

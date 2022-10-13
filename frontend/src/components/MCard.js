@@ -32,7 +32,7 @@ const MCard = ({
   if (Status == null || Status === 3) {
     linkwarp = `menuId/${UserID}/${MenuID}`
   } else if (Status === 2) {
-    linkwarp = "/menuid/waiting/"
+    linkwarp = `menuId/waiting/${UserID}/${MenuID}`
   } else {
     linkwarp = `/add/${UserID}/${MenuID}`
   }

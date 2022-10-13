@@ -8,11 +8,10 @@ const ProtectedOwnerRoute = ({ children }) => {
     return <Navigate to="/login" />
   }
   const UserData = decodeToken(token)
-  console.log(UserData.userID)
   if (uid === UserData.userID) {
     return children
   } else {
-    return <Navigate to="/add" />
+    return <Navigate to="/" />
   }
 }
 

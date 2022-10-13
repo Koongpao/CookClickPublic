@@ -119,6 +119,14 @@ function App() {
             />
             <Route path="/menuId/:uid/:mid" element={<MenuId />} />
             <Route
+              path="/menuId/waiting/:uid/:mid"
+              element={
+                <ProtectedOwnerRoute>
+                  <MenuId />
+                </ProtectedOwnerRoute>
+              }
+            />
+            <Route
               path="/test"
               element={
                 <ProtectedRoute>
