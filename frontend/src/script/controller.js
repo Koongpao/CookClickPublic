@@ -93,6 +93,22 @@ export const AddMenu = async (token, menu) => {
   }
 }
 
+export const UpdateMenu = async (token, menu, menuId) => {
+  const baseURL = `https://cookclick-api.code.in.th/me/menu/${menuId}`
+  try {
+    const response = await axios.post(baseURL, menu, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return err.response.data
+  }
+}
+
 export const AddorEditIngredient = async (token, ingredient) => {
   const baseURL = "https://cookclick-api.code.in.th/me/ingredients"
   try {

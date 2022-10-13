@@ -13,6 +13,7 @@ import {
   AddMenu,
   StepImageUpload,
   GetMenuInfo,
+  UpdateMenu,
 } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
@@ -34,6 +35,7 @@ function Add() {
       for (let i = 0; i < fulling.length; i++) {
         if (fulling[i]._id === ing.ingredientID) {
           let nexting = {}
+          nexting._id = fulling[i]._id
           nexting.id = fulling[i].id
           nexting.amount = ing.amount
           nexting.name = fulling[i].name
@@ -52,6 +54,7 @@ function Add() {
       for (let i = 0; i < fullware.length; i++) {
         if (fullware[i]._id === ware.kitchenwareID) {
           let nextware = {}
+          nextware._id = fullware[i]._id
           nextware.id = fullware[i].id
           nextware.name = fullware[i].name
           oldware.push(nextware)
@@ -92,6 +95,7 @@ function Add() {
       setingdata(ingfulldata.data)
       if (mid) {
         const recipedata = await GetMenuInfo(mid)
+        console.log(recipedata.query[0])
         setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
       }
     }
@@ -222,18 +226,40 @@ function Add() {
       kitchenware: lastwarelist,
       cookingstep: laststeplist,
     }
-    const response = await AddMenu(token, ingarray)
-    if (response.success) {
-      const menuImage = new FormData()
-      menuImage.append("menu_image", selectedFile, selectedFile.name)
-      ImageUpload(token, menuImage, response.id)
-      steplist.forEach((element, index) => {
-        const stepImage = new FormData()
-        stepImage.append("step_image", element.pic, element.pic.name)
-        StepImageUpload(token, stepImage, response.id, index)
-      })
+    if (!mid) {
+      const response = await AddMenu(token, ingarray)
+      if (response.success) {
+        const menuImage = new FormData()
+        menuImage.append("menu_image", selectedFile, selectedFile.name)
+        ImageUpload(token, menuImage, response.id)
+        steplist.forEach((element, index) => {
+          const stepImage = new FormData()
+          stepImage.append("step_image", element.pic, element.pic.name)
+          StepImageUpload(token, stepImage, response.id, index)
+        })
+      } else {
+        console.log("error")
+      }
     } else {
-      console.log("error")
+      const response = await UpdateMenu(token, ingarray, mid)
+      console.log(ingarray)
+      console.log(response)
+      if (!response.success) {
+        console.log("error")
+      } else {
+        if (selectedFile) {
+          const menuImage = new FormData()
+          menuImage.append("menu_image", selectedFile, selectedFile.name)
+          ImageUpload(token, menuImage, response.id)
+        }
+        steplist.forEach((element, index) => {
+          if (element.pic) {
+            const stepImage = new FormData()
+            stepImage.append("step_image", element.pic, element.pic.name)
+            StepImageUpload(token, stepImage, response.id, index)
+          }
+        })
+      }
     }
   }
 
@@ -320,10 +346,9 @@ function Add() {
                 </Card>
                 <Form.Control
                   type="number"
-                  placeholder={"โปรดกรอกปริมาณที่ใช้"}
+                  placeholder={ing.amount}
                   min="0"
                   onChange={(e) => ingsetamount(ing, e.target.value)}
-                  value={ing.amount}
                   className="add-ing-amount"
                 />
                 <Card className="add-ing-unit">
