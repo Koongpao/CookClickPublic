@@ -3,6 +3,7 @@ import {
   TiStarHalfOutline,
   TiStarOutline,
   TiHeartFullOutline,
+  TiCamera,
 } from "react-icons/ti"
 
 const MCard = ({
@@ -41,7 +42,8 @@ const MCard = ({
     <a href={linkwarp} className="link-dark mcard-a-nounderline">
       <div className="flex menu-card">
         <div className="food-image">
-          <img src={FoodImg} alt="food"></img>
+          {FoodImg && <img src={FoodImg} alt="food"></img>}
+          {!FoodImg && <TiCamera size={200} />}
         </div>
         <div className="food-details">
           <h4>{FoodName}</h4>
