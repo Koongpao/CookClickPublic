@@ -1,24 +1,33 @@
 import { useEffect, useState } from "react"
 import { FaPlus } from "react-icons/fa"
 import Userpic from "../../img/user.jpg"
-import { MenuReportedList, MemberReportedList, CommentReportedList } from "../../script/controller"
+import {
+  MenuReportedList,
+  MemberReportedList,
+  CommentReportedList,
+  MenuRequest,
+} from "../../script/controller"
 
 
-function Dashboard() {
-  const reportmenuLine1 = "Butter Chicken With Starch"
-  const reportmenuLine2 = "Mr. Yakkinkao"
-  const reportmenuLine3 = 2
-  const reportuserLine1 = "Mr. Yakkinkao"
-  const reportuserLine2 = "Yakkin_kao@gmail.com"
-  const reportuserLine3 = 3
-
-  useState(() => {
+const Dashboard = () => {
+  const [commentReportCount, setCommentReportCount] = useState(0)
+  const [menuReportCount, setMenuReportCount] = useState(0)
+  const [memberReportCount, setMemberReportCount] = useState(0)
+  const [menuWaitingCount, setMenuWaitingCount] = useState(0)
+  const [menuApprovedCount, setMenuApprovedCount] = useState(0)
+  useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"))
       const menuReportData = await MenuReportedList(token)
       const commentReportData = await CommentReportedList(token)
       const memberReportData = await MemberReportedList(token)
-      console.log(memberReportData)
+      const menuWaitingData = await MenuRequest(token, "waitapprove")
+      const menuApprovedData = await MenuRequest(token, "approved")
+      setMemberReportCount(memberReportData.memreport.length)
+      setMenuReportCount(menuReportData.data.menu.length)
+      setCommentReportCount(commentReportData.data.commentreport.length)
+      setMenuWaitingCount(menuWaitingData.menu.length)
+      setMenuApprovedCount(menuApprovedData.menu.length)
     }
     fetchdata()
   }, [])
@@ -44,56 +53,50 @@ function Dashboard() {
     )
   }
 
-  const menu1 = "Spaghetti Bologna in Tomato Sauce"
-  const menu2 = "Stir Friend Pork with Holy Basil"
-  const menu3 = "Chinese Hai-wan Style Rice"
-  const menu4 = "Butter Chicken with Starch"
-  const cooker1 = "Mr. Yakkinkao"
-  const cooker2 = "ยืนกินปากกาที่ท่าพระ"
-  const cooker3 = "iiiiii"
-  const cooker4 = "ถถถถถถถถถถถถถถถถถถถถ"
   return (
     <>
       <div className="flex flex-col align-items-center">
-        <h1 className="my-3">Dashboard</h1>
-        <div className="common-home flex flex-col">
-          <div className="text-md my-3">Most Reported</div>
-          <div className="dashboard-reportmenu">
-            <div>{reportmenuLine1}</div>
-            <div>{reportmenuLine2}</div>
-            <div>REPORTED {reportmenuLine3} TIME(S)</div>
+        <div className="common-home">
+          <h1 className="my-3 text-center">Dashboard</h1>
+          <div className="align-self-start text-md m-3">Pending Reports...</div>
+          <div className="flex justify-content-evenly">
+            <a href="/" className="db-report shadow-red">
+              <div>Menu Report</div>
+              <div className="text-sm text-muted">
+                {menuReportCount} pending menu(s).
+              </div>
+            </a>
+            <a href="/" className="db-report shadow-yellow">
+              <div>Member Report</div>
+              <div className="text-sm text-muted">
+                {memberReportCount} pending member(s).
+              </div>
+            </a>
+            <a href="/" className="db-report shadow-blue">
+              <div>Comment Report</div>
+              <div className="text-sm text-muted">
+                {commentReportCount} pending comment(s).
+              </div>
+            </a>
           </div>
-          <div className="dashboard-reportuser">
-            <h4 className="dashboard-report-l1">{reportuserLine1}</h4>
-            <h4 className="dashboard-report-txt">{reportuserLine2}</h4>
-            <h4 className="dashboard-report-txt">
-              REPORTED {reportuserLine3} TIME(S)
-            </h4>
+          <div className="align-self-start text-md m-3">
+            Menu Status...
           </div>
-          <div className="dashboard-reportcomment">
-            <h4 className="dashboard-report-l1">{reportmenuLine1}</h4>
-            <h4 className="dashboard-report-txt">{reportmenuLine2}</h4>
-            <h4 className="dashboard-report-txt">
-              REPORTED {reportmenuLine3} TIME(S)
-            </h4>
+          <div className="flex justify-content-evenly">
+            <a href="/" className="db-menu">
+              <div>Total Approved Menu</div>
+              <div className="text-sm text-muted">
+                {menuApprovedCount} approved menu(s).
+              </div>
+            </a>
+            <a href="/" className="db-menu">
+              <div>Waiting for Approval</div>
+              <div className="text-sm text-muted">
+                {menuWaitingCount} menu(s) waiting for approval.
+              </div>
+            </a>
           </div>
         </div>
-      </div>
-      <div className="dashboard-ApproveAndUser">
-        <h3 className="dashboard-approve-title">สูตรอาหารที่รอการอนุมัติ</h3>
-        <div className="dashboard-approve">
-          <Approvelst menuname={menu1} cookername={cooker1} />
-          <hr />
-          <Approvelst menuname={menu2} cookername={cooker2} />
-          <hr />
-          <Approvelst menuname={menu3} cookername={cooker3} />
-          <hr />
-          <Approvelst menuname={menu4} cookername={cooker4} />
-        </div>
-        <h3 className="dashboard-user-title">USER</h3>
-        <Userlst usertype="MEMBER" Userpic={Userpic} />
-        <Userlst usertype="MODERATOR" Userpic={Userpic} />
-        <Userlst usertype="ADMIN" Userpic={Userpic} />
       </div>
     </>
   )

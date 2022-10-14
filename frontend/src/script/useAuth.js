@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { useLocalStorage } from "./useLocalStorage"
+import { decodeToken } from "react-jwt"
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
@@ -14,7 +15,12 @@ export const AuthProvider = ({ children }) => {
       navigate("/login")
     } else {
       setToken(data.token)
-      navigate("/", { replace: true })
+      const UserData = decodeToken(data.token)
+      if (UserData.role >= 2) {
+        navigate("/staff/dashboard");
+      } else {
+        navigate("/");
+      }
     }
   }
 

@@ -329,8 +329,8 @@ export const MemberMenuReport = async (token, menu, menuId) => {
   }
 }
 
-export const MenuRequest = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/requests/menu"
+export const MenuRequest = async (token, type) => {
+  const baseURL = `https://cookclick-api.code.in.th/requests/menu?type=${type}`
   try {
     const response = await axios.get(baseURL, {
       headers: {
