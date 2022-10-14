@@ -32,34 +32,15 @@ const Dashboard = () => {
     fetchdata()
   }, [])
 
-  const Approvelst = ({ menuname, cookername }) => {
-    return (
-      <div className="approvelst-box">
-        <h4 className="approvelst-menu">{menuname}</h4>
-        <h4 className="approvelst-cooker">{cookername}</h4>
-      </div>
-    )
-  }
-
-  const Userlst = ({ usertype, Userpic }) => {
-    return (
-      <div className="userlst-box">
-        <h4 className="userlst-title">{usertype}</h4>
-        <button className="userlst-adduser-btn">
-          <FaPlus />
-        </button>
-        <img src={Userpic} alt="UserPic" className="userlst-userpic"></img>
-      </div>
-    )
-  }
-
   return (
     <>
       <div className="flex flex-col align-items-center">
         <div className="common-home">
-          <h1 className="my-3 text-center">Dashboard</h1>
-          <div className="align-self-start text-md m-3">Pending Reports...</div>
-          <div className="flex justify-content-evenly">
+          <h1 className="my-4 text-center">Dashboard</h1>
+          <div className="align-self-start text-md m-2 mt-5">
+            Pending Reports...
+          </div>
+          <div className="flex flex-col">
             <a href="/" className="db-report shadow-red">
               <div>Menu Report</div>
               <div className="text-sm text-muted">
@@ -79,7 +60,7 @@ const Dashboard = () => {
               </div>
             </a>
           </div>
-          <div className="align-self-start text-md m-3">
+          <div className="align-self-start text-md m-2 mt-5">
             Menu Status...
           </div>
           <div className="flex justify-content-evenly">
@@ -91,6 +72,29 @@ const Dashboard = () => {
             </a>
             <a href="/" className="db-menu">
               <div>Waiting for Approval</div>
+              <div className="text-sm text-muted">
+                {menuWaitingCount} menu(s) waiting for approval.
+              </div>
+            </a>
+          </div>
+          <div className="align-self-start text-md m-2 mt-5">
+            User Status...
+          </div>
+          <div className="flex flex-col">
+            <a href="/" className="db-menu">
+              <div>Owner</div>
+              <div className="text-sm text-muted">
+                {menuApprovedCount} approved menu(s).
+              </div>
+            </a>
+            <a href="/" className="db-menu">
+              <div>Moderator</div>
+              <div className="text-sm text-muted">
+                {menuWaitingCount} menu(s) waiting for approval.
+              </div>
+            </a>
+            <a href="/" className="db-menu">
+              <div>Member</div>
               <div className="text-sm text-muted">
                 {menuWaitingCount} menu(s) waiting for approval.
               </div>

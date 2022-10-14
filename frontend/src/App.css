@@ -541,7 +541,7 @@ label:focus,
   border-radius: 0.5rem;
   margin: 0.5rem 0.75rem;
   padding: 1rem;
-  width: 30%;
+  width: 100%;
 }
 
 .db-menu {
@@ -563,6 +563,52 @@ label:focus,
 
 .shadow-blue {
   box-shadow: -1rem 0px #554971, 5px 5px 10px rgba(170, 170, 170, 0.5);
+}
+
+.rp-nav {
+  background-color: #f8be28;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+  border-radius: 0.125rem;
+  margin: 0.5rem 0.05rem;
+}
+
+.rp-nav-active {
+  background-color: #f84e28;
+  color: white;
+}
+
+.rp-desc {
+  color: #37a199;
+}
+
+.rp-desc:hover {
+  cursor: pointer;
+  text-decoration: underline #37a199;
+}
+
+.btn-blue {
+  background-color: #37a199;
+}
+
+.btn-lightblue {
+  background-color: #89cbc5;
+}
+
+.btn-blue,
+.btn-lightblue {
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  margin: 0.05rem;
+  border-radius: 0.25rem;
+}
+
+.btn-blue:hover,
+.btn-lightblue:hover {
+  filter: brightness(0.95);
 }
 
 .userlst-userpic {
