@@ -18,7 +18,7 @@ import { useAuth } from "../script/useAuth"
 import Modal from "react-bootstrap/Modal"
 
 function Staffbar({ user, onchangelogout }) {
-  const staffname = user.email
+  const staffname = user.displayname
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -82,12 +82,14 @@ function Staffbar({ user, onchangelogout }) {
                     &nbsp;อนุมัติสูตรอาหาร
                   </Nav.Link>
                 </Nav>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Staff/user">
-                    <FaUser />
-                    &nbsp;User ทั้งหมด
-                  </Nav.Link>
-                </Nav>
+                {user.role === 3 && (
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/Staff/user">
+                      <FaUser />
+                      &nbsp;User ทั้งหมด
+                    </Nav.Link>
+                  </Nav>
+                )}
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/Staff/Report">
                     <FaBan />

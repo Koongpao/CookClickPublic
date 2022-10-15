@@ -143,6 +143,7 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    Desc={food.description}
                     MenuID={food._id}
                     Status={food.status}
                     UserID={food.userID}
@@ -159,6 +160,7 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    Desc={food.description}
                     MenuID={food._id}
                     Status={food.status}
                     UserID={food.userID}
@@ -175,6 +177,7 @@ function Menulist() {
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
+                    Desc={food.description}
                     MenuID={food._id}
                     Status={food.status}
                     UserID={food.userID}

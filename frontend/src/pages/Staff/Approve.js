@@ -1,57 +1,58 @@
 import Approvalbox from "../../components/Approvalbox"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
+import FormControl from "react-bootstrap/FormControl"
+import { MenuApproveOrUnapprove, MenuRequest } from "../../script/controller.js"
 
 const Approve = () => {
-  const [Exapproval, setExapproval] = useState([
-    {
-      menuname: "Spaghetti",
-      cookername: "Mr. YakkinPasta",
-      menuid: "1",
-    },
-    {
-      menuname: "Hamburger",
-      cookername: "I Love Junk Food",
-      menuid: "2",
-    },
-    {
-      menuname: "Papaya Salad",
-      cookername: "T",
-      menuid: "3",
-    },
-    {
-      menuname: "Spaghetti Bologna in Tomato Sauce",
-      cookername: "ยืนกินปากกาที่ท่าพระ",
-      menuid: "4",
-    },
-    {
-      menuname: "Cake",
-      cookername: "ถถถถถถถถถถถถถถถถถถถถ",
-      menuid: "5",
-    },
-  ])
+  const token = JSON.parse(localStorage.getItem("token"))
+  const [Exapproval, setExapproval] = useState([])
+  const [ignore, setignore] = useState(false)
+  const [desc, setdesc] = useState("")
+  useEffect(() => {
+    async function fetchdata() {
+      const response = await MenuRequest(token, "waitapprove")
+      setExapproval(response.menu)
+      setleft(response.menu)
+    }
+    if (!ignore) {
+      fetchdata()
+    }
+    return () => {
+      setignore(true)
+    }
+  })
+
   const [checklist, setchecklist] = useState([])
   const [text, settext] = useState("")
-  const [left, setleft] = useState([...Exapproval])
+  const [left, setleft] = useState([])
   const [show, setshow] = useState(false)
   const handlerejcheck = () => {
+    setdesc("")
     settext("ไม่")
     setshow(true)
   }
   const handleappcheck = () => {
+    setdesc("")
     settext("")
     setshow(true)
   }
   const onconfirm = () => {
     setshow(false)
+    if (text) {
+      checklist.forEach((element) => {
+        MenuApproveOrUnapprove(token, element._id, "unapprove", {
+          description: desc,
+        })
+      })
+    } else {
+      checklist.forEach((element) => {
+        MenuApproveOrUnapprove(token, element._id, "approve")
+      })
+    }
     setchecklist([])
     setExapproval(left)
-    if (text) {
-      console.log("reject")
-    } else {
-      console.log("approve")
-    }
   }
   const handleClick = (approval) => {
     if (!checklist.includes(approval)) {
@@ -85,7 +86,11 @@ const Approve = () => {
     const i = Exapproval.indexOf(target)
     setExapproval(Exapproval.slice(0, i).concat(Exapproval.slice(i + 1)))
     if (action) {
+      MenuApproveOrUnapprove(token, target._id, "approve")
     } else {
+      MenuApproveOrUnapprove(token, target._id, "unapprove", {
+        description: desc,
+      })
     }
   }
 
@@ -119,6 +124,7 @@ const Approve = () => {
                 settarget={settarget}
                 setaction={setaction}
                 Status={1}
+                setdesc={setdesc}
               />
             </div>
           )
@@ -141,6 +147,15 @@ const Approve = () => {
           {checklist.map((approval, index) => {
             return <Approvalbox key={index} menu={approval} />
           })}
+          {text && (
+            <FormControl
+              placeholder="กรุณากรอกสาเหตุการไม่อนุมัติ"
+              value={desc}
+              onChange={(e) => {
+                setdesc(e.target.value)
+              }}
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -162,9 +177,16 @@ const Approve = () => {
         <Modal.Header closeButton>ยืนยันการ{text}อนุมัติสูตรอาหาร</Modal.Header>
         <Modal.Body>
           <h6>รายการสูตรอาหารที่เลือก</h6>
-          {checklist.map((approval, index) => {
-            return <Approvalbox key={index} menu={approval} />
-          })}
+          <Approvalbox menu={target} />
+          {!action && (
+            <FormControl
+              placeholder="กรุณากรอกสาเหตุการไม่อนุมัติ"
+              value={desc}
+              onChange={(e) => {
+                setdesc(e.target.value)
+              }}
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button

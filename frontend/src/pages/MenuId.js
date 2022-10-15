@@ -1,14 +1,14 @@
-import { useEffect, useState }  from "react";
-import "./MenuId.css";
-import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
-import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
-import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem";
+import { useEffect, useState } from "react"
+import "./MenuId.css"
+import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
+import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
+import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem"
 import {
   GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
-} from "../script/controller";
-import { useParams } from "react-router-dom";
+} from "../script/controller"
+import { useParams } from "react-router-dom"
 
 const MenuPage = () => {
   const [menuDetails, setMenuDetails] = useState({
@@ -18,35 +18,44 @@ const MenuPage = () => {
     ingredient: [],
     kitchenware: [],
     cookingstep: [],
-  });
+  })
 
-  const { mid } = useParams();
+  const { mid } = useParams()
   useEffect(() => {
     const FetchData = async () => {
-      const ingFullData = await GetSystemIngredient();
-      const wareFullData = await GetSystemKitchenware();
-      const menuInfo = await GetMenuInfo(mid);
-      setMenuDetails(menuInfo.query[0]);
-      const menuIngredients = menuInfo.query[0].ingredient
-        .map((ing) => ({
-          ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID), "amount": ing.amount
-        }));
-      const menuKitchenware = menuInfo.query[0].kitchenware
-        .map((ware) => ({
-          ...wareFullData.data.find((wareFull) => wareFull._id === ware.kitchenwareID)
-        }));
-      console.log(menuInfo.query[0]);
-      setMenuDetails((prev) => ({ ...prev, ingredient: menuIngredients, kitchenware: menuKitchenware }));
+      const ingFullData = await GetSystemIngredient()
+      const wareFullData = await GetSystemKitchenware()
+      const menuInfo = await GetMenuInfo(mid)
+      menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
+        menuInfo.query[0].image
+      )
+      console.log(menuInfo.query[0])
+      setMenuDetails(menuInfo.query[0])
+      const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
+        ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
+        amount: ing.amount,
+      }))
+      const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
+        ...wareFullData.data.find(
+          (wareFull) => wareFull._id === ware.kitchenwareID
+        ),
+      }))
+      console.log(menuInfo.query[0])
+      setMenuDetails((prev) => ({
+        ...prev,
+        ingredient: menuIngredients,
+        kitchenware: menuKitchenware,
+      }))
       ingFullData.data.forEach((element, i) => {
-        element.id = i;
-        element.amount = 0;
-      });
+        element.id = i
+        element.amount = 0
+      })
       wareFullData.data.forEach((element, i) => {
-        element.id = i;
-      });
-    };
-    FetchData();
-  }, []);
+        element.id = i
+      })
+    }
+    FetchData()
+  }, [])
 
   return (
     <div className="menupage">
@@ -71,9 +80,7 @@ const MenuPage = () => {
         <h1 className="pt-4">อุปกรณ์</h1>
         {menuDetails.kitchenware.map((eachWare, index) => (
           <div key={index}>
-            <MenuIngItem
-              name={eachWare.name}
-            />
+            <MenuIngItem name={eachWare.name} />
           </div>
         ))}
       </div>
@@ -97,7 +104,7 @@ const MenuPage = () => {
         <MenuCommentItem comment="Comment Test" />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MenuPage;
+export default MenuPage

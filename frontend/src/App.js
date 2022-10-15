@@ -14,6 +14,7 @@ import Protectedlogin from "./components/Protectedlogin"
 import ProtectedStaffRoute from "./components/ProtectedStaffRoute"
 import ProtectedOwnerRoute from "./components/ProtectedOwnerRoute"
 import ProtectedOwnerStaff from "./components/ProtectedOwnerStaff"
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute"
 
 import Login from "./pages/Login"
 import Home from "./pages/Home"
@@ -174,9 +175,9 @@ function App() {
             <Route
               path="/staff/User"
               element={
-                <ProtectedStaffRoute>
+                <ProtectedAdminRoute>
                   <User />
-                </ProtectedStaffRoute>
+                </ProtectedAdminRoute>
               }
             />
             <Route
