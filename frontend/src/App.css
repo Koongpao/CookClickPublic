@@ -762,3 +762,144 @@ label:focus,
 .mcard-a-nounderline {
   text-decoration: none;
 }
+
+.ads-top-title, .ads-top-btn{
+  display: inline;
+  margin-bottom: 10px;
+}
+.ads-top-title, .addads-title{
+  font-weight: 400;
+  position: absolute; left: 100px;
+}
+.ads-top-btn{
+  font-size: 20px !important; 
+  border-radius: 12px !important;
+  border-width: 0px !important;
+  color: white !important;
+  padding: 12px !important;
+  background-color: #37a199 !important;
+  position: relative; left: 1300px !important;
+  width: 130px !important;
+}
+
+.adsbox-box {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+  margin-left: 100px;
+  margin-right: 50px;
+  border: 1px solid rgb(235, 234, 234);
+  box-shadow: 0px 2px rgb(235, 234, 234);
+  width: 1330px;
+}
+.adsbox-id, .adsbox-adtype, .adsbox-btn{
+  display: inline;
+  font-weight: 400;
+}
+
+.adsbox-id{
+  position: absolute; left: 130px; 
+  width: 500px;
+}
+.adsbox-adtype{
+  position: relative; left: 700px; 
+  width: 100px;
+}
+.adsbox-btn{
+  position: relative; left: 1100px;
+  color: #37a199 !important;
+  border: none !important;
+  background-color: white !important;
+  font-size: 20px !important;
+}
+.adsbox-btn:hover{
+  cursor: pointer;
+  text-decoration: underline #37a199 !important;
+  text-decoration-thickness: 2px !important;
+}
+
+.adpreview-box{
+  min-width: 60%;
+}
+.adpreview-nav, .adpreview-toppic{
+  width: 885px;
+  padding: 0px;
+}
+.adpreview-ad{
+  width: 400px;
+  margin-left: auto; margin-right: auto;
+  display: block;
+}
+.adpreview-menupic{
+  width: 300px;
+  margin-left: 290px;
+  display: block;
+}
+
+.addads-formtitle{
+  position: absolute; left: 100px; top: 150px;
+  font-size: 30px;
+  font-weight: 300;
+}
+.addads-form{
+  position: relative; left: 100px; top: 130px;
+  width: 800px !important;
+  border: none !important;
+  border-bottom: 1px solid !important;
+  margin: 2px 0 !important;
+  border-radius: 0 !important;
+}
+
+.addads-type1{
+  position: absolute; left: 100px; top: 280px;
+}
+.addads-type2{
+  position: absolute; left: 500px; top: 280px;
+}
+.addads-houterbox {
+  position: absolute; top: 320px; left: 130px;
+}
+.addads-bouterbox{
+  position:absolute; top: 320px; left: 530px;
+}
+.addads-houterbox, .addads-bouterbox{
+  border: 1px solid;
+  width: 300px;
+  height: 200px;
+}
+.addads-hinnerbox{
+  position: absolute; top: 340px; left: 180px;
+}
+.addads-hinnerbox, .addads-binnerbox{
+  width: 200px;
+  height: 50px;
+  background-color: #C7C4C4;
+  border: none;
+}
+.addads-binnerbox{
+  position: absolute; top: 450px; left: 580px;
+}
+.addads-btn{
+  font-size: 18px !important; 
+  border-radius: 12px !important;
+  border-width: 0px !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  background-color: #37a199 !important;
+  position: absolute; top: 550px; left: 100px;
+}
+.addads-adshow{
+  position: absolute; left: 250px; top: 555px;
+  color: #37a199 !important;
+  border: none !important;
+  background-color: white !important;
+  font-size: 20px !important;
+}
+
+.addads-adshow:hover{
+  cursor: pointer;
+  text-decoration: underline #37a199 !important;
+  text-decoration-thickness: 2px !important;
+}

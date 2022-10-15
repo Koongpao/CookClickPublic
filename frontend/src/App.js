@@ -31,6 +31,8 @@ import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
 import Report from "./pages/Staff/Report"
 import StaffLogin from "./pages/Staff/StaffLogin"
+import Ads from "./pages/Staff/Ads"
+import AddAds from "./pages/Staff/AddAds"
 
 //test modal
 import ReportUserModal from "./components/Report/Modal/ReportUser"
@@ -162,15 +164,15 @@ function App() {
                 </ProtectedStaffRoute>
               }
             />
-            {/* <Route path="/staff/dashboard" element={<Dashboard />} /> */}
-            <Route
+            {/* <Route
               path="/staff/approve"
               element={
                 <ProtectedStaffRoute>
                   <Approve />
                 </ProtectedStaffRoute>
               }
-            />
+              /> */}
+            <Route path="/staff/approve" element={<Approve />} />
             <Route
               path="/staff/User"
               element={
@@ -197,6 +199,24 @@ function App() {
                 </>
               }
             />
+            <Route
+              path="/staff/ads"
+              element={
+                <ProtectedStaffRoute>
+                  <Ads />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/add-ads"
+              element={
+                <ProtectedStaffRoute>
+                  <AddAds />
+                </ProtectedStaffRoute>
+              }
+            />
+            {/* <Route path="/staff/ads" element={<Ads />} />
+            <Route path="/staff/add-ads" element={<AddAds />} /> */}
           </Routes>
         </AuthProvider>
       </Router>
