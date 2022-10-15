@@ -7,6 +7,7 @@ import {
   FaUserCircle,
   FaUser,
 } from "react-icons/fa"
+import { BsList } from "react-icons/bs"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
@@ -94,6 +95,12 @@ function Staffbar({ user, onchangelogout }) {
                   <Nav.Link href="/Staff/Report">
                     <FaBan />
                     &nbsp;การรายงาน
+                  </Nav.Link>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/Mymenu">
+                    <BsList />
+                    &nbsp;สูตรอาหารของฉัน
                   </Nav.Link>
                 </Nav>
               </div>
