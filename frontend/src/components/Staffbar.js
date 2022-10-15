@@ -83,13 +83,13 @@ function Staffbar({ user, onchangelogout }) {
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Staff/user">
+                  <Nav.Link href="/staff/user">
                     <FaUser />
                     &nbsp;User ทั้งหมด
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Staff/Report">
+                  <Nav.Link href="/staff/report/members">
                     <FaBan />
                     &nbsp;การรายงาน
                   </Nav.Link>

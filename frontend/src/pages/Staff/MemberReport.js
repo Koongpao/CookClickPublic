@@ -1,19 +1,23 @@
-import { MemberReportedList } from "../../script/controller";
+import { MemberReportedList, DelMemberReport } from "../../script/controller";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
 
-const Report = () => {
+const MemberReportPage = () => {
   const [memberReport, setMemberReport] = useState({
     memreport: [],
   });
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState([]);
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
       const memberReportData = await MemberReportedList(token);
-      setMemberReport({...memberReport, memreport: memberReportData.memreport});
-      console.log(memberReportData.memreport);
+      setMemberReport((prev) =>
+        ({ ...prev, memreport: memberReportData.memreport })
+      );
+      const memberReportSize = memberReportData.memreport.length;
+      setShow(Array(memberReportSize).fill(false));
+      console.log(memberReportData);
     };
     fetchdata();
   }, []);
@@ -24,13 +28,13 @@ const Report = () => {
         <div className="common-home">
           <h1 className="my-4 text-center">Report</h1>
           <div className="flex justify-content-evenly text-center">
-            <a href="/" className="flex rp-nav rp-nav-active justify-content-center align-items-center">
+            <a href="/staff/report/members" className="flex rp-nav rp-nav-active justify-content-center align-items-center">
               <div>Reported Members</div>
             </a>
-            <a href="/" className="flex rp-nav justify-content-center align-items-center">
+            <a href="/staff/report/comments" className="flex rp-nav justify-content-center align-items-center">
               <div>Reported Comments</div>
             </a>
-            <a href="/" className="flex rp-nav justify-content-center align-items-center">
+            <a href="/staff/report/menus" className="flex rp-nav justify-content-center align-items-center">
               <div>Reported Menus</div>
             </a>
           </div>
@@ -49,17 +53,28 @@ const Report = () => {
                     REPORTED {item.count} TIME(S).
                   </div>
                   <div className="rp-desc" onClick={() => {
-                    setShow(true);
-                  }}>
+                      setShow(prev => [...prev, prev[index] = true])
+                    }}>
                     Description
                   </div>
                   <div className="flex justify-content-end">
                     <button className="btn-blue">Ban Member</button>
-                    <button className="btn-lightblue">Delete</button>
+                    <button className="btn-lightblue" onClick={
+                      async () => {
+                        const token = JSON.parse(localStorage.getItem("token"));
+                        const delReport = await DelMemberReport(token, item._id);
+                        console.log(delReport);
+                        window.location.reload();
+                      }
+                    }>
+                      Delete
+                    </button>
                   </div>
                   <Modal
-                    show={show}
-                    onHide={() => setShow(false)}
+                    show={show[index]}
+                    onHide={() => {
+                      setShow(prev => [...prev, prev[index] = false])
+                    }}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -70,16 +85,18 @@ const Report = () => {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      {item.reportdescription.map((it, index) => {
+                      {item.reportdescription.map((it, id) => {
                         return (
-                          <div key={index}>
+                          <div key={id}>
                             {it.reporterName}: {it.description} 
                           </div>
                         );
                       })}
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button onClick={() => setShow(false)}>Close</Button>
+                      <Button onClick={() => {
+                      setShow(prev => [...prev, prev[index] = false])
+                    }}>Close</Button>
                     </Modal.Footer>
                   </Modal>
                 </div>
@@ -91,4 +108,4 @@ const Report = () => {
     </>
   )
 }
-export default Report
+export default MemberReportPage

@@ -29,7 +29,9 @@ import Approve from "./pages/Staff/Approve"
 import User from "./pages/Staff/User"
 import Menulist from "./pages/Menulist"
 import Myfav from "./pages/Myfav"
-import Report from "./pages/Staff/Report"
+import MemberReportPage from "./pages/Staff/MemberReport"
+import MenuReportPage from "./pages/Staff/MenuReport"
+import CommentReportPage from "./pages/Staff/CommentReport"
 import StaffLogin from "./pages/Staff/StaffLogin"
 
 //test modal
@@ -180,10 +182,26 @@ function App() {
               }
             />
             <Route
-              path="/staff/Report"
+              path="/staff/report/members"
               element={
                 <ProtectedStaffRoute>
-                  <Report />
+                  <MemberReportPage />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/report/comments"
+              element={
+                <ProtectedStaffRoute>
+                  <CommentReportPage />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/report/menus"
+              element={
+                <ProtectedStaffRoute>
+                  <MenuReportPage />
                 </ProtectedStaffRoute>
               }
             />

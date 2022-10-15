@@ -44,19 +44,19 @@ const Dashboard = () => {
             <a href="/" className="db-report shadow-red">
               <div>Menu Report</div>
               <div className="text-sm text-muted">
-                {menuReportCount} pending menu(s).
+                {menuReportCount} pending report(s).
               </div>
             </a>
             <a href="/" className="db-report shadow-yellow">
               <div>Member Report</div>
               <div className="text-sm text-muted">
-                {memberReportCount} pending member(s).
+                {memberReportCount} pending report(s).
               </div>
             </a>
             <a href="/" className="db-report shadow-blue">
               <div>Comment Report</div>
               <div className="text-sm text-muted">
-                {commentReportCount} pending comment(s).
+                {commentReportCount} pending report(s).
               </div>
             </a>
           </div>
