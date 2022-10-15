@@ -1,25 +1,39 @@
-const Approvalbox = ({ menu, Status, settarget, setaction, setmodal }) => {
+const Approvalbox = ({
+  menu,
+  Status,
+  settarget,
+  setaction,
+  setmodal,
+  setdesc,
+}) => {
   const handleappclick = () => {
+    setdesc("")
     setmodal(true)
     settarget(menu)
     setaction(1)
-    console.log(menu)
   }
   const handlerejclick = () => {
+    setdesc("")
     setmodal(true)
     settarget(menu)
     setaction(0)
-    console.log(menu)
   }
   return (
     <>
-      <a className="approvebox-menu link-dark" href="/menuid">
-        {menu.menuname}
+      <a
+        className="approvebox-menu link-dark"
+        href={"/menuId/waiting/".concat(`${menu.userID}/${menu._id}`)}
+      >
+        {Status && <h4>{menu.name}</h4>}
+        {!Status && <span>{menu.name}</span>}
       </a>
-      <span className="approvebox-cooker">
-        {!Status && <span>โดย </span>}
-        {menu.cookername}
-      </span>
+      {Status && <h4 className="approvebox-cooker">{menu.userID}</h4>}
+      {!Status && (
+        <span className="approvebox-cooker">
+          โดย&nbsp;
+          {menu.userID}
+        </span>
+      )}
       {Status && (
         <>
           <button className="approvebox-app-btn" onClick={handleappclick}>

@@ -42,7 +42,12 @@ const MCard = ({
     <a href={linkwarp} className="link-dark mcard-a-nounderline">
       <div className="flex menu-card">
         <div className="food-image">
-          {FoodImg && <img src={FoodImg} alt="food"></img>}
+          {FoodImg && (
+            <img
+              src={"https://cookclick.code.in.th/images/".concat(FoodImg)}
+              alt="food"
+            ></img>
+          )}
           {!FoodImg && <TiCamera size={200} />}
         </div>
         <div className="food-details">

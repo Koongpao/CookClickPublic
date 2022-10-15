@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import MCard from "../components/MCard"
-import { GetAllMeMenuStatus } from "../script/controller"
+import { GetAllMeFavMenu } from "../script/controller"
 
 function Myfav() {
   const [ignore, setignore] = useState(false)
   const [favmenu, setfavmenu] = useState([])
   useEffect(() => {
     async function fetchdata(token) {
-      const allmenu = await GetAllMeMenuStatus(token)
+      const allmenu = await GetAllMeFavMenu(token)
       setfavmenu(allmenu.data)
     }
     if (!ignore) {

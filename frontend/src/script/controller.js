@@ -33,7 +33,7 @@ export const GetSystemIngredient = async () => {
   }
 }
 
-export const GetSystemKitchenware = async (token) => {
+export const GetSystemKitchenware = async () => {
   const baseURL = "https://cookclick-api.code.in.th/systems/kitchenwares"
   try {
     const response = await axios.get(baseURL)
@@ -201,6 +201,22 @@ export const GetAllMeMenu = async (token) => {
   }
 }
 
+export const GetAllMeFavMenu = async (token) => {
+  const baseURL = "https://cookclick-api.code.in.th/menu/favorite"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const GetAllMeIngredient = async (token) => {
   const baseURL = "https://cookclick-api.code.in.th/me/ingredients"
   try {
@@ -281,10 +297,10 @@ export const RatingMenu = async (token, menu, menuId) => {
   }
 }
 
-export const MenuApproveOrUnapprove = async (token, menu, menuId) => {
-  const baseURL = `https://cookclick-api.code.in.th/requests/menu/${menuId}`
+export const MenuApproveOrUnapprove = async (token, menuId, status, desc) => {
+  const baseURL = `https://cookclick-api.code.in.th/requests/menu/${menuId}?status=${status}`
   try {
-    const response = await axios.put(baseURL, menu, {
+    const response = await axios.put(baseURL, desc, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -454,26 +470,10 @@ export const MemberReportedList = async (token) => {
   }
 }
 
-export const GetAllMemberInfo = async (token) => {
-  const baseURL = "https://cookclick-api.code.in.th/member"
+export const EditMemberRole = async (token, memberID, role) => {
+  const baseURL = `https://cookclick-api.code.in.th/member/${memberID}/roles?role=${role}`
   try {
-    const response = await axios.get(baseURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return response.data
-  } catch (err) {
-    console.error(err.response.data)
-    alert(err.response.data.message)
-    return null
-  }
-}
-
-export const AddMember = async (token, member) => {
-  const baseURL = `https://cookclick-api.code.in.th/member`
-  try {
-    const response = await axios.post(baseURL, member, {
+    const response = await axios.put(baseURL, "", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -663,6 +663,22 @@ export const GetPopularMenuAll = async () => {
     "https://cookclick-api.code.in.th/search/menu/popular?type=all"
   try {
     const response = await axios.get(baseURL)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetAllMember = async (token) => {
+  const baseURL = "https://cookclick-api.code.in.th/admin/member"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return response.data
   } catch (err) {
     console.error(err.response.data)
