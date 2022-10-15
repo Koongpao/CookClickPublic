@@ -7,6 +7,7 @@ import {
   FaUserCircle,
   FaUser,
 } from "react-icons/fa"
+import { BsList } from "react-icons/bs"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
@@ -18,7 +19,7 @@ import { useAuth } from "../script/useAuth"
 import Modal from "react-bootstrap/Modal"
 
 function Staffbar({ user, onchangelogout }) {
-  const staffname = user.email
+  const staffname = user.displayname
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -77,17 +78,25 @@ function Staffbar({ user, onchangelogout }) {
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/Mymenu">
+                    <BsList />
+                    &nbsp;สูตรอาหารของฉัน
+                  </Nav.Link>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/Staff/Approve">
                     <FaCheck />
                     &nbsp;อนุมัติสูตรอาหาร
                   </Nav.Link>
                 </Nav>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/staff/user">
-                    <FaUser />
-                    &nbsp;User ทั้งหมด
-                  </Nav.Link>
-                </Nav>
+                {user.role === 3 && (
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link href="/Staff/user">
+                      <FaUser />
+                      &nbsp;User ทั้งหมด
+                    </Nav.Link>
+                  </Nav>
+                )}
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/staff/report/members">
                     <FaBan />

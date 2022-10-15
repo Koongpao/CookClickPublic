@@ -1,38 +1,42 @@
 import Userbox from "../../components/Userbox"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { GetAllMember } from "../../script/controller"
 
 const User = () => {
-  const Exmem = [
-    {
-      uid: "6314a63eb9440a65d53afda1",
-      username: "Mr. Yakkinkao",
-      email: "Yakkin_kao@gmail.com",
-    },
-    {
-      uid: "684fwa3eb9440sfajd67y34d",
-      username: "L",
-      email: "adsjfksjdladklfdsasd@gmail.com",
-    },
-  ]
-  const Exmod = [
-    {
-      uid: "6314a63eb9440a65d53afda1",
-      username: "Mr. Yakkinkao",
-      email: "Yakkin_kao@gmail.com",
-    },
-  ]
-  const Exadmin = [
-    {
-      uid: "6314a63eb9440a65d53afda1",
-      username: "Mr. Yakkinkao",
-      email: "Yakkin_kao@gmail.com",
-    },
-    {
-      uid: "64a63qejrfj24365d53jfdls",
-      username: "alsdjfkwejiofjfadfewiu2i3iufa",
-      email: "Yakkin_kao@gmail.com",
-    },
-  ]
+  const token = JSON.parse(localStorage.getItem("token"))
+  const [Exmem, setExmem] = useState([])
+  const [Exmod, setExmod] = useState([])
+  const [Exadmin, setExadmin] = useState([])
+  const [ignore, setignore] = useState(false)
+  function setup(ulist) {
+    let admin = []
+    let mod = []
+    let mem = []
+    for (let i = 0; i < ulist.length; i++) {
+      if (ulist[i].role === 3) {
+        admin.push(ulist[i])
+      } else if (ulist[i].role === 2) {
+        mod.push(ulist[i])
+      } else {
+        mem.push(ulist[i])
+      }
+    }
+    setExmem(mem)
+    setExmod(mod)
+    setExadmin(admin)
+  }
+  useEffect(() => {
+    async function fetchdata() {
+      const response = await GetAllMember(token)
+      setup(response.user)
+    }
+    if (!ignore) {
+      fetchdata()
+    }
+    return () => {
+      setignore(true)
+    }
+  })
 
   return (
     <>
@@ -46,10 +50,11 @@ const User = () => {
             return (
               <Userbox
                 key={index}
-                uid={info.uid}
-                username={info.username}
+                uid={info._id}
+                username={info.displayname}
                 email={info.email}
                 role={1}
+                setignore={setignore}
               />
             )
           })}
@@ -62,10 +67,11 @@ const User = () => {
             return (
               <Userbox
                 key={index}
-                uid={info.uid}
-                username={info.username}
+                uid={info._id}
+                username={info.displayname}
                 email={info.email}
                 role={2}
+                setignore={setignore}
               />
             )
           })}
@@ -78,10 +84,11 @@ const User = () => {
             return (
               <Userbox
                 key={index}
-                uid={info.uid}
-                username={info.username}
+                uid={info._id}
+                username={info.displayname}
                 email={info.email}
                 role={3}
+                setignore={setignore}
               />
             )
           })}
