@@ -78,6 +78,12 @@ function Staffbar({ user, onchangelogout }) {
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/Mymenu">
+                    <BsList />
+                    &nbsp;สูตรอาหารของฉัน
+                  </Nav.Link>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Nav.Link href="/Staff/Approve">
                     <FaCheck />
                     &nbsp;อนุมัติสูตรอาหาร
@@ -95,12 +101,6 @@ function Staffbar({ user, onchangelogout }) {
                   <Nav.Link href="/Staff/Report">
                     <FaBan />
                     &nbsp;การรายงาน
-                  </Nav.Link>
-                </Nav>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/Mymenu">
-                    <BsList />
-                    &nbsp;สูตรอาหารของฉัน
                   </Nav.Link>
                 </Nav>
               </div>
