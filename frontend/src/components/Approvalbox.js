@@ -24,12 +24,16 @@ const Approvalbox = ({
         className="approvebox-menu link-dark"
         href={"/menuId/waiting/".concat(`${menu.userID}/${menu._id}`)}
       >
-        {menu.name}
+        {Status && <h4>{menu.name}</h4>}
+        {!Status && <span>{menu.name}</span>}
       </a>
-      <span className="approvebox-cooker">
-        {!Status && <span>โดย </span>}
-        {menu.userID}
-      </span>
+      {Status && <h4 className="approvebox-cooker">{menu.userID}</h4>}
+      {!Status && (
+        <span className="approvebox-cooker">
+          โดย&nbsp;
+          {menu.userID}
+        </span>
+      )}
       {Status && (
         <>
           <button className="approvebox-app-btn" onClick={handleappclick}>
