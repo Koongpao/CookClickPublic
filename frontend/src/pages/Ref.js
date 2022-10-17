@@ -71,11 +71,9 @@ const Ref = () => {
         categoryID: eachIng.categoryID,
         ingamount: eachIng.amount,
         name: eachIng.name,
-        id: i,
+        id: eachIng.id,
         unit: eachIng.unit,
       }
-      console.log(newIngEntry)
-      i += 1
       if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
         setMeatIng((meatIng) => [...meatIng, newIngEntry])
       } else if (eachIng.categoryID === "63148c731fd415225d9d18cd") {
@@ -88,12 +86,11 @@ const Ref = () => {
         setOtherIng((otherIng) => [...otherIng, newIngEntry])
       }
     })
-    i = 0
     ToolData.forEach((eachTool) => {
       const newToolEntry = {
-        _id: eachTool.kitchenwareID,
-        name: eachTool.kitchenwareName,
-        id: i,
+        _id: eachTool._id,
+        name: eachTool.name,
+        id: eachTool.id,
       }
       setTool((prevTool) => [...prevTool, newToolEntry])
     })
@@ -125,15 +122,19 @@ const Ref = () => {
       ...ingfulldata.data.find((ingFull) => ingFull._id === ing.ingredientID),
       amount: ing.amount,
     }))
-    console.log(menuIngredients)
+    const menuWares = mytool.kitchenware.map((tool) => ({
+      ...warefulldata.data.find(
+        (wareFull) => wareFull._id === tool.kitchenwareID
+      ),
+    }))
     setWareData(warefulldata.data)
     setIngData(ingfulldata.data)
-    filterIngByCategory(menuIngredients, mytool.kitchenware)
+    filterIngByCategory(menuIngredients, menuWares)
     menuIngredients.forEach((eachIng) =>
-      setuniqueingid((prev) => [...prev, eachIng.ingredientID])
+      setuniqueingid((prev) => [...prev, eachIng._id])
     )
     mytool.kitchenware.forEach((eachTool) => {
-      setuniquetoolid((prev) => [...prev, eachTool.kitchenwareID])
+      setuniquetoolid((prev) => [...prev, eachTool._id])
     })
   }
 
