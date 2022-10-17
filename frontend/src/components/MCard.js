@@ -67,7 +67,7 @@ const MCard = ({
               <TiHeartFullOutline /> {Fav}
             </span>
           )}
-          <p>{Desc}</p>
+          <p className="overflowhidp">{Desc}</p>
         </div>
       </div>
     </a>
