@@ -67,13 +67,14 @@ const Ref = () => {
     let i = 0
     IngData.forEach((eachIng) => {
       const newIngEntry = {
-        _id: eachIng.ingredientID,
+        _id: eachIng._id,
         categoryID: eachIng.categoryID,
         ingamount: eachIng.amount,
         name: eachIng.name,
         id: i,
         unit: eachIng.unit,
       }
+      console.log(newIngEntry)
       i += 1
       if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
         setMeatIng((meatIng) => [...meatIng, newIngEntry])
