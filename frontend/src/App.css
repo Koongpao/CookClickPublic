@@ -903,3 +903,7 @@ label:focus,
   text-decoration: underline #37a199 !important;
   text-decoration-thickness: 2px !important;
 }
+
+.overflowhid {
+  overflow: hidden;
+}
