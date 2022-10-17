@@ -124,12 +124,12 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/menuId/:uid/:mid" element={<MenuId />} />
+            <Route path="/menuId/:uid/:mid" element={<MenuId status={0} />} />
             <Route
               path="/menuId/waiting/:uid/:mid"
               element={
                 <ProtectedOwnerStaff>
-                  <MenuId />
+                  <MenuId status={1} />
                 </ProtectedOwnerStaff>
               }
             />
