@@ -21,18 +21,17 @@ const SearchRef = () => {
   })
 
   function shortenDesc(desc) {
-    if(desc.length > 165){
-      return desc.substring(0,165) + "......";
-    }else{
-      return desc;
-    }
+  if(desc.length > 165){
+    return desc.substring(0,165) + "......";
+  }else{
+    return desc;
   }
-
+}
   return (
     <>
       <div className="flex flex-col align-items-center">
         <h1 className="text-center">ค้นหาสูตรอาหารจากวัตถุดิบในตู้เย็น</h1>
-        <div className="common-home flex flex-col align-items-center">
+        <div className="common-home flex flex-col width-100 collapse show">
           {Menulist.map((food, index) => {
             return (
               <MCard
