@@ -8,6 +8,18 @@ import {
   GetPopularMenuAll,
 } from "../script/controller"
 
+
+function shortenDesc(desc) {
+  if(desc.length > 165){
+    return desc.substring(0,165) + "......";
+  }else{
+    return desc;
+  }
+}
+
+
+
+
 function Home() {
   const [dfoods, setdfoods] = useState([])
   const [mfoods, setmfoods] = useState([])
@@ -90,7 +102,7 @@ function Home() {
                     FoodImg={food.image}
                     Star={food.rating}
                     Fav={food.favCount}
-                    Desc={food.description}
+                    Desc={shortenDesc(food.description)}
                     MenuID={food._id}
                     UserID={food.userID}
                   />
@@ -108,7 +120,7 @@ function Home() {
                     FoodImg={food.image}
                     Star={food.rating}
                     Fav={food.favCount}
-                    Desc={food.description}
+                    Desc={shortenDesc(food.description)}
                     MenuID={food._id}
                     UserID={food.userID}
                   />
@@ -126,7 +138,7 @@ function Home() {
                     FoodImg={food.image}
                     Star={food.rating}
                     Fav={food.favCount}
-                    Desc={food.description}
+                    Desc={shortenDesc(food.description)}
                     MenuID={food._id}
                     UserID={food.userID}
                   />
