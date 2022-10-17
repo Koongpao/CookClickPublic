@@ -35,6 +35,7 @@ const SearchRef = () => {
                 Fav={food.favCount}
                 Desc={food.description}
                 MenuID={food.menuID}
+                UserID={food.userID}
               />
             )
           })}
