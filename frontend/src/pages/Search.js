@@ -11,7 +11,7 @@ const Search = () => {
     console.log(keyword)
     let response = await SearchMenu(keyword)
     console.log(response)
-    setMenulist(response.menulist)
+    setMenulist(response.menu)
   }
 
   return (
