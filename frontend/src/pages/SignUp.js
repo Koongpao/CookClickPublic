@@ -2,11 +2,16 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState,useEffect } from "react"
 import { AddUser, UserLogin,CheckSignupExist } from "../script/controller"
-import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
+import { AcceptedPopup, DeniedPopup,EmailVerifiedPopup } from "../components/SignInPopup"
 import { useAuth } from "../script/useAuth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,useSearchParams } from "react-router-dom"
+
+
 
 const SignUp = ({ onchangelogin }) => {
+
+  const [searchParams] = useSearchParams();
+
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     displayname: "",
@@ -15,6 +20,9 @@ const SignUp = ({ onchangelogin }) => {
   })
   const [modalShowAccepted, setModalShowAccepted] = useState(false)
   const [modalShowDenied, setModalShowDenied] = useState(false)
+  const [modalShowEmailVerified, setModalShowEmailVerified] = useState(false)
+
+  
   const [deniedMessage, setDeniedMessage] = useState("")
   const { login } = useAuth()
   const handleSubmit = async (e) => {
@@ -89,7 +97,7 @@ const SignUp = ({ onchangelogin }) => {
   }, [displayname]);
 
   const [email, setEmail] = useState({text: ''});
-  
+ 
   useEffect(() => {
     const fetchData = async () => {
       if(email.text.length >= 1){
@@ -104,6 +112,13 @@ const SignUp = ({ onchangelogin }) => {
    fetchData()
   }, [email]);
 
+
+  useEffect(() => {
+    if(searchParams.get('verify') == "true"){
+        setModalShowEmailVerified(true)
+     }
+  },[]);
+  
 
   const checkLengthN = async (event) => {
     if (!isValidLengthN(event.target.value)) {
@@ -231,6 +246,13 @@ const SignUp = ({ onchangelogin }) => {
           navigate("/login")
         }}
       />
+	  <EmailVerifiedPopup
+        show={modalShowEmailVerified}
+        onHide={() => {
+          navigate("/login")
+        }}
+      />
+	  
       <DeniedPopup
         className="text-center"
         show={modalShowDenied}
@@ -238,6 +260,8 @@ const SignUp = ({ onchangelogin }) => {
         message={deniedMessage}
       />
     </>
+	
+	
   )
 }
 
