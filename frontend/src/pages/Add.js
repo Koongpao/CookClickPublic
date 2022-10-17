@@ -509,7 +509,10 @@ function Add() {
             <Button
               className="savebutton"
               variant="success"
-              onClick={() => send(1)}
+              onClick={(e) => {
+                send(1)
+                e.preventDefault()
+              }}
             >
               บันทึกสูตรอาหาร
             </Button>
@@ -517,7 +520,10 @@ function Add() {
             <Button
               className="submitbutton"
               variant="success"
-              onClick={() => send(2)}
+              onClick={(e) => {
+                send(2)
+                e.preventDefault()
+              }}
             >
               ยืนยันการสร้างสูตรอาหาร
             </Button>
