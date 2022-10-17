@@ -229,13 +229,17 @@ function Add() {
     if (!mid) {
       const response = await AddMenu(token, ingarray)
       if (response.success) {
-        const menuImage = new FormData()
-        menuImage.append("menu_image", selectedFile, selectedFile.name)
-        ImageUpload(token, menuImage, response.id)
+        if (selectedFile) {
+          const menuImage = new FormData()
+          menuImage.append("menu_image", selectedFile, selectedFile.name)
+          ImageUpload(token, menuImage, response.id)
+        }
         steplist.forEach((element, index) => {
-          const stepImage = new FormData()
-          stepImage.append("step_image", element.pic, element.pic.name)
-          StepImageUpload(token, stepImage, response.id, index)
+          if (element.pic) {
+            const stepImage = new FormData()
+            stepImage.append("step_image", element.pic, element.pic.name)
+            StepImageUpload(token, stepImage, response.id, index)
+          }
         })
       } else {
         console.log("error")
