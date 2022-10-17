@@ -20,6 +20,14 @@ const SearchRef = () => {
     }
   })
 
+  function shortenDesc(desc) {
+    if(desc.length > 165){
+      return desc.substring(0,165) + "......";
+    }else{
+      return desc;
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col align-items-center">
@@ -33,7 +41,7 @@ const SearchRef = () => {
                 FoodImg={food.image}
                 Star={food.rating}
                 Fav={food.favCount}
-                Desc={food.description}
+                Desc={shortenDesc(food.description)}
                 MenuID={food.menuID}
                 UserID={food.userID}
               />
