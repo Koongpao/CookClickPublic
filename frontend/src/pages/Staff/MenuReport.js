@@ -44,7 +44,7 @@ const MenuReportPage = () => {
               return (
                 <div className="db-menu" key={index}>
                   <div className="mb-1">
-                    Menu: {item.menuInfo.name} ({item.menuID})
+                    Menu: {item.menuInfo[0].name} ({item.menuID})
                   </div>
                   <div className="text-sm text-muted mb-3">
                     By: {item.userDisplayName} ({item.userID})

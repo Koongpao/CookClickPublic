@@ -77,29 +77,6 @@ const Dashboard = () => {
               </div>
             </a>
           </div>
-          <div className="align-self-start text-md m-2 mt-5">
-            User Status...
-          </div>
-          <div className="flex flex-col">
-            <a href="/" className="db-menu">
-              <div>Owner</div>
-              <div className="text-sm text-muted">
-                {menuApprovedCount} approved menu(s).
-              </div>
-            </a>
-            <a href="/" className="db-menu">
-              <div>Moderator</div>
-              <div className="text-sm text-muted">
-                {menuWaitingCount} menu(s) waiting for approval.
-              </div>
-            </a>
-            <a href="/" className="db-menu">
-              <div>Member</div>
-              <div className="text-sm text-muted">
-                {menuWaitingCount} menu(s) waiting for approval.
-              </div>
-            </a>
-          </div>
         </div>
       </div>
     </>

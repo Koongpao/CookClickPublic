@@ -115,9 +115,7 @@
 
 .menu-comments-list {
   width: 100%;
-  height: auto;
-  margin: 2% 0 2% 0;
-  padding: 2.5%;
+  margin: 0.5rem 0;
+  padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border: none !important;
 }

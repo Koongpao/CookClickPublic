@@ -18,6 +18,7 @@ const MenuPage = () => {
     ingredient: [],
     kitchenware: [],
     cookingstep: [],
+    comment: [],
   })
 
   const { mid } = useParams()
@@ -64,6 +65,7 @@ const MenuPage = () => {
       </div>
       <div className="menu-desc">
         <h1 className="menu-header">{menuDetails.name}</h1>
+        <div>By: { menuDetails.userDisplayName }</div>
         {menuDetails.description}
       </div>
       <div className="menu-ing-list">
@@ -97,12 +99,13 @@ const MenuPage = () => {
           />
         ))}
       </div>
-      <div className="menu-comments-list">
-        <MenuCommentItem comment="Comment Test" />
-        <MenuCommentItem comment="Comment Test" />
-        <MenuCommentItem comment="Comment Test" />
-        <MenuCommentItem comment="Comment Test" />
-      </div>
+      <h1 className="mt-5">Comments</h1>
+        {menuDetails.comment.map((eachComment, id) => (
+          <div className="menu-comments-list">
+            <h4 key={id}>{eachComment.userID}</h4>
+            <p>{eachComment.description}</p>
+          </div>
+        ))}
     </div>
   )
 }
