@@ -12,7 +12,7 @@ import {
   ImageUpload,
   AddMenu,
   StepImageUpload,
-  GetMenuInfo,
+  MenuEdit,
   UpdateMenu,
 } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
@@ -29,7 +29,7 @@ function Add() {
   function setup(data, fulling, fullware) {
     setrecipename(data.name)
     setrecipedesc(data.description)
-    setPreview(data.image)
+    setPreview("https://cookclick.code.in.th/images/".concat(data.image))
     let olding = []
     let olduing = []
     data.ingredient.forEach((ing) => {
@@ -70,7 +70,9 @@ function Add() {
     let oldpicstep = {}
     data.cookingstep.forEach((step) => {
       let newstep = { pic: null, id: step.index, desc: step.description }
-      oldpicstep[step.index] = step.image
+      oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
+        step.image
+      )
       oldstep.push(newstep)
     })
     setsteplist(oldstep)
@@ -95,8 +97,7 @@ function Add() {
       setwaredata(warefulldata.data)
       setingdata(ingfulldata.data)
       if (mid) {
-        const recipedata = await GetMenuInfo(mid)
-        console.log(recipedata)
+        const recipedata = await MenuEdit(token, mid)
         setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
       }
     }

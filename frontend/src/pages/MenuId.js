@@ -7,10 +7,11 @@ import {
   GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
+  MenuEdit,
 } from "../script/controller"
 import { useParams } from "react-router-dom"
 
-const MenuPage = () => {
+const MenuPage = ({ status }) => {
   const [menuDetails, setMenuDetails] = useState({
     name: "",
     image: "",
@@ -20,13 +21,19 @@ const MenuPage = () => {
     cookingstep: [],
     comment: [],
   })
-
+  const token = JSON.parse(localStorage.getItem("token"))
   const { mid } = useParams()
   useEffect(() => {
     const FetchData = async () => {
       const ingFullData = await GetSystemIngredient()
       const wareFullData = await GetSystemKitchenware()
-      const menuInfo = await GetMenuInfo(mid)
+      let menuInfo
+      if (!status) {
+        menuInfo = await GetMenuInfo(mid)
+      } else {
+        menuInfo = await MenuEdit(token, mid)
+      }
+
       console.log(menuInfo)
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image

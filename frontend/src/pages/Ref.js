@@ -64,7 +64,6 @@ const Ref = () => {
   };
 
   const filterIngByCategory = (IngData, ToolData) => {
-    let i = 0;
     IngData.forEach((eachIng) => {
       const newIngEntry = {
         _id: eachIng._id,
