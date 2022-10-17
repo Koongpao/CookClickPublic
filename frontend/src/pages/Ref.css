@@ -1,5 +1,5 @@
 .refpage {
-  width: 50%;
+  width: 65%;
   margin: auto;
 }
 .ref-ing-item {
@@ -156,4 +156,20 @@
 .tab-content {
   justify-content: center !important;
   overflow-y: scroll;
+}
+
+.refpage-category{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5%;
+}
+
+.refpage-lower-section{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.category-card{
+  height: auto;
+  flex-grow: 1;
 }
