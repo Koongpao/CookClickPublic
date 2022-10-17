@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { FaPlus, FaBan } from "react-icons/fa";
+import React, { useState, useEffect } from "react"
+import Tab from "react-bootstrap/Tab"
+import Tabs from "react-bootstrap/Tabs"
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
+import { FaPlus } from "react-icons/fa"
 import {
   AddorEditIngredient,
   AddorEditKitchenware,
@@ -11,162 +11,165 @@ import {
   GetAllMeKitware,
   GetSystemIngredient,
   GetSystemKitchenware,
-} from "../script/controller";
-import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
-import { Offcanvas } from "react-bootstrap";
-import "./Ref.css";
-import IngListComponent from "../components/IngListComponent";
+} from "../script/controller"
+import Modal from "react-bootstrap/Modal"
+import { Offcanvas } from "react-bootstrap"
+import "./Ref.css"
+import IngListComponent from "../components/IngListComponent"
 
 const Ref = () => {
   // email: simonys@gmail.com
   // password: simonys
 
-  const [categoryData, setCategoryData] = useState({
+  const [categoryData] = useState({
     meat: "63148bc17afa87e2439351d4",
     veggie: "63148c731fd415225d9d18cd",
     condiment: "63148cee1fd415225d9d18d1",
     flour: "6326f032899f2ff5706099a7",
     other: "6326f0b9899f2ff5706099ab",
-  });
+  })
 
   const sortByCategory = (element) => {
     Object.keys(categoryData).forEach((e) => {
       if (element.categoryID === categoryData[e]) {
         if (e === "meat") {
-          setMeatIng([...meatIng, element]);
+          setMeatIng([...meatIng, element])
         } else if (e === "veggie") {
-          setVegIng([...vegIng, element]);
+          setVegIng([...vegIng, element])
         } else if (e === "condiment") {
-          setCondIng([...condIng, element]);
+          setCondIng([...condIng, element])
         } else if (e === "flour") {
-          setFlourIng([...flourIng, element]);
+          setFlourIng([...flourIng, element])
         } else if (e === "other") {
-          setOtherIng([...otherIng, element]);
+          setOtherIng([...otherIng, element])
         }
       }
-    });
-  };
+    })
+  }
 
   const addEntryClick = (element) => {
-    const isDuplicate = uniqueingid.includes(element._id);
+    const isDuplicate = uniqueingid.includes(element._id)
     if (
       element.categoryID === undefined &&
       !uniquetoolid.includes(element._id)
     ) {
-      setTool([...Tool, element]);
-      setuniquetoolid([...uniquetoolid, element._id]);
+      setTool([...Tool, element])
+      setuniquetoolid([...uniquetoolid, element._id])
     } else if (!isDuplicate) {
-      sortByCategory(element);
-      setuniqueingid([...uniqueingid, element._id]);
+      sortByCategory(element)
+      setuniqueingid([...uniqueingid, element._id])
     }
-    handleCloseing();
-    handleClosetool();
-  };
+    handleCloseing()
+    handleClosetool()
+  }
 
   const filterIngByCategory = (IngData, ToolData) => {
-    let i = 0;
+    let i = 0
     IngData.forEach((eachIng) => {
       const newIngEntry = {
         _id: eachIng.ingredientID,
         categoryID: eachIng.categoryID,
         ingamount: eachIng.amount,
-        name: eachIng.ingredientName,
+        name: eachIng.name,
         id: i,
-      };
-      i += 1;
-      if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
-        setMeatIng((meatIng) => [...meatIng, newIngEntry]);
-      } else if (eachIng.categoryID === "63148c731fd415225d9d18cd") {
-        setVegIng((vegIng) => [...vegIng, newIngEntry]);
-      } else if (eachIng.categoryID === "63148cee1fd415225d9d18d1") {
-        setCondIng((condIng) => [...condIng, newIngEntry]);
-      } else if (eachIng.categoryID === "6326f032899f2ff5706099a7") {
-        setFlourIng((flourIng) => [...flourIng, newIngEntry]);
-      } else if (eachIng.categoryID === "6326f0b9899f2ff5706099ab") {
-        setOtherIng((otherIng) => [...otherIng, newIngEntry]);
+        unit: eachIng.unit,
       }
-    });
-    i = 0;
+      i += 1
+      if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
+        setMeatIng((meatIng) => [...meatIng, newIngEntry])
+      } else if (eachIng.categoryID === "63148c731fd415225d9d18cd") {
+        setVegIng((vegIng) => [...vegIng, newIngEntry])
+      } else if (eachIng.categoryID === "63148cee1fd415225d9d18d1") {
+        setCondIng((condIng) => [...condIng, newIngEntry])
+      } else if (eachIng.categoryID === "6326f032899f2ff5706099a7") {
+        setFlourIng((flourIng) => [...flourIng, newIngEntry])
+      } else if (eachIng.categoryID === "6326f0b9899f2ff5706099ab") {
+        setOtherIng((otherIng) => [...otherIng, newIngEntry])
+      }
+    })
+    i = 0
     ToolData.forEach((eachTool) => {
       const newToolEntry = {
         _id: eachTool.kitchenwareID,
         name: eachTool.kitchenwareName,
         id: i,
-      };
-      setTool((prevTool) => [...prevTool, newToolEntry]);
-    });
-  };
+      }
+      setTool((prevTool) => [...prevTool, newToolEntry])
+    })
+  }
 
   // const [ignore, setignore] = useState(false);
-  const [ingData, setIngData] = useState([]);
-  const [wareData, setWareData] = useState([]);
-  const [token, setToken] = useState("");
+  const [ingData, setIngData] = useState([])
+  const [wareData, setWareData] = useState([])
+  const token = JSON.parse(localStorage.getItem("token"))
 
   const UpdateCurrentIngredientKitchenware = async () => {
-    if (ignore.current) return;
-    ignore.current = true;
-    setToken(JSON.parse(localStorage.getItem("token")));
-    let myToken = JSON.parse(localStorage.getItem("token"));
-    const ingfulldata = await GetSystemIngredient(myToken);
-    const warefulldata = await GetSystemKitchenware(myToken);
-    const myingredient = await GetAllMeIngredient(myToken);
-    const mytool = await GetAllMeKitware(myToken);
-    let i = 0;
+    if (ignore.current) return
+    ignore.current = true
+    const ingfulldata = await GetSystemIngredient(token)
+    const warefulldata = await GetSystemKitchenware(token)
+    const myingredient = await GetAllMeIngredient(token)
+    const mytool = await GetAllMeKitware(token)
+    let i = 0
     ingfulldata.data.forEach((element) => {
-      element.id = i;
-      i += 1;
-    });
-    i = 0;
+      element.id = i
+      i += 1
+    })
+    i = 0
     warefulldata.data.forEach((element) => {
-      element.id = i;
-      i += 1;
-    });
-    setWareData(warefulldata.data);
-    setIngData(ingfulldata.data);
-    filterIngByCategory(myingredient.ingredient, mytool.kitchenware);
-    myingredient.ingredient.forEach((eachIng) =>
+      element.id = i
+      i += 1
+    })
+    const menuIngredients = myingredient.ingredient.map((ing) => ({
+      ...ingfulldata.data.find((ingFull) => ingFull._id === ing.ingredientID),
+      amount: ing.amount,
+    }))
+    console.log(menuIngredients)
+    setWareData(warefulldata.data)
+    setIngData(ingfulldata.data)
+    filterIngByCategory(menuIngredients, mytool.kitchenware)
+    menuIngredients.forEach((eachIng) =>
       setuniqueingid((prev) => [...prev, eachIng.ingredientID])
-    );
+    )
     mytool.kitchenware.forEach((eachTool) => {
-      setuniquetoolid((prev) => [...prev, eachTool.kitchenwareID]);
-    });
-  };
+      setuniquetoolid((prev) => [...prev, eachTool.kitchenwareID])
+    })
+  }
 
-  const ignore = React.useRef(false);
+  const ignore = React.useRef(false)
   useEffect(() => {
-    UpdateCurrentIngredientKitchenware();
-  });
+    UpdateCurrentIngredientKitchenware()
+  })
 
   const removeonClick = (setFunc, setUniqueFunc, element) => {
     setFunc((current) =>
       current.filter((ing) => {
-        return ing._id !== element._id;
+        return ing._id !== element._id
       })
-    );
+    )
     setUniqueFunc((current) =>
       current.filter((item) => {
-        return item !== element._id;
+        return item !== element._id
       })
-    );
-  };
+    )
+  }
 
-  const [showing, setshowing] = useState(false);
-  const [showtool, setshowtool] = useState(false);
-  const handleShowtool = () => setshowtool(true);
-  const handleClosetool = () => setshowtool(false);
-  const handleCloseing = () => setshowing(false);
-  const handleShowing = () => setshowing(true);
-  const [keywording, setkeywording] = useState("");
+  const [showing, setshowing] = useState(false)
+  const [showtool, setshowtool] = useState(false)
+  const handleShowtool = () => setshowtool(true)
+  const handleClosetool = () => setshowtool(false)
+  const handleCloseing = () => setshowing(false)
+  const handleShowing = () => setshowing(true)
+  const [keywording, setkeywording] = useState("")
 
-  const [meatIng, setMeatIng] = useState([]);
-  const [vegIng, setVegIng] = useState([]);
-  const [condIng, setCondIng] = useState([]);
-  const [flourIng, setFlourIng] = useState([]);
-  const [otherIng, setOtherIng] = useState([]);
-  const [uniqueingid, setuniqueingid] = useState([]);
-  const [Tool, setTool] = useState([]);
-  const [uniquetoolid, setuniquetoolid] = useState([]);
+  const [meatIng, setMeatIng] = useState([])
+  const [vegIng, setVegIng] = useState([])
+  const [condIng, setCondIng] = useState([])
+  const [flourIng, setFlourIng] = useState([])
+  const [otherIng, setOtherIng] = useState([])
+  const [uniqueingid, setuniqueingid] = useState([])
+  const [Tool, setTool] = useState([])
+  const [uniquetoolid, setuniquetoolid] = useState([])
   const [IngBeforeEdit, setIngBeforeEdit] = useState({
     meat: [],
     veg: [],
@@ -175,16 +178,16 @@ const Ref = () => {
     other: [],
     uniqueing: [],
     uniquetoolid: [],
-  });
+  })
 
-  const [showAddIngButton, setShowAddIngButton] = useState(false);
-  const [showAddWareButton, setShowAddWareButton] = useState(false);
-  const [showSubmitButton, setShowSubmitButton] = useState(false);
-  const [showEditButton, setShowEditButton] = useState(true);
-  const [SubmitConfirmation, setSubmitConfirmation] = useState(false);
-  const [nullAmountAlert, setNullAmountAlert] = useState(false);
-  const [DiscardChange, setDiscardChange] = useState(false);
-  const [Dummy, setDummy] = useState(false);
+  const [showAddIngButton, setShowAddIngButton] = useState(false)
+  const [showAddWareButton, setShowAddWareButton] = useState(false)
+  const [showSubmitButton, setShowSubmitButton] = useState(false)
+  const [showEditButton, setShowEditButton] = useState(true)
+  const [SubmitConfirmation, setSubmitConfirmation] = useState(false)
+  const [nullAmountAlert, setNullAmountAlert] = useState(false)
+  const [DiscardChange, setDiscardChange] = useState(false)
+  const [Dummy, setDummy] = useState(false)
 
   const handleStartEditing = (
     meat,
@@ -196,18 +199,18 @@ const Ref = () => {
     uing,
     utool
   ) => {
-    setShowAddIngButton(true);
-    setShowAddWareButton(true);
-    setShowSubmitButton(true);
-    setShowEditButton(false);
-    const meatCopy = JSON.parse(JSON.stringify(meat));
-    const vegCopy = JSON.parse(JSON.stringify(veg));
-    const condCopy = JSON.parse(JSON.stringify(cond));
-    const flourCopy = JSON.parse(JSON.stringify(flour));
-    const otherCopy = JSON.parse(JSON.stringify(other));
-    const toolCopy = JSON.parse(JSON.stringify(tool));
-    const uingCopy = JSON.parse(JSON.stringify(uing));
-    const utoolCopy = JSON.parse(JSON.stringify(utool));
+    setShowAddIngButton(true)
+    setShowAddWareButton(true)
+    setShowSubmitButton(true)
+    setShowEditButton(false)
+    const meatCopy = JSON.parse(JSON.stringify(meat))
+    const vegCopy = JSON.parse(JSON.stringify(veg))
+    const condCopy = JSON.parse(JSON.stringify(cond))
+    const flourCopy = JSON.parse(JSON.stringify(flour))
+    const otherCopy = JSON.parse(JSON.stringify(other))
+    const toolCopy = JSON.parse(JSON.stringify(tool))
+    const uingCopy = JSON.parse(JSON.stringify(uing))
+    const utoolCopy = JSON.parse(JSON.stringify(utool))
     setIngBeforeEdit({
       meat: meatCopy,
       veg: vegCopy,
@@ -217,79 +220,79 @@ const Ref = () => {
       tool: toolCopy,
       uniqueing: uingCopy,
       uniquetool: utoolCopy,
-    });
-    console.log("start editing");
-  };
+    })
+    console.log("start editing")
+  }
 
   const handleRevertChange = () => {
-    setMeatIng(IngBeforeEdit.meat);
-    setVegIng(IngBeforeEdit.veg);
-    setFlourIng(IngBeforeEdit.flour);
-    setCondIng(IngBeforeEdit.cond);
-    setOtherIng(IngBeforeEdit.other);
-    setTool(IngBeforeEdit.tool);
-    setuniqueingid(IngBeforeEdit.uniqueing);
-    setuniquetoolid(IngBeforeEdit.uniquetool);
-  };
+    setMeatIng(IngBeforeEdit.meat)
+    setVegIng(IngBeforeEdit.veg)
+    setFlourIng(IngBeforeEdit.flour)
+    setCondIng(IngBeforeEdit.cond)
+    setOtherIng(IngBeforeEdit.other)
+    setTool(IngBeforeEdit.tool)
+    setuniqueingid(IngBeforeEdit.uniqueing)
+    setuniquetoolid(IngBeforeEdit.uniquetool)
+  }
 
   const handleDiscardChange = () => {
-    setShowAddIngButton(false);
-    setShowAddWareButton(false);
-    setShowSubmitButton(false);
-    setShowEditButton(true);
-    setDiscardChange(false);
-    handleRevertChange();
-  };
+    setShowAddIngButton(false)
+    setShowAddWareButton(false)
+    setShowSubmitButton(false)
+    setShowEditButton(true)
+    setDiscardChange(false)
+    handleRevertChange()
+  }
 
   const handleSubmit = async () => {
-    let IngList = [];
-    let ToolList = [];
+    let IngList = []
+    let ToolList = []
     Tool.forEach((eachTool) => {
-      ToolList.push(eachTool._id);
-    });
+      ToolList.push(eachTool._id)
+    })
     const handleIngList = (IngCategory) => {
       IngCategory.forEach((eachIng) => {
         IngList.push({
           ingredientID: eachIng._id,
           amount: parseInt(eachIng.ingamount),
-        });
-      });
-    };
-    handleIngList(meatIng);
-    handleIngList(vegIng);
-    handleIngList(condIng);
-    handleIngList(flourIng);
-    handleIngList(otherIng);
-    let isIngAmountNull = false;
+        })
+      })
+    }
+    handleIngList(meatIng)
+    handleIngList(vegIng)
+    handleIngList(condIng)
+    handleIngList(flourIng)
+    handleIngList(otherIng)
+    let isIngAmountNull = false
     IngList.forEach((eachIng) => {
       if (isNaN(eachIng.amount)) {
-        console.log(isNaN(eachIng.amount));
-        setNullAmountAlert(true);
-        isIngAmountNull = true;
+        console.log(isNaN(eachIng.amount))
+        setNullAmountAlert(true)
+        isIngAmountNull = true
       }
-    });
-    if (isIngAmountNull) return;
-    setShowAddIngButton(false);
-    setShowAddWareButton(false);
-    setShowSubmitButton(false);
-    setShowEditButton(true);
-    setSubmitConfirmation(false);
+    })
+    if (isIngAmountNull) return
+    setShowAddIngButton(false)
+    setShowAddWareButton(false)
+    setShowSubmitButton(false)
+    setShowEditButton(true)
+    setSubmitConfirmation(false)
     let AddOrEditIngredientInfo = {
       ingredient: IngList,
-    };
+    }
     let AddOrEditKitchenwareInfo = {
       kitchenware: ToolList,
-    };
-    console.log(AddOrEditIngredientInfo);
-    console.log(AddOrEditKitchenwareInfo);
-    const response = await AddorEditIngredient(token, AddOrEditIngredientInfo);
+    }
+    console.log(AddOrEditIngredientInfo)
+    console.log(AddOrEditKitchenwareInfo)
+    const response = await AddorEditIngredient(token, AddOrEditIngredientInfo)
     const response2 = await AddorEditKitchenware(
       token,
       AddOrEditKitchenwareInfo
-    );
-    console.log(response);
-    console.log(response2);
-  };
+    )
+    console.log(response)
+    console.log(response2)
+  }
 
   return (
     <div className="refpage">
@@ -353,7 +356,7 @@ const Ref = () => {
               <Form.Control
                 type="text"
                 onChange={(e) => {
-                  setkeywording(e.target.value);
+                  setkeywording(e.target.value)
                 }}
               />
               {wareData
@@ -383,6 +386,7 @@ const Ref = () => {
               setUniqueIng={setuniqueingid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={true}
             />
           </Tab>
           <Tab eventKey="veggie" title="ผัก/ผลไม้">
@@ -392,42 +396,47 @@ const Ref = () => {
               setUniqueIng={setuniqueingid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={true}
             />
           </Tab>
           <Tab eventKey="condiment" title="เครื่องปรุง">
-          <IngListComponent
+            <IngListComponent
               ingType={condIng}
               setIng={setCondIng}
               setUniqueIng={setuniqueingid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={true}
             />
           </Tab>
           <Tab eventKey="flour" title="แป้ง">
-          <IngListComponent
+            <IngListComponent
               ingType={flourIng}
               setIng={setFlourIng}
               setUniqueIng={setuniqueingid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={true}
             />
           </Tab>
           <Tab eventKey="other" title="ไข่/นม/อื่นๆ">
-          <IngListComponent
+            <IngListComponent
               ingType={otherIng}
               setIng={setOtherIng}
               setUniqueIng={setuniqueingid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={true}
             />
           </Tab>
           <Tab eventKey="tool" title="อุปกรณ์ทำอาหาร">
-          <IngListComponent
+            <IngListComponent
               ingType={Tool}
               setIng={setTool}
               setUniqueIng={setuniquetoolid}
               showEditButton={showEditButton}
               removeonClick={removeonClick}
+              ingorware={false}
             />
           </Tab>
         </Tabs>
@@ -514,8 +523,8 @@ const Ref = () => {
             <Button
               className="button-28-green"
               onClick={() => {
-                setNullAmountAlert(false);
-                setSubmitConfirmation(false);
+                setNullAmountAlert(false)
+                setSubmitConfirmation(false)
               }}
             >
               กลับ
@@ -524,7 +533,7 @@ const Ref = () => {
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Ref;
+export default Ref

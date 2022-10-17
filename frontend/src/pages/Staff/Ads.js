@@ -41,6 +41,7 @@ const Ads = () => {
   return (
     <>
       <div className="ads-top">
+        test
         <h1 className="ads-top-title">ADS</h1>
         <Button className="ads-top-btn" href="/staff/add-ads">
           ADD ADS

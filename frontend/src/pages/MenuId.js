@@ -29,6 +29,14 @@ const MenuPage = () => {
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image
       )
+      for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
+        if (menuInfo.query[0].cookingstep[i].image) {
+          menuInfo.query[0].cookingstep[i].image =
+            "https://cookclick.code.in.th/images/".concat(
+              menuInfo.query[0].cookingstep[i].image
+            )
+        }
+      }
       console.log(menuInfo.query[0])
       setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
