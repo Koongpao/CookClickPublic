@@ -6,7 +6,7 @@ import { FaBan } from "react-icons/fa"
 const IngListComponent = (props) => {
   const [IngDummy, setIngDummy] = useState(false)
   return (
-    <div>
+    <div style={props.style}>
       {props.ingType.map((ing) => (
         <div className="ref-ing-item" key={ing.id}>
           <Card className="ref-ing-name">

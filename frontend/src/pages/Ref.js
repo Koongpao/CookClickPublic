@@ -73,7 +73,7 @@ const Ref = () => {
         name: eachIng.name,
         id: eachIng.id,
         unit: eachIng.unit,
-      }
+      };
       if (eachIng.categoryID === "63148bc17afa87e2439351d4") {
         setMeatIng((meatIng) => [...meatIng, newIngEntry]);
       } else if (eachIng.categoryID === "63148c731fd415225d9d18cd") {
@@ -85,16 +85,16 @@ const Ref = () => {
       } else if (eachIng.categoryID === "6326f0b9899f2ff5706099ab") {
         setOtherIng((otherIng) => [...otherIng, newIngEntry]);
       }
-    })
+    });
     ToolData.forEach((eachTool) => {
       const newToolEntry = {
         _id: eachTool._id,
         name: eachTool.name,
         id: eachTool.id,
-      }
-      setTool((prevTool) => [...prevTool, newToolEntry])
-    })
-  }
+      };
+      setTool((prevTool) => [...prevTool, newToolEntry]);
+    });
+  };
 
   // const [ignore, setignore] = useState(false);
   const [ingData, setIngData] = useState([]);
@@ -121,22 +121,22 @@ const Ref = () => {
     const menuIngredients = myingredient.ingredient.map((ing) => ({
       ...ingfulldata.data.find((ingFull) => ingFull._id === ing.ingredientID),
       amount: ing.amount,
-    }))
+    }));
     const menuWares = mytool.kitchenware.map((tool) => ({
       ...warefulldata.data.find(
         (wareFull) => wareFull._id === tool.kitchenwareID
       ),
-    }))
-    setWareData(warefulldata.data)
-    setIngData(ingfulldata.data)
-    filterIngByCategory(menuIngredients, menuWares)
+    }));
+    setWareData(warefulldata.data);
+    setIngData(ingfulldata.data);
+    filterIngByCategory(menuIngredients, menuWares);
     menuIngredients.forEach((eachIng) =>
       setuniqueingid((prev) => [...prev, eachIng._id])
-    )
+    );
     mytool.kitchenware.forEach((eachTool) => {
-      setuniquetoolid((prev) => [...prev, eachTool._id])
-    })
-  }
+      setuniquetoolid((prev) => [...prev, eachTool._id]);
+    });
+  };
 
   const ignore = React.useRef(false);
   useEffect(() => {
@@ -172,6 +172,7 @@ const Ref = () => {
   const [uniqueingid, setuniqueingid] = useState([]);
   const [Tool, setTool] = useState([]);
   const [uniquetoolid, setuniquetoolid] = useState([]);
+  const [currentIngShow, setCurrentIngShow] = useState("all");
   const [IngBeforeEdit, setIngBeforeEdit] = useState({
     meat: [],
     veg: [],
@@ -296,30 +297,53 @@ const Ref = () => {
     console.log(response2);
   };
 
+  const handleCategorySelection = (s) => {};
   return (
     <div className="refpage">
       <h1 className="text-center">จัดการวัตถุดิบในตู้เย็น</h1>
-      <div className="flex refpage-lower-section">
+      <div className="refpage-lower-section">
         <div className="refpage-category">
-          <div className="category-card">
+          <div
+            className={currentIngShow === "all"? "category-card is-active" : "category-card"}
+            style={{ border: "none" }}
+            onClick={() => setCurrentIngShow("all")}
+          >
             ทั้งหมด
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "meat"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("meat")}
+          >
             เนื้อสัตว์
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "veg"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("veg")}
+          >
             ผักผลไม้
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "cond"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("cond")}
+          >
             เครื่องปรุง
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "flour"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("flour")}
+          >
             แป้ง
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "other"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("other")}
+          >
             ไข่/นม/อื่นๆ
           </div>
-          <div className="category-card">
+          <div
+            className={currentIngShow === "tool"? "category-card is-active" : "category-card"}
+            onClick={() => setCurrentIngShow("tool")}
+          >
             อุปกรณ์ทำอาหาร
           </div>
         </div>
@@ -405,74 +429,91 @@ const Ref = () => {
             </Form>
           </div>
           <div className="ref-page-ingredient-list">
-            <Tabs
-              className="ref-page-ingredient-tab"
-              defaultActiveKey="profile"
-              id="uncontrolled-tab-example"
-            >
-              <Tab eventKey="meat" title="เนื้อสัตว์">
-                <IngListComponent
-                  ingType={meatIng}
-                  setIng={setMeatIng}
-                  setUniqueIng={setuniqueingid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={true}
-                />
-              </Tab>
-              <Tab eventKey="veggie" title="ผัก/ผลไม้">
-                <IngListComponent
-                  ingType={vegIng}
-                  setIng={setVegIng}
-                  setUniqueIng={setuniqueingid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={true}
-                />
-              </Tab>
-              <Tab eventKey="condiment" title="เครื่องปรุง">
-                <IngListComponent
-                  ingType={condIng}
-                  setIng={setCondIng}
-                  setUniqueIng={setuniqueingid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={true}
-                />
-              </Tab>
-              <Tab eventKey="flour" title="แป้ง">
-                <IngListComponent
-                  ingType={flourIng}
-                  setIng={setFlourIng}
-                  setUniqueIng={setuniqueingid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={true}
-                />
-              </Tab>
-              <Tab eventKey="other" title="ไข่/นม/อื่นๆ">
-                <IngListComponent
-                  ingType={otherIng}
-                  setIng={setOtherIng}
-                  setUniqueIng={setuniqueingid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={true}
-                />
-              </Tab>
-              <Tab eventKey="tool" title="อุปกรณ์ทำอาหาร">
-                <IngListComponent
-                  ingType={Tool}
-                  setIng={setTool}
-                  setUniqueIng={setuniquetoolid}
-                  showEditButton={showEditButton}
-                  removeonClick={removeonClick}
-                  ingorware={false}
-                />
-              </Tab>
-            </Tabs>
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "meat" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={meatIng}
+              setIng={setMeatIng}
+              setUniqueIng={setuniqueingid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={true}
+            />
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "veg" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={vegIng}
+              setIng={setVegIng}
+              setUniqueIng={setuniqueingid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={true}
+            />
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "cond" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={condIng}
+              setIng={setCondIng}
+              setUniqueIng={setuniqueingid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={true}
+            />
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "flour" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={flourIng}
+              setIng={setFlourIng}
+              setUniqueIng={setuniqueingid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={true}
+            />
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "other" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={otherIng}
+              setIng={setOtherIng}
+              setUniqueIng={setuniqueingid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={true}
+            />
+            <IngListComponent
+              style={{
+                display:
+                  currentIngShow === "tool" || currentIngShow === "all"
+                    ? "block"
+                    : "none",
+              }}
+              ingType={Tool}
+              setIng={setTool}
+              setUniqueIng={setuniquetoolid}
+              showEditButton={showEditButton}
+              removeonClick={removeonClick}
+              ingorware={false}
+            />
           </div>
-
           <div className="submit-button-section">
             <Button
               onClick={() =>
