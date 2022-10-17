@@ -14,6 +14,14 @@ const Search = () => {
     setMenulist(response.menu)
   }
 
+  function shortenDesc(desc) {
+    if(desc.length > 165){
+      return desc.substring(0,165) + "......";
+    }else{
+      return desc;
+    }
+  }
+  
   return (
     <>
       <h1 className="text-center">ค้นหาสูตรอาหารทั้งหมด</h1>
@@ -41,7 +49,7 @@ const Search = () => {
             FoodImg={eachMenu.image}
             Star={eachMenu.rating}
             Fav={eachMenu.favCount}
-            Desc={eachMenu.description}
+            Desc={shortenDesc(eachMenu.description)}
             MenuID={eachMenu._id}
             UserID={eachMenu.userID}
           ></MCard>
