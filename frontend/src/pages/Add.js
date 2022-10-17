@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom"
 function Add() {
   const token = JSON.parse(localStorage.getItem("token"))
   const { mid } = useParams()
+  const [menuid, setMenuid] = useState(mid)
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
@@ -95,7 +96,7 @@ function Add() {
       setingdata(ingfulldata.data)
       if (mid) {
         const recipedata = await GetMenuInfo(mid)
-        console.log(recipedata.query[0])
+        console.log(recipedata)
         setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
       }
     }
@@ -226,8 +227,9 @@ function Add() {
       kitchenware: lastwarelist,
       cookingstep: laststeplist,
     }
-    if (!mid) {
+    if (!menuid) {
       const response = await AddMenu(token, ingarray)
+      setMenuid(response.id)
       if (response.success) {
         if (selectedFile) {
           const menuImage = new FormData()
@@ -245,9 +247,7 @@ function Add() {
         console.log("error")
       }
     } else {
-      const response = await UpdateMenu(token, ingarray, mid)
-      console.log(ingarray)
-      console.log(response)
+      const response = await UpdateMenu(token, ingarray, menuid)
       if (!response.success) {
         console.log("error")
       } else {
