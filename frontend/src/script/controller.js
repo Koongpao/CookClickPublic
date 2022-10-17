@@ -21,6 +21,19 @@ export const UserLogin = async (item) => {
   }
 }
 
+export const CheckSignupExist = async (type,value) => {
+  const baseURL = "https://cookclick-api.code.in.th/user/signup/check?type="+type+"&value="+value
+  try {
+    const response = await axios.get(baseURL)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+
 export const GetSystemIngredient = async () => {
   const baseURL = "https://cookclick-api.code.in.th/systems/ingredients"
   try {
