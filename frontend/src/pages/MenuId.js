@@ -27,6 +27,7 @@ const MenuPage = () => {
       const ingFullData = await GetSystemIngredient()
       const wareFullData = await GetSystemKitchenware()
       const menuInfo = await GetMenuInfo(mid)
+      console.log(menuInfo)
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image
       )
@@ -38,7 +39,7 @@ const MenuPage = () => {
             )
         }
       }
-      console.log(menuInfo.query[0])
+
       setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
@@ -73,7 +74,7 @@ const MenuPage = () => {
       </div>
       <div className="menu-desc">
         <h1 className="menu-header">{menuDetails.name}</h1>
-        <div>By: { menuDetails.userDisplayName }</div>
+        <div>By: {menuDetails.userDisplayName}</div>
         {menuDetails.description}
       </div>
       <div className="menu-ing-list">
@@ -108,12 +109,12 @@ const MenuPage = () => {
         ))}
       </div>
       <h1 className="mt-5">Comments</h1>
-        {menuDetails.comment.map((eachComment, id) => (
-          <div className="menu-comments-list">
-            <h4 key={id}>{eachComment.userID}</h4>
-            <p>{eachComment.description}</p>
-          </div>
-        ))}
+      {menuDetails.comment.map((eachComment, id) => (
+        <div className="menu-comments-list">
+          <h4 key={id}>{eachComment.userID}</h4>
+          <p>{eachComment.description}</p>
+        </div>
+      ))}
     </div>
   )
 }
