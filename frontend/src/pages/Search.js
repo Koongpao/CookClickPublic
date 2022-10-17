@@ -42,7 +42,7 @@ const Search = () => {
             Star={eachMenu.rating}
             Fav={eachMenu.favCount}
             Desc={eachMenu.description}
-            MenuId={eachMenu._id}
+            MenuID={eachMenu._id}
             UserID={eachMenu.userID}
           ></MCard>
         ))}

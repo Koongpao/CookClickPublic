@@ -34,9 +34,9 @@
   height: auto;
   margin: 2% 0 2% 0;
   padding: 2%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border: none !important;
-  font-size: 90%;
+  font-size: 110%;
 }
 
 .menu-ing-list {
@@ -44,14 +44,14 @@
   height: auto;
   margin: 1% 0 1% 0;
   padding: 2.5%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   /* border: black solid 1px; */
 }
 
 .menu-ing-item {
   display: flex;
   flex: 1 0 100%;
-  font-size: 150%;
+  font-size: 110%;
 }
 
 .menu-ing-item-right {
@@ -76,7 +76,7 @@
   width: 100%;
   height: auto;
   margin: 2% auto 2% auto;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 2.5%;
   text-align: center;
 }
@@ -84,7 +84,7 @@
 .menu-steps-item {
   height: auto;
   font-size: 120%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin: 2% auto 2% auto;
   padding: 5%;
   width: 100%;
@@ -117,5 +117,5 @@
   width: 100%;
   margin: 0.5rem 0;
   padding: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }

@@ -78,7 +78,7 @@ const MenuPage = () => {
         {menuDetails.description}
       </div>
       <div className="menu-ing-list">
-        <h1>ส่วนผสม</h1>
+        <h4>ส่วนผสม</h4>
         {menuDetails.ingredient.map((eachIng, index) => (
           <div key={index}>
             <MenuIngItem
@@ -88,7 +88,7 @@ const MenuPage = () => {
             />
           </div>
         ))}
-        <h1 className="pt-4">อุปกรณ์</h1>
+        <h4 className="pt-4">อุปกรณ์</h4>
         {menuDetails.kitchenware.map((eachWare, index) => (
           <div key={index}>
             <MenuIngItem name={eachWare.name} />
