@@ -50,7 +50,7 @@ const MCard = ({
           )}
           {!FoodImg && <TiCamera size={200} />}
         </div>
-        <div className="food-details">
+        <div className="food-details overflowhid">
           <h4>{FoodName}</h4>
           <span className="hint-star star">
             {addStar(1)}
@@ -67,7 +67,7 @@ const MCard = ({
               <TiHeartFullOutline /> {Fav}
             </span>
           )}
-          <p>{Desc}</p>
+          <p className="overflowhidp">{Desc}</p>
         </div>
       </div>
     </a>

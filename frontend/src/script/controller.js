@@ -21,6 +21,19 @@ export const UserLogin = async (item) => {
   }
 }
 
+export const CheckSignupExist = async (type,value) => {
+  const baseURL = "https://cookclick-api.code.in.th/user/signup/check?type="+type+"&value="+value
+  try {
+    const response = await axios.get(baseURL)
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+
 export const GetSystemIngredient = async () => {
   const baseURL = "https://cookclick-api.code.in.th/systems/ingredients"
   try {
@@ -265,6 +278,39 @@ export const GetAllMeMenuStatus = async (token) => {
   }
 }
 
+export const GetWaitMeMenuStatus = async (token) => {
+  const baseURL =
+    "https://cookclick-api.code.in.th/me/menu/status?type=waitapprove"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetDraftMeMenuStatus = async (token) => {
+  const baseURL = "https://cookclick-api.code.in.th/me/menu/status?type=draft"
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const DelMeMenu = async (token, menu, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/me/menu/${menuId}`
   try {
@@ -347,6 +393,22 @@ export const MenuReport = async (token, comment, menuId) => {
 
 export const MenuRequest = async (token, type) => {
   const baseURL = `https://cookclick-api.code.in.th/requests/menu?type=${type}`
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const MenuEdit = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/edit/${menuid}`
   try {
     const response = await axios.get(baseURL, {
       headers: {

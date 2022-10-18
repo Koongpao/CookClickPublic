@@ -12,7 +12,7 @@ import {
   ImageUpload,
   AddMenu,
   StepImageUpload,
-  GetMenuInfo,
+  MenuEdit,
   UpdateMenu,
 } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
@@ -22,13 +22,14 @@ import { useParams } from "react-router-dom"
 function Add() {
   const token = JSON.parse(localStorage.getItem("token"))
   const { mid } = useParams()
+  const [menuid, setMenuid] = useState(mid)
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
   function setup(data, fulling, fullware) {
     setrecipename(data.name)
     setrecipedesc(data.description)
-    setPreview(data.image)
+    setPreview("https://cookclick.code.in.th/images/".concat(data.image))
     let olding = []
     let olduing = []
     data.ingredient.forEach((ing) => {
@@ -69,7 +70,9 @@ function Add() {
     let oldpicstep = {}
     data.cookingstep.forEach((step) => {
       let newstep = { pic: null, id: step.index, desc: step.description }
-      oldpicstep[step.index] = step.image
+      oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
+        step.image
+      )
       oldstep.push(newstep)
     })
     setsteplist(oldstep)
@@ -94,8 +97,7 @@ function Add() {
       setwaredata(warefulldata.data)
       setingdata(ingfulldata.data)
       if (mid) {
-        const recipedata = await GetMenuInfo(mid)
-        console.log(recipedata.query[0])
+        const recipedata = await MenuEdit(token, mid)
         setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
       }
     }
@@ -226,24 +228,27 @@ function Add() {
       kitchenware: lastwarelist,
       cookingstep: laststeplist,
     }
-    if (!mid) {
+    if (!menuid) {
       const response = await AddMenu(token, ingarray)
+      setMenuid(response.id)
       if (response.success) {
-        const menuImage = new FormData()
-        menuImage.append("menu_image", selectedFile, selectedFile.name)
-        ImageUpload(token, menuImage, response.id)
+        if (selectedFile) {
+          const menuImage = new FormData()
+          menuImage.append("menu_image", selectedFile, selectedFile.name)
+          ImageUpload(token, menuImage, response.id)
+        }
         steplist.forEach((element, index) => {
-          const stepImage = new FormData()
-          stepImage.append("step_image", element.pic, element.pic.name)
-          StepImageUpload(token, stepImage, response.id, index)
+          if (element.pic) {
+            const stepImage = new FormData()
+            stepImage.append("step_image", element.pic, element.pic.name)
+            StepImageUpload(token, stepImage, response.id, index)
+          }
         })
       } else {
         console.log("error")
       }
     } else {
-      const response = await UpdateMenu(token, ingarray, mid)
-      console.log(ingarray)
-      console.log(response)
+      const response = await UpdateMenu(token, ingarray, menuid)
       if (!response.success) {
         console.log("error")
       } else {
@@ -509,7 +514,10 @@ function Add() {
             <Button
               className="savebutton"
               variant="success"
-              onClick={() => send(1)}
+              onClick={(e) => {
+                send(1)
+                e.preventDefault()
+              }}
             >
               บันทึกสูตรอาหาร
             </Button>
@@ -517,7 +525,10 @@ function Add() {
             <Button
               className="submitbutton"
               variant="success"
-              onClick={() => send(2)}
+              onClick={(e) => {
+                send(2)
+                e.preventDefault()
+              }}
             >
               ยืนยันการสร้างสูตรอาหาร
             </Button>

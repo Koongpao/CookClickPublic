@@ -6,12 +6,13 @@ import {
   GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
+  MenuEdit,
 } from "../script/controller"
 import { useParams } from "react-router-dom"
 import { BiFlag } from "react-icons/bi"
 import Form from 'react-bootstrap/Form';
 
-const MenuPage = () => {
+const MenuPage = ({ status }) => {
   const [menuDetails, setMenuDetails] = useState({
     _id: "",
     name: "",
@@ -22,15 +23,26 @@ const MenuPage = () => {
     cookingstep: [],
     comment: [],
   })
+<<<<<<< HEAD
 
   const [comment, setComment] = useState("")
 
+=======
+  const token = JSON.parse(localStorage.getItem("token"))
+>>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
   const { mid } = useParams()
   useEffect(() => {
     const FetchData = async () => {
       const ingFullData = await GetSystemIngredient()
       const wareFullData = await GetSystemKitchenware()
-      const menuInfo = await GetMenuInfo(mid)
+      let menuInfo
+      if (!status) {
+        menuInfo = await GetMenuInfo(mid)
+      } else {
+        menuInfo = await MenuEdit(token, mid)
+      }
+
+      console.log(menuInfo)
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image
       )
@@ -42,7 +54,11 @@ const MenuPage = () => {
             )
         }
       }
+<<<<<<< HEAD
       console.log(menuInfo)
+=======
+
+>>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
       setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
@@ -82,11 +98,11 @@ const MenuPage = () => {
       </div>
       <div className="menu-desc">
         <h1 className="menu-header">{menuDetails.name}</h1>
-        <div>By: { menuDetails.userDisplayName }</div>
+        <div>By: {menuDetails.userDisplayName}</div>
         {menuDetails.description}
       </div>
       <div className="menu-ing-list">
-        <h1>ส่วนผสม</h1>
+        <h4>ส่วนผสม</h4>
         {menuDetails.ingredient.map((eachIng, index) => (
           <div key={index}>
             <MenuIngItem
@@ -96,7 +112,7 @@ const MenuPage = () => {
             />
           </div>
         ))}
-        <h1 className="pt-4">อุปกรณ์</h1>
+        <h4 className="pt-4">อุปกรณ์</h4>
         {menuDetails.kitchenware.map((eachWare, index) => (
           <div key={index}>
             <MenuIngItem name={eachWare.name} />
@@ -118,6 +134,7 @@ const MenuPage = () => {
       </div>
       <h1 className="mt-5">Comments</h1>
       {menuDetails.comment.map((eachComment, id) => (
+<<<<<<< HEAD
         <div className="menu-comments-list" key={id}>
           <div className="flex justify-content-between text-md">
             {eachComment.userID}
@@ -137,6 +154,13 @@ const MenuPage = () => {
           value={comment}
         />
       </Form.Group>
+=======
+        <div className="menu-comments-list">
+          <h4 key={id}>{eachComment.userID}</h4>
+          <p>{eachComment.description}</p>
+        </div>
+      ))}
+>>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
     </div>
     )
 }

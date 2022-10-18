@@ -1,12 +1,17 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
-import { useState } from "react"
-import { AddUser, UserLogin } from "../script/controller"
-import { AcceptedPopup, DeniedPopup } from "../components/SignInPopup"
+import { useState,useEffect } from "react"
+import { AddUser, UserLogin,CheckSignupExist } from "../script/controller"
+import { AcceptedPopup, DeniedPopup,EmailVerifiedPopup } from "../components/SignInPopup"
 import { useAuth } from "../script/useAuth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate,useSearchParams } from "react-router-dom"
+
+
 
 const SignUp = ({ onchangelogin }) => {
+
+  const [searchParams] = useSearchParams();
+
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     displayname: "",
@@ -15,6 +20,9 @@ const SignUp = ({ onchangelogin }) => {
   })
   const [modalShowAccepted, setModalShowAccepted] = useState(false)
   const [modalShowDenied, setModalShowDenied] = useState(false)
+  const [modalShowEmailVerified, setModalShowEmailVerified] = useState(false)
+
+  
   const [deniedMessage, setDeniedMessage] = useState("")
   const { login } = useAuth()
   const handleSubmit = async (e) => {
@@ -62,11 +70,57 @@ const SignUp = ({ onchangelogin }) => {
     if (!isValidEmail(event.target.value)) {
       setError("Email is invalid")
     } else {
-      setError(null)
+      setEmail({
+        ...email,
+        text: event.target.value,
+      });
     }
     setMessage(event.target.value)
   }
-  const checkLengthN = (event) => {
+
+
+  const [displayname, setDisplayname] = useState({text: ''});
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if(displayname.text.length >= 6){
+        let data = await CheckSignupExist("displayname",displayname.text);
+        if(data.message == "Already taken."){
+          setErrorN("Display Name already taken.")
+        }else{
+          setErrorN(null)
+        }
+      }
+    }
+   fetchData()
+  }, [displayname]);
+
+  const [email, setEmail] = useState({text: ''});
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      if(email.text.length >= 1){
+        let data = await CheckSignupExist("email",email.text);
+        if(data.message == "Already taken."){
+          setError("Email already taken.")
+        }else{
+          setError(null)
+        }
+      }
+    }
+   fetchData()
+  }, [email]);
+
+
+  useEffect(() => {
+    if(searchParams.get('verify') == "true"){
+        setModalShowEmailVerified(true)
+     }
+  },[]);
+  
+
+  const checkLengthN = async (event) => {
     if (!isValidLengthN(event.target.value)) {
       setErrorN("Display Name must be 6-20 characters long")
     }
@@ -74,7 +128,11 @@ const SignUp = ({ onchangelogin }) => {
       setErrorN("Display Name must only contain letters, numbers and underscores")
     }
     else {
-      setErrorN(null)
+      const {value} = event.target.value;
+      setDisplayname({
+        ...displayname,
+        text: event.target.value,
+      });
     }
     setMessageN(event.target.value)
   }
@@ -188,6 +246,13 @@ const SignUp = ({ onchangelogin }) => {
           navigate("/login")
         }}
       />
+	  <EmailVerifiedPopup
+        show={modalShowEmailVerified}
+        onHide={() => {
+          navigate("/login")
+        }}
+      />
+	  
       <DeniedPopup
         className="text-center"
         show={modalShowDenied}
@@ -195,6 +260,8 @@ const SignUp = ({ onchangelogin }) => {
         message={deniedMessage}
       />
     </>
+	
+	
   )
 }
 

@@ -20,11 +20,12 @@ const SearchRef = () => {
     }
   })
 
+
   return (
     <>
       <div className="flex flex-col align-items-center">
         <h1 className="text-center">ค้นหาสูตรอาหารจากวัตถุดิบในตู้เย็น</h1>
-        <div className="common-home flex flex-col align-items-center">
+        <div className="common-home flex flex-col width-100 collapse show">
           {Menulist.map((food, index) => {
             return (
               <MCard
@@ -35,6 +36,7 @@ const SearchRef = () => {
                 Fav={food.favCount}
                 Desc={food.description}
                 MenuID={food.menuID}
+                UserID={food.userID}
               />
             )
           })}

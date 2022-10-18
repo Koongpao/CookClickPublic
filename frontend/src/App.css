@@ -940,3 +940,14 @@ label:focus,
 .hover-pointer {
   cursor: pointer;
 }
+
+.overflowhid {
+  overflow: hidden;
+}
+
+.overflowhidp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

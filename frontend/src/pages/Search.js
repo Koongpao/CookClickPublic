@@ -11,9 +11,11 @@ const Search = () => {
     console.log(keyword)
     let response = await SearchMenu(keyword)
     console.log(response)
-    setMenulist(response.menulist)
+    setMenulist(response.menu)
   }
 
+
+  
   return (
     <>
       <h1 className="text-center">ค้นหาสูตรอาหารทั้งหมด</h1>
@@ -42,7 +44,7 @@ const Search = () => {
             Star={eachMenu.rating}
             Fav={eachMenu.favCount}
             Desc={eachMenu.description}
-            MenuId={eachMenu._id}
+            MenuID={eachMenu._id}
             UserID={eachMenu.userID}
           ></MCard>
         ))}

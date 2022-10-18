@@ -27,11 +27,11 @@ const Approvalbox = ({
         {Status && <h4>{menu.name}</h4>}
         {!Status && <span>{menu.name}</span>}
       </a>
-      {Status && <h4 className="approvebox-cooker">{menu.userID}</h4>}
+      {Status && <h4 className="approvebox-cooker">{menu.ownerName}</h4>}
       {!Status && (
         <span className="approvebox-cooker">
           โดย&nbsp;
-          {menu.userID}
+          {menu.ownerName}
         </span>
       )}
       {Status && (
