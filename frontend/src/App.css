@@ -951,3 +951,27 @@ label:focus,
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.ref-offcanva-button{
+  background-color: white;
+  border: rgba(0, 0, 0, 0.16) solid 1px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  width: 250px;
+  height: 250px;
+  max-height: 50px;
+  margin: 0.5% auto 0.5% auto;
+  transition: all 0.5s
+}
+
+.ref-offcanva-button:hover{
+  background-color: rgb(0, 0, 0, 0.15)
+}
+
+.ref-offcanva-body{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 50%;
+  margin: auto;
+}

@@ -18,6 +18,7 @@ const IngListComponent = (props) => {
                 disabled={props.showEditButton ? true : false}
                 type="number"
                 min="0"
+                placeholder="ปริมาณ"
                 onChange={(e) => {
                   ing.ingamount = e.target.value
                   setIngDummy((dummy) => !dummy)

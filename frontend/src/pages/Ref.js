@@ -57,6 +57,7 @@ const Ref = () => {
       sortByCategory(element)
       setuniqueingid([...uniqueingid, element._id])
     }
+    setCurrentIngShow("all")
     handleCloseing()
     handleClosetool()
   }
@@ -379,10 +380,11 @@ const Ref = () => {
                 className="searchoffcanvas"
               >
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>เพิ่มวัตถุดิบ</Offcanvas.Title>
+                  <Offcanvas.Title style={{margin: "auto"}}>เพิ่มวัตถุดิบ</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
+                <Offcanvas.Body className="ref-offcanva-body">
                   <Form.Control
+                    placeholder="กรอกชื่อวัตถุดิบที่ต้องการเพิ่ม"
                     type="text"
                     onChange={(e) => setkeywording(e.target.value)}
                   />
@@ -391,12 +393,13 @@ const Ref = () => {
                       ing.name.includes(keywording.toLowerCase())
                     )
                     .map((filtereding) => (
-                      <Button
+                      <button
+                        className="ref-offcanva-button"
                         onClick={() => addEntryClick(filtereding)}
                         key={filtereding.id}
                       >
                         {filtereding.name}
-                      </Button>
+                      </button>
                     ))}
                 </Offcanvas.Body>
               </Offcanvas>
@@ -417,11 +420,12 @@ const Ref = () => {
                 className="searchoffcanvas"
               >
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>เพิ่มอุปกรณ์</Offcanvas.Title>
+                  <Offcanvas.Title style={{margin: "auto"}}>เพิ่มอุปกรณ์</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
+                <Offcanvas.Body className="ref-offcanva-body">
                   <Form.Control
                     type="text"
+                    placeholder="กรอกชื่ออุปกรณ์ที่ต้องการเพิ่ม"
                     onChange={(e) => {
                       setkeywording(e.target.value)
                     }}
@@ -431,12 +435,13 @@ const Ref = () => {
                       ing.name.includes(keywording.toLowerCase())
                     )
                     .map((filtereding) => (
-                      <Button
+                      <button
+                        className="ref-offcanva-button"
                         onClick={() => addEntryClick(filtereding)}
                         key={filtereding.id}
                       >
                         {filtereding.name}
-                      </Button>
+                      </button>
                     ))}
                 </Offcanvas.Body>
               </Offcanvas>
@@ -573,10 +578,10 @@ const Ref = () => {
               </Modal.Body>
               <Modal.Footer className="content-center">
                 <Button
-                  className="button-28-red"
+                  className="button-28-blue"
                   onClick={() => setSubmitConfirmation(false)}
                 >
-                  ยกเลิก
+                  แก้ไขต่อ
                 </Button>
                 <Button
                   className="button-28-green"
@@ -595,16 +600,16 @@ const Ref = () => {
               </Modal.Body>
               <Modal.Footer className="content-center">
                 <Button
-                  className="button-28-red"
+                  className="button-28-blue"
                   onClick={() => setDiscardChange(false)}
                 >
-                  ยกเลิก
+                  แก้ไขต่อ
                 </Button>
                 <Button
-                  className="button-28-green"
+                  className="button-28-red"
                   onClick={() => handleDiscardChange()}
                 >
-                  ยืนยัน
+                  ยกเลิกการเปลี่ยนแปลง
                 </Button>
               </Modal.Footer>
             </Modal>

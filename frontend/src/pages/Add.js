@@ -326,22 +326,24 @@ function Add() {
             className="searchoffcanvas"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>เพิ่มวัตถุดิบ</Offcanvas.Title>
+              <Offcanvas.Title style={{margin:"auto"}}>เพิ่มวัตถุดิบ</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>
+            <Offcanvas.Body className="ref-offcanva-body">
               <FormControl
+                placeholder="กรอกวัตถุดิบที่ต้องการเพิ่ม"
                 type="text"
                 onChange={(e) => setkeywording(e.target.value)}
               />
               {ingdata
                 .filter((ing) => ing.name.includes(keywording.toLowerCase()))
                 .map((filtereding) => (
-                  <Button
+                  <button
+                    className="ref-offcanva-button"
                     onClick={() => addEntryClick(0, filtereding)}
                     key={filtereding.id}
                   >
                     {filtereding.name}
-                  </Button>
+                  </button>
                 ))}
             </Offcanvas.Body>
           </Offcanvas>
@@ -384,22 +386,24 @@ function Add() {
             className="searchoffcanvas"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>เพิ่มอุปกรณ์</Offcanvas.Title>
+              <Offcanvas.Title style={{margin:"auto"}}>เพิ่มอุปกรณ์</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>
+            <Offcanvas.Body className="ref-offcanva-body">
               <FormControl
+                placeholder="กรอกอุปกรณ์ที่ต้องการเพิ่ม"
                 type="text"
                 onChange={(e) => setkeywordtool(e.target.value)}
               />
               {waredata
                 .filter((tool) => tool.name.includes(keywordtool.toLowerCase()))
                 .map((filteredtool) => (
-                  <Button
+                  <button
+                    className="ref-offcanva-button"
                     onClick={() => addEntryClick(1, filteredtool)}
                     key={filteredtool.id}
                   >
                     {filteredtool.name}
-                  </Button>
+                  </button>
                 ))}
             </Offcanvas.Body>
           </Offcanvas>
