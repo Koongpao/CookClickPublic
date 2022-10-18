@@ -2,16 +2,18 @@ import { useEffect, useState } from "react"
 import "./MenuId.css"
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
-import MenuCommentItem from "../components/MenuIdPage/MenuCommentItem"
 import {
   GetMenuInfo,
   GetSystemIngredient,
   GetSystemKitchenware,
 } from "../script/controller"
 import { useParams } from "react-router-dom"
+import { BiFlag } from "react-icons/bi"
+import Form from 'react-bootstrap/Form';
 
 const MenuPage = () => {
   const [menuDetails, setMenuDetails] = useState({
+    _id: "",
     name: "",
     image: "",
     description: "",
@@ -20,6 +22,8 @@ const MenuPage = () => {
     cookingstep: [],
     comment: [],
   })
+
+  const [comment, setComment] = useState("")
 
   const { mid } = useParams()
   useEffect(() => {
@@ -38,7 +42,7 @@ const MenuPage = () => {
             )
         }
       }
-      console.log(menuInfo.query[0])
+      console.log(menuInfo)
       setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
@@ -65,6 +69,11 @@ const MenuPage = () => {
     }
     FetchData()
   }, [])
+
+  const sendReport = async () => {
+    const token = JSON.parse(localStorage.getItem("token"))
+  }
+
 
   return (
     <div className="menupage">
@@ -108,14 +117,28 @@ const MenuPage = () => {
         ))}
       </div>
       <h1 className="mt-5">Comments</h1>
-        {menuDetails.comment.map((eachComment, id) => (
-          <div className="menu-comments-list">
-            <h4 key={id}>{eachComment.userID}</h4>
-            <p>{eachComment.description}</p>
+      {menuDetails.comment.map((eachComment, id) => (
+        <div className="menu-comments-list" key={id}>
+          <div className="flex justify-content-between text-md">
+            {eachComment.userID}
+            <BiFlag className="hover-pointer" onClick={() => {
+              sendReport(menuDetails[id]._id, eachComment.commentID)
+            }}/>
           </div>
-        ))}
+          <p>{eachComment.description}</p>
+        </div>
+      ))}
+      <Form.Group className="mb-3" controlId="AddDesc">
+        <Form.Control
+          type="text"
+          placeholder="ใส่คำอธิบายของสูตรอาหาร"
+          as="textarea"
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+        />
+      </Form.Group>
     </div>
-  )
+    )
 }
 
 export default MenuPage
