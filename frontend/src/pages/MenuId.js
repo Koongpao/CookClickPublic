@@ -23,13 +23,12 @@ const MenuPage = ({ status }) => {
     cookingstep: [],
     comment: [],
   })
-<<<<<<< HEAD
 
   const [comment, setComment] = useState("")
 
-=======
   const token = JSON.parse(localStorage.getItem("token"))
->>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
+
+
   const { mid } = useParams()
   useEffect(() => {
     const FetchData = async () => {
@@ -54,11 +53,7 @@ const MenuPage = ({ status }) => {
             )
         }
       }
-<<<<<<< HEAD
       console.log(menuInfo)
-=======
-
->>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
       setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
@@ -90,6 +85,23 @@ const MenuPage = ({ status }) => {
     const token = JSON.parse(localStorage.getItem("token"))
   }
 
+
+
+  function commentBox(props) {
+      return <Form.Group className="mb-3" controlId="AddDesc">
+      <Form.Control
+        type="text"
+        placeholder="ใส่คำอธิบายของสูตรอาหาร"
+        as="textarea"
+        onChange={(e) => setComment(e.target.value)}
+        value={comment}
+      />
+    </Form.Group>
+  }
+
+  
+
+  const comBox = commentBox();
 
   return (
     <div className="menupage">
@@ -134,7 +146,6 @@ const MenuPage = ({ status }) => {
       </div>
       <h1 className="mt-5">Comments</h1>
       {menuDetails.comment.map((eachComment, id) => (
-<<<<<<< HEAD
         <div className="menu-comments-list" key={id}>
           <div className="flex justify-content-between text-md">
             {eachComment.userID}
@@ -145,22 +156,7 @@ const MenuPage = ({ status }) => {
           <p>{eachComment.description}</p>
         </div>
       ))}
-      <Form.Group className="mb-3" controlId="AddDesc">
-        <Form.Control
-          type="text"
-          placeholder="ใส่คำอธิบายของสูตรอาหาร"
-          as="textarea"
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-      </Form.Group>
-=======
-        <div className="menu-comments-list">
-          <h4 key={id}>{eachComment.userID}</h4>
-          <p>{eachComment.description}</p>
-        </div>
-      ))}
->>>>>>> 12d6e6db337eebcb55d6f95dcdd4987f4ef0c014
+      {token && comBox}    
     </div>
     )
 }
