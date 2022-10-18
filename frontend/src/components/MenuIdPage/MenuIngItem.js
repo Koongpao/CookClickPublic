@@ -1,10 +1,11 @@
 import React from "react"
+import { FaRegBell } from "react-icons/fa"
 
-const MenuIngItem = ({ name, amount, unit }) => {
+const MenuIngItem = (p) => {
   return (
-    <div className="menu-ing-item">
-      <div className="menu-ing-item-right">{name}</div>
-      <div className="menu-ing-item-left">{amount} {unit}</div>
+    <div className="menu-ing-item" style={{backgroundColor: p.index%2===0? "rgb(0,0,0,0.16)" : "none" }}>
+      <div className="menu-ing-item-right"><li>{p.name}</li></div>
+      <div className="menu-ing-item-left">{p.amount} {p.unit}</div>
     </div>
   )
 }
