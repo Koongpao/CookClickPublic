@@ -70,9 +70,11 @@ function Add() {
     let oldpicstep = {}
     data.cookingstep.forEach((step) => {
       let newstep = { pic: null, id: step.index, desc: step.description }
-      oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
-        step.image
-      )
+      if (step.image) {
+        oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
+          step.image
+        )
+      }
       oldstep.push(newstep)
     })
     setsteplist(oldstep)
