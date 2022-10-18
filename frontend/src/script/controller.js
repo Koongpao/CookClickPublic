@@ -327,10 +327,10 @@ export const DelMeMenu = async (token, menu, menuId) => {
   }
 }
 
-export const RatingMenu = async (token, menu, menuId) => {
+export const RatingMenu = async (token, score, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/rating`
   try {
-    const response = await axios.post(baseURL, menu, {
+    const response = await axios.post(baseURL, score, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -753,6 +753,22 @@ export const DelMemberReport = async (token, reportID) => {
   const baseURL = `https://cookclick-api.code.in.th/reports/user/${reportID}`
   try {
     const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const FavoriteMenu = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.get(baseURL, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

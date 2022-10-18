@@ -18,6 +18,7 @@
   height: auto;
   margin: 5% 0 2% 0;
   background-color: rgb(38, 38, 38);
+  border-radius: 10px;
 }
 
 .menu-img > img {
@@ -37,6 +38,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border: none !important;
   font-size: 110%;
+  border-radius: 10px;
 }
 
 .menu-ing-list {
@@ -45,6 +47,7 @@
   margin: 1% 0 1% 0;
   padding: 2.5%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
   /* border: black solid 1px; */
 }
 
@@ -52,9 +55,11 @@
   display: flex;
   flex: 1 0 100%;
   font-size: 110%;
+  border-radius: 10px;
 }
 
 .menu-ing-item-right {
+  margin-left: 7%;
   width: 70%;
   height: auto;
 }
@@ -79,38 +84,50 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 2.5%;
   text-align: center;
+  border-radius: 10px;
 }
 
 .menu-steps-item {
   height: auto;
-  font-size: 120%;
+  font-size: 2.2vh;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin: 2% auto 2% auto;
   padding: 5%;
   width: 100%;
-  align-items: center;
-  text-align: center;
-}
-
-.menu-steps-item-img {
-  height: auto;
+  border-radius: 10px;
+  display: flex;
 }
 
 .menu-steps-item-img > img {
-  max-width: 90%;
-  width: auto;
-  height: 100%;
+  object-fit: cover;
+  max-width: 80%;
   max-height: 100%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 5%;
+  width: 250px;
+  float: right;
 }
 
+.menu-steps-item-img{
+  flex-grow: 1;
+}
 .menu-steps-item-desc {
-  margin: auto;
   margin-top: 2%;
   height: auto;
+  max-width: 50%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-steps-index{
+  background-color: rgba(0, 0, 0, 0.16);
+  width: 60px;
+  height: 28px;
+  flex: 0 0 auto;
+  font-weight: bold;
+  text-align: center;
+  padding: 2%;
+  margin-bottom: 3%;
+  border-radius: 10px;
 }
 
 .menu-comments-list {
@@ -119,3 +136,41 @@
   padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
+.menu-rating-bar{
+  display:flex;
+  flex: space-evenly;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 2%;
+  height: auto;
+  border-radius: 10px;
+  font-size: 110%;
+  text-align: center;
+}
+
+.menu-rating-rate{
+  flex-grow:1;
+  border-right: rgba(0, 0, 0, 0.16) solid 1px;
+}
+
+.menu-rating-comment{
+  flex-grow: 1;
+  border-right: rgba(0, 0, 0, 0.16) solid 1px;
+}
+
+.menu-rating-fav{
+  flex-grow: 1;
+}
+.menu-rating-star{
+  color: none;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.menu-star{
+  cursor: pointer;
+  color: rgb(250, 217, 71);
+}
+
+
