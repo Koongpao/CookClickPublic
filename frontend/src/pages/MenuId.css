@@ -151,6 +151,7 @@
 .menu-rating-rate{
   flex-grow:1;
   border-right: rgba(0, 0, 0, 0.16) solid 1px;
+  max-width: 30%;
 }
 
 .menu-rating-comment{
@@ -160,12 +161,12 @@
 
 .menu-rating-fav{
   flex-grow: 1;
+  max-width: 30%;
 }
 .menu-rating-star{
   color: none;
   display: flex;
   justify-content: center;
-  
 }
 
 .menu-star{

@@ -3,13 +3,17 @@ import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
 import {
+  GetCurrentMenuIfFavorited,
   GetMenuInfo,
+  GetMyRatingOnMenu,
   GetSystemIngredient,
   GetSystemKitchenware,
   MenuEdit,
   RatingMenu,
+  UnfavoriteMenu,
+  FavoriteMenu,
 } from "../script/controller";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
 import {
   BsPersonCircle,
@@ -20,13 +24,10 @@ import {
 } from "react-icons/bs";
 import { MdOutlineDescription } from "react-icons/md";
 import Form from "react-bootstrap/Form";
-import {
-  TiStarFullOutline,
-  TiStarHalfOutline,
-  TiStarOutline,
-} from "react-icons/ti";
+import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Modal, Button } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
+import axios from "axios";
 
 const MenuPage = ({ status }) => {
   const Navigate = useNavigate();
@@ -51,6 +52,11 @@ const MenuPage = ({ status }) => {
     const FetchData = async () => {
       const ingFullData = await GetSystemIngredient();
       const wareFullData = await GetSystemKitchenware();
+      const myRating = await GetMyRatingOnMenu(token, mid);
+      const ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
+      setMenuFavorite(ifFavorited.result);
+      setInitialFavorite(ifFavorited.result);
+      setCurrentStarValue(myRating.ratescore);
       let menuInfo;
       if (!status) {
         menuInfo = await GetMenuInfo(mid);
@@ -58,7 +64,7 @@ const MenuPage = ({ status }) => {
         menuInfo = await MenuEdit(token, mid);
       }
 
-      console.log(menuInfo);
+      // console.log(menuInfo);
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image
       );
@@ -70,7 +76,6 @@ const MenuPage = ({ status }) => {
             );
         }
       }
-      console.log(menuInfo);
       setMenuDetails(menuInfo.query[0]);
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
@@ -119,6 +124,10 @@ const MenuPage = ({ status }) => {
   const [hoverStarValue, setHoverStarValue] = useState(0);
   const [menuFavorite, setMenuFavorite] = useState(false);
   const [notLoggedIn, setNotLoggedIn] = useState(false);
+  const [rateSuccessMsg, setRateSuccessMsg] = useState(false);
+  const [initialFavorite, setInitialFavorite] = useState(0);
+  const [showFavoritemsg, setShowFavoritemsg] = useState(false);
+  const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false);
   const comBox = commentBox();
 
   const handleRatingClick = async (value) => {
@@ -132,6 +141,29 @@ const MenuPage = ({ status }) => {
     };
     const response = await RatingMenu(token, valueBody, mid);
     console.log(response);
+    setRateSuccessMsg(true);
+  };
+
+  const handleFavoriteClick = async () => {
+    if (!token) {
+      setNotLoggedIn(true);
+      return;
+    }
+    if (menuFavorite === false) {
+      const response = await FavoriteMenu(token, mid);
+      console.log("favoriting menu");
+      setMenuFavorite(true);
+      console.log(response);
+    } else {
+      const response = await UnfavoriteMenu(token, mid);
+      setMenuFavorite(false);
+      console.log(response);
+    }
+    if (initialFavorite) {
+      setShowUnfavoritemsg(!showUnfavoritemsg);
+    } else {
+      setShowFavoritemsg(!showFavoritemsg);
+    }
   };
 
   return (
@@ -148,7 +180,7 @@ const MenuPage = ({ status }) => {
           <MdOutlineDescription /> {menuDetails.description}
         </div>
         <div>
-          <BsFillStarFill /> Rating : {menuDetails.rating}/5 -{" "}
+          <BsFillStarFill /> Rating : {menuDetails.rating.toFixed(2)}/5 -{" "}
           <span style={{ color: "rgba(0, 0, 0, 0.5)" }}>
             {" "}
             rated by {menuDetails.ratingWeight} peoples
@@ -211,6 +243,15 @@ const MenuPage = ({ status }) => {
               );
             })}
           </div>
+          <span
+            style={{
+              display: rateSuccessMsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            {" "}
+            คุณได้ให้ {currentStarValue} ดาวกับเมนูนี้!
+          </span>
         </div>
         <div className="menu-rating-comment">
           Comment
@@ -233,7 +274,7 @@ const MenuPage = ({ status }) => {
                 display: menuFavorite ? "none" : "block",
                 color: "green",
               }}
-              onClick={() => setMenuFavorite(true)}
+              onClick={() => handleFavoriteClick()}
             />
             <BsBookmarkStarFill
               style={{
@@ -242,9 +283,25 @@ const MenuPage = ({ status }) => {
                 display: menuFavorite ? "block" : "none",
                 color: "green",
               }}
-              onClick={() => setMenuFavorite(false)}
+              onClick={() => handleFavoriteClick()}
             />
           </div>
+          <span
+            style={{
+              display: showFavoritemsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            นำเข้ารายการโปรดแล้ว
+          </span>
+          <span
+            style={{
+              display: showUnfavoritemsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            นำออกจากรายการโปรดแล้ว
+          </span>
         </div>
       </div>
 

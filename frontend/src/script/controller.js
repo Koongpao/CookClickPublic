@@ -765,8 +765,56 @@ export const DelMemberReport = async (token, reportID) => {
   }
 }
 
+export const UnfavoriteMenu = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const FavoriteMenu = async (token, menuid) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.post(baseURL, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetCurrentMenuIfFavorited = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetMyRatingOnMenu = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/rating`
   try {
     const response = await axios.get(baseURL, {
       headers: {
