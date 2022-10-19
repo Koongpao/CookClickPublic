@@ -89,6 +89,7 @@ const MenuPage = ({ status }) => {
       console.log(menuInfo.query[0]);
       setMenuDetails((prev) => ({
         ...prev,
+        rating: prev.rating.toFixed(2),
         ingredient: menuIngredients,
         kitchenware: menuKitchenware,
       }));
@@ -180,7 +181,7 @@ const MenuPage = ({ status }) => {
           <MdOutlineDescription /> {menuDetails.description}
         </div>
         <div>
-          <BsFillStarFill /> Rating : {menuDetails.rating.toFixed(2)}/5 -{" "}
+          <BsFillStarFill /> Rating : {menuDetails.rating}/5 -{" "}
           <span style={{ color: "rgba(0, 0, 0, 0.5)" }}>
             {" "}
             rated by {menuDetails.ratingWeight} peoples
