@@ -56,7 +56,10 @@ const MenuPage = ({ status }) => {
       myRating = await GetMyRatingOnMenu(token, mid);
       ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
       setMenuFavorite(ifFavorited.result);
+      if(!IgnoreInitialFavorite){
       setInitialFavorite(ifFavorited.result);
+      setIgnoreInitialFavorite(true);
+      }
       setCurrentStarValue(myRating.ratescore);
     }
     let menuInfo;
@@ -167,6 +170,7 @@ const MenuPage = ({ status }) => {
   const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false);
   const [commentDeleteConf, setShowCommentDeleteConf] = useState(false);
   const [currentCommentForDelete, setCurrentCommentForDelete] = useState("")
+  const [IgnoreInitialFavorite, setIgnoreInitialFavorite] = useState(false)
   const comBox = commentBox();
   
 
@@ -192,8 +196,10 @@ const MenuPage = ({ status }) => {
       // console.log(response);
     }
     if (initialFavorite) {
+      console.log(initialFavorite)
       setShowUnfavoritemsg(!showUnfavoritemsg);
     } else {
+      console.log(initialFavorite)
       setShowFavoritemsg(!showFavoritemsg);
     }
     FetchData();
