@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import "./MenuId.css";
-import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
-import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
+import { useEffect, useState } from "react"
+import "./MenuId.css"
+import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
+import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
 import {
   GetCurrentMenuIfFavorited,
   GetMenuInfo,
@@ -12,25 +12,24 @@ import {
   RatingMenu,
   UnfavoriteMenu,
   FavoriteMenu,
-} from "../script/controller";
-import { useNavigate, useParams } from "react-router-dom";
-import { BiFlag } from "react-icons/bi";
+} from "../script/controller"
+import { useNavigate, useParams } from "react-router-dom"
+import { BiFlag } from "react-icons/bi"
 import {
   BsPersonCircle,
   BsFillStarFill,
   BsFillBookmarksFill,
   BsBookmarkPlus,
   BsBookmarkStarFill,
-} from "react-icons/bs";
-import { MdOutlineDescription } from "react-icons/md";
-import Form from "react-bootstrap/Form";
-import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
-import { Modal, Button } from "react-bootstrap";
-import { AiOutlineComment } from "react-icons/ai";
-import axios from "axios";
+} from "react-icons/bs"
+import { MdOutlineDescription } from "react-icons/md"
+import Form from "react-bootstrap/Form"
+import { TiStarFullOutline, TiStarOutline } from "react-icons/ti"
+import { Modal, Button } from "react-bootstrap"
+import { AiOutlineComment } from "react-icons/ai"
 
 const MenuPage = ({ status }) => {
-  const Navigate = useNavigate();
+  const Navigate = useNavigate()
 
   const [menuDetails, setMenuDetails] = useState({
     _id: "",
@@ -41,72 +40,72 @@ const MenuPage = ({ status }) => {
     kitchenware: [],
     cookingstep: [],
     comment: [],
-  });
+  })
 
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("")
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = JSON.parse(localStorage.getItem("token"))
 
-  const { mid } = useParams();
+  const { mid } = useParams()
   useEffect(() => {
     const FetchData = async () => {
-      const ingFullData = await GetSystemIngredient();
-      const wareFullData = await GetSystemKitchenware();
-      const myRating = await GetMyRatingOnMenu(token, mid);
-      const ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
-      setMenuFavorite(ifFavorited.result);
-      setInitialFavorite(ifFavorited.result);
-      setCurrentStarValue(myRating.ratescore);
-      let menuInfo;
+      const ingFullData = await GetSystemIngredient()
+      const wareFullData = await GetSystemKitchenware()
+      const myRating = await GetMyRatingOnMenu(token, mid)
+      const ifFavorited = await GetCurrentMenuIfFavorited(token, mid)
+      setMenuFavorite(ifFavorited.result)
+      setInitialFavorite(ifFavorited.result)
+      setCurrentStarValue(myRating.ratescore)
+      let menuInfo
       if (!status) {
-        menuInfo = await GetMenuInfo(mid);
+        menuInfo = await GetMenuInfo(mid)
       } else {
-        menuInfo = await MenuEdit(token, mid);
+        menuInfo = await MenuEdit(token, mid)
       }
 
       // console.log(menuInfo);
       menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
         menuInfo.query[0].image
-      );
+      )
       for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
         if (menuInfo.query[0].cookingstep[i].image) {
           menuInfo.query[0].cookingstep[i].image =
             "https://cookclick.code.in.th/images/".concat(
               menuInfo.query[0].cookingstep[i].image
-            );
+            )
         }
       }
-      setMenuDetails(menuInfo.query[0]);
+      setMenuDetails(menuInfo.query[0])
       const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
         ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
         amount: ing.amount,
-      }));
+      }))
       const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
         ...wareFullData.data.find(
           (wareFull) => wareFull._id === ware.kitchenwareID
         ),
-      }));
-      console.log(menuInfo.query[0]);
+      }))
+      console.log(menuInfo.query[0])
       setMenuDetails((prev) => ({
         ...prev,
         rating: prev.rating.toFixed(2),
         ingredient: menuIngredients,
         kitchenware: menuKitchenware,
-      }));
+      }))
       ingFullData.data.forEach((element, i) => {
-        element.id = i;
-        element.amount = 0;
-      });
+        element.id = i
+        element.amount = 0
+      })
       wareFullData.data.forEach((element, i) => {
-        element.id = i;
-      });
-    };
-    FetchData();
-  }, []);
+        element.id = i
+      })
+    }
+    FetchData()
+  }, [])
 
   const sendReport = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-  };
+    const token = JSON.parse(localStorage.getItem("token"))
+  }
 
   function commentBox(props) {
     return (
@@ -119,53 +118,53 @@ const MenuPage = ({ status }) => {
           value={comment}
         />
       </Form.Group>
-    );
+    )
   }
-  const [currentStarValue, setCurrentStarValue] = useState(0);
-  const [hoverStarValue, setHoverStarValue] = useState(0);
-  const [menuFavorite, setMenuFavorite] = useState(false);
-  const [notLoggedIn, setNotLoggedIn] = useState(false);
-  const [rateSuccessMsg, setRateSuccessMsg] = useState(false);
-  const [initialFavorite, setInitialFavorite] = useState(0);
-  const [showFavoritemsg, setShowFavoritemsg] = useState(false);
-  const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false);
-  const comBox = commentBox();
+  const [currentStarValue, setCurrentStarValue] = useState(0)
+  const [hoverStarValue, setHoverStarValue] = useState(0)
+  const [menuFavorite, setMenuFavorite] = useState(false)
+  const [notLoggedIn, setNotLoggedIn] = useState(false)
+  const [rateSuccessMsg, setRateSuccessMsg] = useState(false)
+  const [initialFavorite, setInitialFavorite] = useState(0)
+  const [showFavoritemsg, setShowFavoritemsg] = useState(false)
+  const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false)
+  const comBox = commentBox()
 
   const handleRatingClick = async (value) => {
-    setCurrentStarValue(value);
+    setCurrentStarValue(value)
     if (!token) {
-      setNotLoggedIn(true);
-      return;
+      setNotLoggedIn(true)
+      return
     }
     let valueBody = {
       score: value,
-    };
-    const response = await RatingMenu(token, valueBody, mid);
-    console.log(response);
-    setRateSuccessMsg(true);
-  };
+    }
+    const response = await RatingMenu(token, valueBody, mid)
+    console.log(response)
+    setRateSuccessMsg(true)
+  }
 
   const handleFavoriteClick = async () => {
     if (!token) {
-      setNotLoggedIn(true);
-      return;
+      setNotLoggedIn(true)
+      return
     }
     if (menuFavorite === false) {
-      const response = await FavoriteMenu(token, mid);
-      console.log("favoriting menu");
-      setMenuFavorite(true);
-      console.log(response);
+      const response = await FavoriteMenu(token, mid)
+      console.log("favoriting menu")
+      setMenuFavorite(true)
+      console.log(response)
     } else {
-      const response = await UnfavoriteMenu(token, mid);
-      setMenuFavorite(false);
-      console.log(response);
+      const response = await UnfavoriteMenu(token, mid)
+      setMenuFavorite(false)
+      console.log(response)
     }
     if (initialFavorite) {
-      setShowUnfavoritemsg(!showUnfavoritemsg);
+      setShowUnfavoritemsg(!showUnfavoritemsg)
     } else {
-      setShowFavoritemsg(!showFavoritemsg);
+      setShowFavoritemsg(!showFavoritemsg)
     }
-  };
+  }
 
   return (
     <div className="menupage">
@@ -197,7 +196,7 @@ const MenuPage = ({ status }) => {
           Rate
           <div className="menu-rating-star">
             {[...Array(5)].map((star, starValue) => {
-              const ratingValue = starValue + 1;
+              const ratingValue = starValue + 1
               return (
                 <>
                   <label
@@ -241,7 +240,7 @@ const MenuPage = ({ status }) => {
                     />
                   </label>
                 </>
-              );
+              )
             })}
           </div>
           <span
@@ -348,7 +347,7 @@ const MenuPage = ({ status }) => {
             <BiFlag
               className="hover-pointer"
               onClick={() => {
-                sendReport(menuDetails[id]._id, eachComment.commentID);
+                sendReport(menuDetails[id]._id, eachComment.commentID)
               }}
             />
           </div>
@@ -364,7 +363,7 @@ const MenuPage = ({ status }) => {
           <Button
             className="button-28-green"
             onClick={() => {
-              setNotLoggedIn(false);
+              setNotLoggedIn(false)
             }}
           >
             กลับ
@@ -372,8 +371,8 @@ const MenuPage = ({ status }) => {
           <Button
             className="button-28-green"
             onClick={() => {
-              Navigate("/login");
-              setNotLoggedIn(false);
+              Navigate("/login")
+              setNotLoggedIn(false)
             }}
           >
             ไปยังหน้าล็อกอิน
@@ -381,7 +380,7 @@ const MenuPage = ({ status }) => {
         </Modal.Footer>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default MenuPage;
+export default MenuPage

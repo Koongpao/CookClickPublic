@@ -8,6 +8,7 @@ function Myfav() {
   useEffect(() => {
     async function fetchdata(token) {
       const allmenu = await GetAllMeFavMenu(token)
+      console.log(allmenu.data)
       setfavmenu(allmenu.data)
     }
     if (!ignore) {
@@ -29,13 +30,14 @@ function Myfav() {
               return (
                 <MCard
                   key={index}
-                  FoodName={food.name}
-                  FoodImg={food.image}
-                  Star={food.rating}
-                  Fav={food.favCount}
-                  MenuID={food._id}
-                  Status={food.status}
-                  UserID={food.userID}
+                  FoodName={food[0].name}
+                  FoodImg={food[0].image}
+                  Star={food[0].rating}
+                  Fav={food[0].favCount}
+                  Desc={food[0].description}
+                  MenuID={food[0]._id}
+                  UserID={food[0].userID}
+                  Status={food[0].status}
                 />
               )
             })}
