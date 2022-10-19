@@ -1,3 +1,4 @@
+
 .menupage {
   height: auto;
   max-width: 50%;
@@ -174,4 +175,36 @@
   color: rgb(250, 217, 71);
 }
 
+.comment-box-button-box{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  
+}
 
+.comment-box-button{
+  padding: 6px;
+  margin: 0 1% 0 1%;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.menu-comments-list{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+}
+
+.comment-box-button:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.menu-comment-username{
+  font-size: 80%;
+}
+
+.delete-icon{
+  margin-right: 6px;
+}

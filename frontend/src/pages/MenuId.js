@@ -12,6 +12,7 @@ import {
   RatingMenu,
   UnfavoriteMenu,
   FavoriteMenu,
+  AddMenuComment,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
@@ -22,10 +23,10 @@ import {
   BsBookmarkPlus,
   BsBookmarkStarFill,
 } from "react-icons/bs";
-import { MdOutlineDescription } from "react-icons/md";
+import { MdOutlineDescription, MdDelete } from "react-icons/md";
 import Form from "react-bootstrap/Form";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
 import axios from "axios";
 
@@ -43,64 +44,66 @@ const MenuPage = ({ status }) => {
     comment: [],
   });
 
-  const [comment, setComment] = useState("");
-
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const { mid } = useParams();
-  useEffect(() => {
-    const FetchData = async () => {
-      const ingFullData = await GetSystemIngredient();
-      const wareFullData = await GetSystemKitchenware();
-      const myRating = await GetMyRatingOnMenu(token, mid);
-      const ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
+  const FetchData = async () => {
+    const ingFullData = await GetSystemIngredient();
+    const wareFullData = await GetSystemKitchenware();
+    let myRating, ifFavorited;
+    if (token) {
+      myRating = await GetMyRatingOnMenu(token, mid);
+      ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
       setMenuFavorite(ifFavorited.result);
       setInitialFavorite(ifFavorited.result);
       setCurrentStarValue(myRating.ratescore);
-      let menuInfo;
-      if (!status) {
-        menuInfo = await GetMenuInfo(mid);
-      } else {
-        menuInfo = await MenuEdit(token, mid);
-      }
+    }
+    let menuInfo;
+    if (!status) {
+      menuInfo = await GetMenuInfo(mid);
+    } else {
+      menuInfo = await MenuEdit(token, mid);
+    }
 
-      // console.log(menuInfo);
-      menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
-        menuInfo.query[0].image
-      );
-      for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
-        if (menuInfo.query[0].cookingstep[i].image) {
-          menuInfo.query[0].cookingstep[i].image =
-            "https://cookclick.code.in.th/images/".concat(
-              menuInfo.query[0].cookingstep[i].image
-            );
-        }
+    // console.log(menuInfo);
+    menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
+      menuInfo.query[0].image
+    );
+    for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
+      if (menuInfo.query[0].cookingstep[i].image) {
+        menuInfo.query[0].cookingstep[i].image =
+          "https://cookclick.code.in.th/images/".concat(
+            menuInfo.query[0].cookingstep[i].image
+          );
       }
-      setMenuDetails(menuInfo.query[0]);
-      const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
-        ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
-        amount: ing.amount,
-      }));
-      const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
-        ...wareFullData.data.find(
-          (wareFull) => wareFull._id === ware.kitchenwareID
-        ),
-      }));
-      console.log(menuInfo.query[0]);
-      setMenuDetails((prev) => ({
-        ...prev,
-        rating: prev.rating.toFixed(2),
-        ingredient: menuIngredients,
-        kitchenware: menuKitchenware,
-      }));
-      ingFullData.data.forEach((element, i) => {
-        element.id = i;
-        element.amount = 0;
-      });
-      wareFullData.data.forEach((element, i) => {
-        element.id = i;
-      });
-    };
+    }
+    setMenuDetails(menuInfo.query[0]);
+    const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
+      ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
+      amount: ing.amount,
+    }));
+    const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
+      ...wareFullData.data.find(
+        (wareFull) => wareFull._id === ware.kitchenwareID
+      ),
+    }));
+    console.log(menuInfo.query[0]);
+    setMenuDetails((prev) => ({
+      ...prev,
+      rating: prev.rating.toFixed(2),
+      ingredient: menuIngredients,
+      kitchenware: menuKitchenware,
+    }));
+    ingFullData.data.forEach((element, i) => {
+      element.id = i;
+      element.amount = 0;
+    });
+    wareFullData.data.forEach((element, i) => {
+      element.id = i;
+    });
+  };
+
+  const { mid } = useParams();
+  useEffect(() => {
     FetchData();
   }, []);
 
@@ -108,23 +111,54 @@ const MenuPage = ({ status }) => {
     const token = JSON.parse(localStorage.getItem("token"));
   };
 
+  const [myComment, setMyComment] = useState("");
+
   function commentBox(props) {
     return (
-      <Form.Group className="mb-3" controlId="AddDesc">
-        <Form.Control
-          type="text"
-          placeholder="ใส่คำอธิบายของสูตรอาหาร"
-          as="textarea"
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-      </Form.Group>
+      <div className="comment-box">
+        <Form.Group className="mb-3" controlId="AddDesc">
+          <Form.Control
+            type="text"
+            placeholder="ใส่คำอธิบายของสูตรอาหาร"
+            as="textarea"
+            onChange={(e) => setMyComment(e.target.value)}
+            value={myComment}
+          />
+        </Form.Group>
+        <div className="comment-box-button-box">
+          <button
+            style={{ display: myComment ? "block" : "none" }}
+            className="comment-box-button"
+            onClick={() => setMyComment("")}
+          >
+            {" "}
+            ยกเลิก{" "}
+          </button>
+          <button
+            style={{ display: myComment ? "block" : "none" }}
+            className="comment-box-button"
+            onClick={() => handleComment()}
+          >
+            {" "}
+            เพิ่มคอมเมนต์{" "}
+          </button>
+        </div>
+      </div>
     );
   }
+
+  const handleComment = async () => {
+    const response = await AddMenuComment(
+      token,
+      { description: myComment },
+      mid
+    );
+    setMyComment("");
+    FetchData();
+  };
   const [currentStarValue, setCurrentStarValue] = useState(0);
   const [hoverStarValue, setHoverStarValue] = useState(0);
   const [menuFavorite, setMenuFavorite] = useState(false);
-  const [notLoggedIn, setNotLoggedIn] = useState(false);
   const [rateSuccessMsg, setRateSuccessMsg] = useState(false);
   const [initialFavorite, setInitialFavorite] = useState(0);
   const [showFavoritemsg, setShowFavoritemsg] = useState(false);
@@ -133,23 +167,16 @@ const MenuPage = ({ status }) => {
 
   const handleRatingClick = async (value) => {
     setCurrentStarValue(value);
-    if (!token) {
-      setNotLoggedIn(true);
-      return;
-    }
     let valueBody = {
       score: value,
     };
     const response = await RatingMenu(token, valueBody, mid);
     console.log(response);
     setRateSuccessMsg(true);
+    FetchData();
   };
 
   const handleFavoriteClick = async () => {
-    if (!token) {
-      setNotLoggedIn(true);
-      return;
-    }
     if (menuFavorite === false) {
       const response = await FavoriteMenu(token, mid);
       console.log("favoriting menu");
@@ -165,6 +192,7 @@ const MenuPage = ({ status }) => {
     } else {
       setShowFavoritemsg(!showFavoritemsg);
     }
+    FetchData();
   };
 
   return (
@@ -192,7 +220,10 @@ const MenuPage = ({ status }) => {
         </div>
       </div>
 
-      <div className="menu-rating-bar">
+      <div
+        className="menu-rating-bar"
+        style={{ display: token ? "flex" : "none" }}
+      >
         <div className="menu-rating-rate">
           Rate
           <div className="menu-rating-star">
@@ -341,45 +372,27 @@ const MenuPage = ({ status }) => {
       <h1 className="mt-5" id="comment-section">
         Comments
       </h1>
+      {token && comBox}
       {menuDetails.comment.map((eachComment, id) => (
         <div className="menu-comments-list" key={id}>
           <div className="flex justify-content-between text-md">
-            {eachComment.userID}
-            <BiFlag
-              className="hover-pointer"
-              onClick={() => {
-                sendReport(menuDetails[id]._id, eachComment.commentID);
-              }}
-            />
+            <span className="menu-comment-username">
+              <BsPersonCircle style={{ fontSize: "150%" }} />{" "}
+              {eachComment.userID}
+            </span>
+            <div>
+              <MdDelete className="delete-icon" />
+              <BiFlag
+                className="hover-pointer"
+                onClick={() => {
+                  sendReport(menuDetails[id]._id, eachComment.commentID);
+                }}
+              />
+            </div>
           </div>
           <p>{eachComment.description}</p>
         </div>
       ))}
-      {token && comBox}
-      <Modal show={notLoggedIn} onHide={() => setNotLoggedIn(false)}>
-        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
-          คุณยังไม่ได้ล็อกอิน
-        </Modal.Body>
-        <Modal.Footer className="content-center">
-          <Button
-            className="button-28-green"
-            onClick={() => {
-              setNotLoggedIn(false);
-            }}
-          >
-            กลับ
-          </Button>
-          <Button
-            className="button-28-green"
-            onClick={() => {
-              Navigate("/login");
-              setNotLoggedIn(false);
-            }}
-          >
-            ไปยังหน้าล็อกอิน
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
