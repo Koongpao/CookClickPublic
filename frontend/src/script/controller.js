@@ -14,7 +14,7 @@ export const UserLogin = async (item) => {
   const baseURL = "https://cookclick-api.code.in.th/user/login"
   try {
     const response = await axios.post(baseURL, item)
-    return response.data.token
+    return response.data
   } catch (err) {
     console.log(err.response.data)
     return "error"
@@ -443,6 +443,22 @@ export const DelComment = async (token, menu, menuId, commentId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/comments/${commentId}`
   try {
     const response = await axios.post(baseURL, menu, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const DelMyComment = async (token, menuId, commentId) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/comments/${commentId}`
+  try {
+    const response = await axios.delete(baseURL, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

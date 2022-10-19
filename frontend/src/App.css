@@ -759,6 +759,10 @@ label:focus,
   object-fit: cover;
 }
 
+.food-image > img {
+  border-radius: 0 !important;
+}
+
 .mcard-a-nounderline {
   text-decoration: none;
 }
@@ -976,9 +980,7 @@ label:focus,
   margin: auto;
 }
 
-.food-details{
-  width: 100%!important;
-}
+
 
 .normal-search-box-button{
   margin-left: 5%;

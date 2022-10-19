@@ -1,17 +1,17 @@
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import { UserLogin } from "../script/controller"
-import { useState } from "react"
-import { useAuth } from "../script/useAuth"
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { UserLogin } from "../script/controller";
+import { useState } from "react";
+import { useAuth } from "../script/useAuth";
 
 function Login({ onchangelogin }) {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
-  })
-  const [error, setError] = useState(false)
+  });
+  const [error, setError] = useState(false);
 
-  const { login } = useAuth()
+  const { login } = useAuth();
 
   return (
     <>
@@ -20,14 +20,15 @@ function Login({ onchangelogin }) {
         <Form
           className="flex flex-col formbox p-4"
           onSubmit={async (e) => {
-          e.preventDefault()
-          const tokenData = await UserLogin(userDetails)
-            if ((await tokenData) === "error") {
-            setError(true)
+            e.preventDefault();
+            const tokenData = await UserLogin(userDetails);
+            localStorage.setItem("userId", JSON.stringify(tokenData.userID))
+            if ((await tokenData.token) === "error") {
+              setError(true);
             } else {
-              await login({ token: tokenData })
-          }
-            onchangelogin(false)
+              await login({ token: tokenData.token });
+            }
+            onchangelogin(false);
           }}
         >
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -74,7 +75,7 @@ function Login({ onchangelogin }) {
         </Form>
       </div>
     </>
-  )
+  );
 }
 
-export default Login
+export default Login;

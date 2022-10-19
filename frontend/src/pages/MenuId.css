@@ -202,9 +202,18 @@
 }
 
 .menu-comment-username{
+  width: 50%;
   font-size: 80%;
+  display: flex;
 }
 
 .delete-icon{
   margin-right: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.delete-icon:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
 }
