@@ -975,3 +975,7 @@ label:focus,
   width: 50%;
   margin: auto;
 }
+
+.food-details{
+  width: 100%!important;
+}

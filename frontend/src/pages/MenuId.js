@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import "./MenuId.css";
-import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
-import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
+import { useEffect, useState } from "react"
+import "./MenuId.css"
+import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js"
+import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js"
 import {
   GetCurrentMenuIfFavorited,
   GetMenuInfo,
@@ -31,7 +31,7 @@ import { AiOutlineComment } from "react-icons/ai";
 import axios from "axios";
 
 const MenuPage = ({ status }) => {
-  const Navigate = useNavigate();
+  const Navigate = useNavigate()
 
   const [menuDetails, setMenuDetails] = useState({
     _id: "",
@@ -42,7 +42,7 @@ const MenuPage = ({ status }) => {
     kitchenware: [],
     cookingstep: [],
     comment: [],
-  });
+  })
 
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -108,8 +108,8 @@ const MenuPage = ({ status }) => {
   }, []);
 
   const sendReport = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-  };
+    const token = JSON.parse(localStorage.getItem("token"))
+  }
 
   const [myComment, setMyComment] = useState("");
 
@@ -178,19 +178,19 @@ const MenuPage = ({ status }) => {
 
   const handleFavoriteClick = async () => {
     if (menuFavorite === false) {
-      const response = await FavoriteMenu(token, mid);
-      console.log("favoriting menu");
-      setMenuFavorite(true);
-      console.log(response);
+      const response = await FavoriteMenu(token, mid)
+      console.log("favoriting menu")
+      setMenuFavorite(true)
+      console.log(response)
     } else {
-      const response = await UnfavoriteMenu(token, mid);
-      setMenuFavorite(false);
-      console.log(response);
+      const response = await UnfavoriteMenu(token, mid)
+      setMenuFavorite(false)
+      console.log(response)
     }
     if (initialFavorite) {
-      setShowUnfavoritemsg(!showUnfavoritemsg);
+      setShowUnfavoritemsg(!showUnfavoritemsg)
     } else {
-      setShowFavoritemsg(!showFavoritemsg);
+      setShowFavoritemsg(!showFavoritemsg)
     }
     FetchData();
   };
@@ -228,7 +228,7 @@ const MenuPage = ({ status }) => {
           Rate
           <div className="menu-rating-star">
             {[...Array(5)].map((star, starValue) => {
-              const ratingValue = starValue + 1;
+              const ratingValue = starValue + 1
               return (
                 <>
                   <label
@@ -272,7 +272,7 @@ const MenuPage = ({ status }) => {
                     />
                   </label>
                 </>
-              );
+              )
             })}
           </div>
           <span
@@ -394,7 +394,7 @@ const MenuPage = ({ status }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default MenuPage;
+export default MenuPage

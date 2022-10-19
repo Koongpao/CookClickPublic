@@ -17,10 +17,11 @@ import {
 } from "../script/controller"
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 function Add() {
   const token = JSON.parse(localStorage.getItem("token"))
+  let navigate = useNavigate()
   const { mid } = useParams()
   const [menuid, setMenuid] = useState(mid)
   const [ingdata, setingdata] = useState([])
@@ -100,6 +101,9 @@ function Add() {
       setingdata(ingfulldata.data)
       if (mid) {
         const recipedata = await MenuEdit(token, mid)
+        if (recipedata.query[0].status !== 1) {
+          navigate("../add")
+        }
         setup(recipedata.query[0], ingfulldata.data, warefulldata.data)
       }
     }
@@ -326,7 +330,9 @@ function Add() {
             className="searchoffcanvas"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title style={{margin:"auto"}}>เพิ่มวัตถุดิบ</Offcanvas.Title>
+              <Offcanvas.Title style={{ margin: "auto" }}>
+                เพิ่มวัตถุดิบ
+              </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className="ref-offcanva-body">
               <FormControl
@@ -386,7 +392,9 @@ function Add() {
             className="searchoffcanvas"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title style={{margin:"auto"}}>เพิ่มอุปกรณ์</Offcanvas.Title>
+              <Offcanvas.Title style={{ margin: "auto" }}>
+                เพิ่มอุปกรณ์
+              </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className="ref-offcanva-body">
               <FormControl
