@@ -378,7 +378,7 @@ const MenuPage = ({ status }) => {
           <div className="flex justify-content-between text-md">
             <span className="menu-comment-username">
               <BsPersonCircle style={{ fontSize: "150%" }} />{" "}
-              {eachComment.userID}
+              {eachComment.displayname}
             </span>
             <div>
               <MdDelete className="delete-icon" />

@@ -979,3 +979,20 @@ label:focus,
 .food-details{
   width: 100%!important;
 }
+
+.normal-search-box-button{
+  margin-left: 5%;
+  transition: all 0.2s;
+  border: rgba(0, 0, 0, 0.16) solid 1px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.normal-search-box-button:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.normal-search-box{
+  width: 30%;
+  margin: auto;
+}
