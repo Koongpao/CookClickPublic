@@ -7,7 +7,10 @@ const MemberReportPage = () => {
   const [memberReport, setMemberReport] = useState({
     memreport: [],
   });
-  const [show, setShow] = useState([]);
+  const [show, setShow] = useState(false);
+  const [modalItem, setModalItem] = useState({
+    reportdescription: [],
+  });
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -15,9 +18,6 @@ const MemberReportPage = () => {
       setMemberReport((prev) =>
         ({ ...prev, memreport: memberReportData.memreport })
       );
-      const memberReportSize = memberReportData.memreport.length;
-      setShow(Array(memberReportSize).fill(false));
-      console.log(memberReportData);
     };
     fetchdata();
   }, []);
@@ -53,8 +53,9 @@ const MemberReportPage = () => {
                     REPORTED {item.count} TIME(S).
                   </div>
                   <div className="rp-desc" onClick={() => {
-                      setShow(prev => [...prev, prev[index] = true])
-                    }}>
+                    setShow(true)
+                    setModalItem((prev) => ({ ...prev, reportdescription: item.reportdescription }))
+                  }}>
                     Description
                   </div>
                   <div className="flex justify-content-end">
@@ -70,38 +71,34 @@ const MemberReportPage = () => {
                       Delete
                     </button>
                   </div>
-                  <Modal
-                    show={show[index]}
-                    onHide={() => {
-                      setShow(prev => [...prev, prev[index] = false])
-                    }}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Comments
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {item.reportdescription.map((it, id) => {
-                        return (
-                          <div key={id}>
-                            {it.reporterName}: {it.description} 
-                          </div>
-                        );
-                      })}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button onClick={() => {
-                      setShow(prev => [...prev, prev[index] = false])
-                    }}>Close</Button>
-                    </Modal.Footer>
-                  </Modal>
                 </div>
               )
             })}
+            <Modal
+              show={show}
+              onHide={() => setShow(false)}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Comments
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {modalItem.reportdescription.map((it, id) => {
+                  return (
+                    <div key={id}>
+                      {it.reporterName}: {it.description} 
+                    </div>
+                  );
+                })}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={() => setShow(false)}>Close</Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

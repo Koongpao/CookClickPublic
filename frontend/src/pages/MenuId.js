@@ -282,6 +282,15 @@ const MenuPage = ({ status }) => {
       <h1 className="mt-5" id="comment-section">
         Comments
       </h1>
+      <Form.Group className="mb-3" controlId="AddDesc">
+        <Form.Control
+          type="text"
+          placeholder="Add Comment"
+          as="textarea"
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+        />
+      </Form.Group>
       {menuDetails.comment.map((eachComment, id) => (
         <div className="menu-comments-list">
           <h4 key={id}>{eachComment.userID}</h4>
