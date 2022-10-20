@@ -3,13 +3,20 @@ import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
 import {
+  GetCurrentMenuIfFavorited,
   GetMenuInfo,
+  GetMyRatingOnMenu,
   GetSystemIngredient,
   GetSystemKitchenware,
   MenuEdit,
   RatingMenu,
+  UnfavoriteMenu,
+  FavoriteMenu,
+  AddMenuComment,
+  DelComment,
+  DelMyComment,
 } from "../script/controller";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
 import {
   BsPersonCircle,
@@ -18,15 +25,12 @@ import {
   BsBookmarkPlus,
   BsBookmarkStarFill,
 } from "react-icons/bs";
-import { MdOutlineDescription } from "react-icons/md";
+import { MdOutlineDescription, MdDelete } from "react-icons/md";
 import Form from "react-bootstrap/Form";
-import {
-  TiStarFullOutline,
-  TiStarHalfOutline,
-  TiStarOutline,
-} from "react-icons/ti";
-import { Modal, Button } from "react-bootstrap";
+import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
+import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
+import axios from "axios";
 
 const MenuPage = ({ status }) => {
   const Navigate = useNavigate();
@@ -41,59 +45,70 @@ const MenuPage = ({ status }) => {
     cookingstep: [],
     comment: [],
   });
-
-  const [comment, setComment] = useState("");
-
   const token = JSON.parse(localStorage.getItem("token"));
+  const userId = JSON.parse(localStorage.getItem("userId"));
+
+  const FetchData = async () => {
+    const ingFullData = await GetSystemIngredient();
+    const wareFullData = await GetSystemKitchenware();
+    let myRating, ifFavorited;
+    if (token) {
+      myRating = await GetMyRatingOnMenu(token, mid);
+      ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
+      setMenuFavorite(ifFavorited.result);
+      if(!IgnoreInitialFavorite){
+      setInitialFavorite(ifFavorited.result);
+      setIgnoreInitialFavorite(true);
+      }
+      setCurrentStarValue(myRating.ratescore);
+    }
+    let menuInfo;
+    if (!status) {
+      menuInfo = await GetMenuInfo(mid);
+    } else {
+      menuInfo = await MenuEdit(token, mid);
+    }
+
+    // console.log(menuInfo);
+    menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
+      menuInfo.query[0].image
+    );
+    for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
+      if (menuInfo.query[0].cookingstep[i].image) {
+        menuInfo.query[0].cookingstep[i].image =
+          "https://cookclick.code.in.th/images/".concat(
+            menuInfo.query[0].cookingstep[i].image
+          );
+      }
+    }
+    setMenuDetails(menuInfo.query[0]);
+    const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
+      ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
+      amount: ing.amount,
+    }));
+    const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
+      ...wareFullData.data.find(
+        (wareFull) => wareFull._id === ware.kitchenwareID
+      ),
+    }));
+    console.log(menuInfo.query[0]);
+    setMenuDetails((prev) => ({
+      ...prev,
+      rating: prev.rating.toFixed(2),
+      ingredient: menuIngredients,
+      kitchenware: menuKitchenware,
+    }));
+    ingFullData.data.forEach((element, i) => {
+      element.id = i;
+      element.amount = 0;
+    });
+    wareFullData.data.forEach((element, i) => {
+      element.id = i;
+    });
+  };
 
   const { mid } = useParams();
   useEffect(() => {
-    const FetchData = async () => {
-      const ingFullData = await GetSystemIngredient();
-      const wareFullData = await GetSystemKitchenware();
-      let menuInfo;
-      if (!status) {
-        menuInfo = await GetMenuInfo(mid);
-      } else {
-        menuInfo = await MenuEdit(token, mid);
-      }
-
-      console.log(menuInfo);
-      menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
-        menuInfo.query[0].image
-      );
-      for (let i = 0; i < menuInfo.query[0].cookingstep.length; i++) {
-        if (menuInfo.query[0].cookingstep[i].image) {
-          menuInfo.query[0].cookingstep[i].image =
-            "https://cookclick.code.in.th/images/".concat(
-              menuInfo.query[0].cookingstep[i].image
-            );
-        }
-      }
-      setMenuDetails(menuInfo.query[0])
-      const menuIngredients = menuInfo.query[0].ingredient.map((ing) => ({
-        ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
-        amount: ing.amount,
-      }));
-      const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
-        ...wareFullData.data.find(
-          (wareFull) => wareFull._id === ware.kitchenwareID
-        ),
-      }));
-      console.log(menuInfo.query[0]);
-      setMenuDetails((prev) => ({
-        ...prev,
-        ingredient: menuIngredients,
-        kitchenware: menuKitchenware,
-      }));
-      ingFullData.data.forEach((element, i) => {
-        element.id = i;
-        element.amount = 0;
-      });
-      wareFullData.data.forEach((element, i) => {
-        element.id = i;
-      });
-    };
     FetchData();
   }, []);
 
@@ -101,36 +116,100 @@ const MenuPage = ({ status }) => {
     const token = JSON.parse(localStorage.getItem("token"));
   };
 
+  const [myComment, setMyComment] = useState("");
+
   function commentBox(props) {
     return (
-      <Form.Group className="mb-3" controlId="AddDesc">
-        <Form.Control
-          type="text"
-          placeholder="ใส่คำอธิบายของสูตรอาหาร"
-          as="textarea"
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-      </Form.Group>
+      <div className="comment-box">
+        <Form.Group className="mb-3" controlId="AddDesc">
+          <Form.Control
+            type="text"
+            placeholder="ใส่คำอธิบายของสูตรอาหาร"
+            as="textarea"
+            onChange={(e) => setMyComment(e.target.value)}
+            value={myComment}
+          />
+        </Form.Group>
+        <div className="comment-box-button-box">
+          <button
+            style={{ display: myComment ? "block" : "none" }}
+            className="comment-box-button"
+            onClick={() => setMyComment("")}
+          >
+            {" "}
+            ยกเลิก{" "}
+          </button>
+          <button
+            style={{ display: myComment ? "block" : "none" }}
+            className="comment-box-button"
+            onClick={() => handleComment()}
+          >
+            {" "}
+            เพิ่มคอมเมนต์{" "}
+          </button>
+        </div>
+      </div>
     );
   }
+
+  const handleComment = async () => {
+    const response = await AddMenuComment(
+      token,
+      { description: myComment },
+      mid
+    );
+    setMyComment("");
+    FetchData();
+  };
   const [currentStarValue, setCurrentStarValue] = useState(0);
   const [hoverStarValue, setHoverStarValue] = useState(0);
   const [menuFavorite, setMenuFavorite] = useState(false);
-  const [notLoggedIn, setNotLoggedIn] = useState(false);
+  const [rateSuccessMsg, setRateSuccessMsg] = useState(false);
+  const [initialFavorite, setInitialFavorite] = useState(0);
+  const [showFavoritemsg, setShowFavoritemsg] = useState(false);
+  const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false);
+  const [commentDeleteConf, setShowCommentDeleteConf] = useState(false);
+  const [currentCommentForDelete, setCurrentCommentForDelete] = useState("")
+  const [IgnoreInitialFavorite, setIgnoreInitialFavorite] = useState(false)
   const comBox = commentBox();
+  
 
   const handleRatingClick = async (value) => {
     setCurrentStarValue(value);
-    if (!token) {
-      setNotLoggedIn(true);
-      return;
-    }
     let valueBody = {
       score: value,
     };
     const response = await RatingMenu(token, valueBody, mid);
-    console.log(response);
+    // console.log(response);
+    setRateSuccessMsg(true);
+    FetchData();
+  };
+
+  const handleFavoriteClick = async () => {
+    if (menuFavorite === false) {
+      const response = await FavoriteMenu(token, mid);
+      setMenuFavorite(true);
+      // console.log(response);
+    } else {
+      const response = await UnfavoriteMenu(token, mid);
+      setMenuFavorite(false);
+      // console.log(response);
+    }
+    if (initialFavorite) {
+      console.log(initialFavorite)
+      setShowUnfavoritemsg(!showUnfavoritemsg);
+    } else {
+      console.log(initialFavorite)
+      setShowFavoritemsg(!showFavoritemsg);
+    }
+    FetchData();
+  };
+
+  const handleRemoveComment = async () => {
+    const response = await DelMyComment(token, mid, currentCommentForDelete)
+    console.log(response)
+    setShowCommentDeleteConf(false)
+    FetchData()
   };
 
   return (
@@ -158,7 +237,10 @@ const MenuPage = ({ status }) => {
         </div>
       </div>
 
-      <div className="menu-rating-bar">
+      <div
+        className="menu-rating-bar"
+        style={{ display: token ? "flex" : "none" }}
+      >
         <div className="menu-rating-rate">
           Rate
           <div className="menu-rating-star">
@@ -210,6 +292,15 @@ const MenuPage = ({ status }) => {
               );
             })}
           </div>
+          <span
+            style={{
+              display: rateSuccessMsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            {" "}
+            คุณได้ให้ {currentStarValue} ดาวกับเมนูนี้!
+          </span>
         </div>
         <div className="menu-rating-comment">
           Comment
@@ -232,7 +323,7 @@ const MenuPage = ({ status }) => {
                 display: menuFavorite ? "none" : "block",
                 color: "green",
               }}
-              onClick={() => setMenuFavorite(true)}
+              onClick={() => handleFavoriteClick()}
             />
             <BsBookmarkStarFill
               style={{
@@ -241,9 +332,25 @@ const MenuPage = ({ status }) => {
                 display: menuFavorite ? "block" : "none",
                 color: "green",
               }}
-              onClick={() => setMenuFavorite(false)}
+              onClick={() => handleFavoriteClick()}
             />
           </div>
+          <span
+            style={{
+              display: showFavoritemsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            นำเข้ารายการโปรดแล้ว
+          </span>
+          <span
+            style={{
+              display: showUnfavoritemsg ? "block" : "none",
+              fontSize: "70%",
+            }}
+          >
+            นำออกจากรายการโปรดแล้ว
+          </span>
         </div>
       </div>
 
@@ -282,21 +389,57 @@ const MenuPage = ({ status }) => {
       <h1 className="mt-5" id="comment-section">
         Comments
       </h1>
-      <Form.Group className="mb-3" controlId="AddDesc">
-        <Form.Control
-          type="text"
-          placeholder="Add Comment"
-          as="textarea"
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-      </Form.Group>
+      {token && comBox}
       {menuDetails.comment.map((eachComment, id) => (
-        <div className="menu-comments-list">
-          <h4 key={id}>{eachComment.userID}</h4>
+        <div className="menu-comments-list" key={id}>
+          <div className="flex justify-content-between text-md">
+            <span className="menu-comment-username">
+              <BsPersonCircle style={{ fontSize: "150%" }} />&nbsp;
+              {eachComment.displayname} &nbsp; <span style={{display: userId === eachComment.userID? "block" : "none"}}>(You)</span>
+            </span>
+            <div className="flex">
+              <MdDelete
+                className="delete-icon"
+                style={{
+                  display: userId === eachComment.userID ? "block" : "none",
+                }}
+                onClick={() => {setShowCommentDeleteConf(true)
+                setCurrentCommentForDelete(eachComment.commentID)}}
+              />
+              <BiFlag
+                className="hover-pointer"
+                onClick={() => {
+                  sendReport(menuDetails[id]._id, eachComment.commentID);
+                }}
+              />
+            </div>
+          </div>
           <p>{eachComment.description}</p>
         </div>
       ))}
+      <Modal show={commentDeleteConf} onHide={() => setShowCommentDeleteConf(false)}>
+        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+          ยินยันลบคอมเมนต์นี้หรือไม่
+        </Modal.Body>
+        <Modal.Footer className="content-center">
+          <Button
+            className="button-28-blue"
+            onClick={() => {
+              setShowCommentDeleteConf(false)
+            }}
+          >
+            กลับ
+          </Button>
+          <Button
+            className="button-28-red"
+            onClick={() => {
+              handleRemoveComment()
+            }}
+          >
+            ยืนยันลบคอมเมนต์
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

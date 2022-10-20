@@ -14,7 +14,7 @@ export const UserLogin = async (item) => {
   const baseURL = "https://cookclick-api.code.in.th/user/login"
   try {
     const response = await axios.post(baseURL, item)
-    return response.data.token
+    return response.data
   } catch (err) {
     console.log(err.response.data)
     return "error"
@@ -455,6 +455,22 @@ export const DelComment = async (token, menu, menuId, commentId) => {
   }
 }
 
+export const DelMyComment = async (token, menuId, commentId) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/comments/${commentId}`
+  try {
+    const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const SearchMenu = async (name) => {
   const baseURL = `https://cookclick-api.code.in.th/search/menu?name=${name}`
   try {
@@ -765,6 +781,22 @@ export const DelMemberReport = async (token, reportID) => {
   }
 }
 
+export const UnfavoriteMenu = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const DelMenuReport = async (token, menuID) => {
   const baseURL = `https://cookclick-api.code.in.th/reports/menu/${menuID}`
   try {
@@ -799,6 +831,38 @@ export const DelMenuCommentReport = async (token, commentID) => {
 
 export const FavoriteMenu = async (token, menuid) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.post(baseURL, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetCurrentMenuIfFavorited = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
+  try {
+    const response = await axios.get(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const GetMyRatingOnMenu = async (token, menuid) => {
+  const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/rating`
   try {
     const response = await axios.get(baseURL, {
       headers: {

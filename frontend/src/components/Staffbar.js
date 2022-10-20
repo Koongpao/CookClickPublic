@@ -3,11 +3,9 @@ import {
   FaCheck,
   FaSearch,
   FaBan,
-  FaPlus,
   FaUserCircle,
   FaUser,
 } from "react-icons/fa"
-import { BsList } from "react-icons/bs"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
@@ -40,7 +38,7 @@ function Staffbar({ user, onchangelogout }) {
       <Navbar key="false" expand="false" className="mb-3 color-staffnav">
         <Container fluid>
           <Navbar.Toggle onClick={handleShow} />
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="/staff/dashboard">
             <img src={Logonobg} alt="logo" style={{ width: "150px" }}></img>
           </Navbar.Brand>
           <Navbar.Brand href="/">

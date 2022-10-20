@@ -1,3 +1,4 @@
+
 .menupage {
   height: auto;
   max-width: 50%;
@@ -151,6 +152,7 @@
 .menu-rating-rate{
   flex-grow:1;
   border-right: rgba(0, 0, 0, 0.16) solid 1px;
+  max-width: 30%;
 }
 
 .menu-rating-comment{
@@ -160,12 +162,12 @@
 
 .menu-rating-fav{
   flex-grow: 1;
+  max-width: 30%;
 }
 .menu-rating-star{
   color: none;
   display: flex;
   justify-content: center;
-  
 }
 
 .menu-star{
@@ -173,4 +175,45 @@
   color: rgb(250, 217, 71);
 }
 
+.comment-box-button-box{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  
+}
 
+.comment-box-button{
+  padding: 6px;
+  margin: 0 1% 0 1%;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.menu-comments-list{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+}
+
+.comment-box-button:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.menu-comment-username{
+  width: 50%;
+  font-size: 80%;
+  display: flex;
+}
+
+.delete-icon{
+  margin-right: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.delete-icon:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
+}

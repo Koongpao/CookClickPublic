@@ -29,6 +29,7 @@ function Nbar({ user, onchangelogout }) {
   const [modalshow, setmodalshow] = useState(false)
   const handlemodalClose = () => setmodalshow(false)
   const handleConfirmlogout = () => {
+    localStorage.removeItem("userId")
     setmodalshow(false)
     logout()
     onchangelogout(false)
