@@ -428,14 +428,14 @@ const MenuPage = ({ status }) => {
                     setCurrentCommentForDelete(eachComment.commentID);
                   }}
                 />
-                <BiFlag
+                {token && <BiFlag
                   className="report-icon"
-                  style={{display: userId === eachComment.userID? "none" : "block"}}
+                  style={{display: (userId === eachComment.userID)? "none" : "block"}}
                   onClick={() => {
                     setShowReportModal(true);
                     setCommentReportId(eachComment.commentID)
                   }}
-                />
+                />}
               </div>
             </div>
             <p>{eachComment.description}</p>

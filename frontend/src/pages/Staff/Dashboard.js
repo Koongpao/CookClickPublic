@@ -41,19 +41,19 @@ const Dashboard = () => {
             Pending Reports...
           </div>
           <div className="flex flex-col">
-            <a href="/" className="db-report shadow-red">
+            <a href="/staff/report/menus" className="db-report shadow-red">
               <div>Menu Report</div>
               <div className="text-sm text-muted">
                 {menuReportCount} pending report(s).
               </div>
             </a>
-            <a href="/" className="db-report shadow-yellow">
+            <a href="/staff/report/members" className="db-report shadow-yellow">
               <div>Member Report</div>
               <div className="text-sm text-muted">
                 {memberReportCount} pending report(s).
               </div>
             </a>
-            <a href="/" className="db-report shadow-blue">
+            <a href="/staff/report/comments" className="db-report shadow-blue">
               <div>Comment Report</div>
               <div className="text-sm text-muted">
                 {commentReportCount} pending report(s).
