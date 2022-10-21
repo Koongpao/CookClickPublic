@@ -5,7 +5,7 @@ import { FaBan, FaPlus } from "react-icons/fa"
 import { IoIosArrowDown } from "react-icons/io"
 import Card from "react-bootstrap/Card"
 import Offcanvas from "react-bootstrap/Offcanvas"
-import { FormControl } from "react-bootstrap"
+import { FormControl, Modal } from "react-bootstrap"
 import {
   GetSystemIngredient,
   GetSystemKitchenware,
@@ -18,19 +18,28 @@ import {
 import Accordion from "react-bootstrap/Accordion"
 import { useAccordionButton } from "react-bootstrap/AccordionButton"
 import { useParams, useNavigate } from "react-router-dom"
+import { decodeToken } from "react-jwt"
 
 function Add() {
   const token = JSON.parse(localStorage.getItem("token"))
+  const userdata = decodeToken(token)
   let navigate = useNavigate()
   const { mid } = useParams()
   const [menuid, setMenuid] = useState(mid)
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
+  const [imagename, setimagename] = useState("")
+  const [stepimagename, setstepimagename] = useState({})
+  const [statusshow, setstatusshow] = useState(false)
   function setup(data, fulling, fullware) {
+    console.log(data)
     setrecipename(data.name)
     setrecipedesc(data.description)
-    setPreview("https://cookclick.code.in.th/images/".concat(data.image))
+    if (data.image) {
+      setimagename(data.image)
+      setPreview("https://cookclick.code.in.th/images/".concat(data.image))
+    }
     let olding = []
     let olduing = []
     data.ingredient.forEach((ing) => {
@@ -72,6 +81,7 @@ function Add() {
     data.cookingstep.forEach((step) => {
       let newstep = { pic: null, id: step.index, desc: step.description }
       if (step.image) {
+        stepimagename[step.index] = step.image
         oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
           step.image
         )
@@ -80,7 +90,9 @@ function Add() {
     })
     setsteplist(oldstep)
     setsteppic(oldpicstep)
-    setstepindex(oldstep.length)
+    console.log(oldpicstep)
+    console.log(oldstep)
+    setstepindex(oldstep[oldstep.length - 1].id + 1)
   }
   useEffect(() => {
     async function fetchdata() {
@@ -200,6 +212,7 @@ function Add() {
   const [keywordtool, setkeywordtool] = useState("")
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
+  const [failtext, setfailtext] = useState("การอัปโหลดสำเร็จ")
 
   const onSelectFile = (event) => {
     if (!event.target.files || event.target.files.length === 0) {
@@ -222,12 +235,18 @@ function Add() {
       lastwarelist.push(nextware)
     })
     let laststeplist = []
-    steplist.forEach((element, index) => {
-      let nextstep = { index: index, description: element.desc }
+    steplist.forEach((element) => {
+      let nextstep = { index: element.id, description: element.desc }
+      if (!element.pic) {
+        if (stepimagename[element.id]) {
+          nextstep.image = stepimagename[element.id]
+        }
+      }
       laststeplist.push(nextstep)
     })
     const ingarray = {
       name: recipename,
+      image: imagename,
       description: recipedesc,
       status: ready,
       ingredient: lastinglist,
@@ -241,37 +260,65 @@ function Add() {
         if (selectedFile) {
           const menuImage = new FormData()
           menuImage.append("menu_image", selectedFile, selectedFile.name)
-          ImageUpload(token, menuImage, response.id)
+          const rep = await ImageUpload(token, menuImage, response.id)
+          if (!rep.status) {
+            setfailtext("เกิดความผิดพลาดในการอัปโหลดภาพปก")
+          }
         }
-        steplist.forEach((element, index) => {
+        steplist.forEach(async (element) => {
           if (element.pic) {
             const stepImage = new FormData()
             stepImage.append("step_image", element.pic, element.pic.name)
-            StepImageUpload(token, stepImage, response.id, index)
+            const res = await StepImageUpload(
+              token,
+              stepImage,
+              response.id,
+              element.id
+            )
+            if (!res.status) {
+              setfailtext(
+                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${element.id + 1}`
+              )
+            }
           }
         })
       } else {
-        console.log("error")
+        setfailtext("เกิดความผิดพลาดในการอัปโหลดสูตรอาหาร")
       }
     } else {
       const response = await UpdateMenu(token, ingarray, menuid)
       if (!response.success) {
         console.log("error")
+        setfailtext("เกิดความผิดพลาดในการอัปโหลดสูตรอาหาร")
       } else {
         if (selectedFile) {
           const menuImage = new FormData()
           menuImage.append("menu_image", selectedFile, selectedFile.name)
-          ImageUpload(token, menuImage, response.id)
+          const rep = await ImageUpload(token, menuImage, response.id)
+          if (!rep.status) {
+            setfailtext("เกิดความผิดพลาดในการอัปโหลดภาพปก")
+          }
         }
-        steplist.forEach((element, index) => {
+        steplist.forEach(async (element) => {
           if (element.pic) {
             const stepImage = new FormData()
             stepImage.append("step_image", element.pic, element.pic.name)
-            StepImageUpload(token, stepImage, response.id, index)
+            const res = await StepImageUpload(
+              token,
+              stepImage,
+              response.id,
+              element.id
+            )
+            if (!res.status) {
+              setfailtext(
+                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${element.id + 1}`
+              )
+            }
           }
         })
       }
     }
+    setstatusshow(true)
   }
 
   const CustomToggle = ({ children, eventKey }) => {
@@ -549,6 +596,28 @@ function Add() {
           </div>
         </Form>
       </div>
+      <Modal
+        show={statusshow}
+        onHide={() => {
+          setstatusshow(false)
+        }}
+      >
+        <Modal.Header>สถานะการอัปโหลด</Modal.Header>
+        <Modal.Body>{failtext}</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => navigate("../Mymenu")}>
+            ไปที่หน้าสูตรอาหารของฉัน
+          </Button>
+          <Button
+            onClick={() => {
+              navigate(`../Add/${userdata.userID}/${menuid}`)
+              setstatusshow(false)
+            }}
+          >
+            ปิดหน้าต่าง
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }
