@@ -370,7 +370,6 @@ export const CommentReport = async (token, comment, menuId, commentId) => {
     return response.data
   } catch (err) {
     console.error(err.response.data)
-    alert(err.response.data.message)
     return null
   }
 }

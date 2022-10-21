@@ -53,9 +53,12 @@ label:focus,
 #forget-password:hover {
   text-decoration: underline;
 }
+
 .color-nav {
   background-color: #4a7c59;
+  margin-bottom: 0 !important;
 }
+
 .color-nav-blue {
   background-color: rgba(55, 161, 153, 0.5);
 }
@@ -996,6 +999,10 @@ label:focus,
   border-radius: 10px;
 }
 
+.normal-search-box-input{
+  border:rgb(0, 0, 0, 0.15) 1px solid;
+  border-radius: 10px;
+}
 .normal-search-box-button:hover{
   background-color: rgba(0, 0, 0, 0.16);
 }
@@ -1003,4 +1010,66 @@ label:focus,
 .normal-search-box{
   width: 30%;
   margin: auto;
+}
+
+.new-login-page{
+  height: 92vh;
+  /* background-image: url("\img\Fall-Ingredient-Cover-Photo.gif"); */
+}
+
+.login-slideshow{
+  flex-grow: 2;
+  max-width: 60%;
+}
+
+.login-slideshow > img {
+  height: 100%;
+}
+
+
+.login-right-part{
+  max-width: 40%;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.new-login-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15%;
+  align-items: center;
+}
+
+.new-login-header{
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 15%;
+  color:rgb(0, 0, 0, 0.5);
+  font-size: 1.5em;
+}
+
+.new-login-button{
+  border-radius: 100px;
+  width: 15vw;
+  height: 5vh;
+  border: none;
+  background-color: #37333d;
+  color: white;
+  transition: all 0.2s;
+}
+
+.new-login-button:hover{
+  background-color: #000000;
+  border: rgb(0, 0, 0, 1) 10px 10px 10px;
+}
+
+.or-text{
+  border-top:rgb(0, 0, 0, 0.15) solid 1px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }

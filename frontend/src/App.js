@@ -44,6 +44,7 @@ import ReportMenuModal from "./components/Report/Modal/ReportMenu"
 import DeleteUserModal from "./components/Report/Modal/DeleteUser"
 import DeleteCommentModal from "./components/Report/Modal/DeleteComment"
 import DeleteMenuModal from "./components/Report/Modal/DeleteMenu"
+import NewLogin from "./pages/NewLogin"
 
 //* Non logged-in users cannot access ProtectedRoute pages
 
@@ -105,6 +106,14 @@ function App() {
               element={
                 <Protectedlogin>
                   <Login onchangelogin={setignore} />
+                </Protectedlogin>
+              }
+            />
+            <Route
+              path="/newlogin"
+              element={
+                <Protectedlogin>
+                  <NewLogin onchangelogin={setignore} />
                 </Protectedlogin>
               }
             />
