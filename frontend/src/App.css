@@ -295,6 +295,12 @@ label:focus,
   color: #000 !important;
 }
 
+.staffbar-text-center {
+  color: #000 !important;
+  justify-content: center;
+  display: flex;
+}
+
 .staffbar-text a {
   color: #000 !important;
 }

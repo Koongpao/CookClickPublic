@@ -71,7 +71,7 @@ const CommentReportPage = () => {
                         console.log(delReport);
                         window.location.reload();
                       }
-                    }>Delete</button>
+                    }>Reject Report</button>
                   </div>
                 </div>
               )

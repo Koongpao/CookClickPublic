@@ -56,7 +56,7 @@ function Staffbar({ user, onchangelogout }) {
             <Offcanvas.Body className="staffbar-bluebg">
               <div className="staffbar-profile">
                 <FaUserCircle size="183.5" />
-                <div className="staffbar-text">
+                <div className="staffbar-text-center">
                   ยินดีต้อนรับ
                   <br />
                   {staffname}
