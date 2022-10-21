@@ -15,6 +15,7 @@ import {
   AddMenuComment,
   DelComment,
   DelMyComment,
+  CommentReport,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
@@ -56,9 +57,9 @@ const MenuPage = ({ status }) => {
       myRating = await GetMyRatingOnMenu(token, mid);
       ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
       setMenuFavorite(ifFavorited.result);
-      if(!IgnoreInitialFavorite){
-      setInitialFavorite(ifFavorited.result);
-      setIgnoreInitialFavorite(true);
+      if (!IgnoreInitialFavorite) {
+        setInitialFavorite(ifFavorited.result);
+        setIgnoreInitialFavorite(true);
       }
       setCurrentStarValue(myRating.ratescore);
     }
@@ -169,10 +170,12 @@ const MenuPage = ({ status }) => {
   const [showFavoritemsg, setShowFavoritemsg] = useState(false);
   const [showUnfavoritemsg, setShowUnfavoritemsg] = useState(false);
   const [commentDeleteConf, setShowCommentDeleteConf] = useState(false);
-  const [currentCommentForDelete, setCurrentCommentForDelete] = useState("")
-  const [IgnoreInitialFavorite, setIgnoreInitialFavorite] = useState(false)
+  const [currentCommentForDelete, setCurrentCommentForDelete] = useState("");
+  const [IgnoreInitialFavorite, setIgnoreInitialFavorite] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportContent, setReportContent] = useState("");
+  const [commentReportId, setCommentReportId] = useState("")
   const comBox = commentBox();
-  
 
   const handleRatingClick = async (value) => {
     setCurrentStarValue(value);
@@ -183,6 +186,13 @@ const MenuPage = ({ status }) => {
     // console.log(response);
     setRateSuccessMsg(true);
     FetchData();
+  };
+
+  const handleSendReport = async () => {
+    setReportContent("");
+    setShowReportModal(false);
+    const response = await CommentReport(token, {description: reportContent}, mid, commentReportId)
+    console.log(response)
   };
 
   const handleFavoriteClick = async () => {
@@ -196,20 +206,20 @@ const MenuPage = ({ status }) => {
       // console.log(response);
     }
     if (initialFavorite) {
-      console.log(initialFavorite)
+      console.log(initialFavorite);
       setShowUnfavoritemsg(!showUnfavoritemsg);
     } else {
-      console.log(initialFavorite)
+      console.log(initialFavorite);
       setShowFavoritemsg(!showFavoritemsg);
     }
     FetchData();
   };
 
   const handleRemoveComment = async () => {
-    const response = await DelMyComment(token, mid, currentCommentForDelete)
-    console.log(response)
-    setShowCommentDeleteConf(false)
-    FetchData()
+    const response = await DelMyComment(token, mid, currentCommentForDelete);
+    console.log(response);
+    setShowCommentDeleteConf(false);
+    FetchData();
   };
 
   return (
@@ -390,42 +400,59 @@ const MenuPage = ({ status }) => {
         Comments
       </h1>
       {token && comBox}
-      {menuDetails.comment.map((eachComment, id) => (
-        <div className="menu-comments-list" key={id}>
-          <div className="flex justify-content-between text-md">
-            <span className="menu-comment-username">
-              <BsPersonCircle style={{ fontSize: "150%" }} />&nbsp;
-              {eachComment.displayname} &nbsp; <span style={{display: userId === eachComment.userID? "block" : "none"}}>(You)</span>
-            </span>
-            <div className="flex">
-              <MdDelete
-                className="delete-icon"
-                style={{
-                  display: userId === eachComment.userID ? "block" : "none",
-                }}
-                onClick={() => {setShowCommentDeleteConf(true)
-                setCurrentCommentForDelete(eachComment.commentID)}}
-              />
-              <BiFlag
-                className="hover-pointer"
-                onClick={() => {
-                  sendReport(menuDetails[id]._id, eachComment.commentID);
-                }}
-              />
+      {menuDetails.comment
+        .filter((eachItem) => eachItem.status !== false)
+        .map((eachComment, id) => (
+          <div className="menu-comments-list" key={id}>
+            <div className="flex justify-content-between text-md">
+              <span className="menu-comment-username">
+                <BsPersonCircle style={{ fontSize: "150%" }} />
+                &nbsp;
+                {eachComment.displayname} &nbsp;{" "}
+                <span
+                  style={{
+                    display: userId === eachComment.userID ? "block" : "none",
+                  }}
+                >
+                  (You)
+                </span>
+              </span>
+              <div className="flex">
+                <MdDelete
+                  className="delete-icon"
+                  style={{
+                    display: userId === eachComment.userID ? "block" : "none",
+                  }}
+                  onClick={() => {
+                    setShowCommentDeleteConf(true);
+                    setCurrentCommentForDelete(eachComment.commentID);
+                  }}
+                />
+                <BiFlag
+                  className="report-icon"
+                  style={{display: userId === eachComment.userID? "none" : "block"}}
+                  onClick={() => {
+                    setShowReportModal(true);
+                    setCommentReportId(eachComment.commentID)
+                  }}
+                />
+              </div>
             </div>
+            <p>{eachComment.description}</p>
           </div>
-          <p>{eachComment.description}</p>
-        </div>
-      ))}
-      <Modal show={commentDeleteConf} onHide={() => setShowCommentDeleteConf(false)}>
+        ))}
+      <Modal
+        show={commentDeleteConf}
+        onHide={() => setShowCommentDeleteConf(false)}
+      >
         <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
-          ยินยันลบคอมเมนต์นี้หรือไม่
+          ยืนยันลบคอมเมนต์นี้หรือไม่
         </Modal.Body>
         <Modal.Footer className="content-center">
           <Button
             className="button-28-blue"
             onClick={() => {
-              setShowCommentDeleteConf(false)
+              setShowCommentDeleteConf(false);
             }}
           >
             กลับ
@@ -433,10 +460,38 @@ const MenuPage = ({ status }) => {
           <Button
             className="button-28-red"
             onClick={() => {
-              handleRemoveComment()
+              handleRemoveComment();
             }}
           >
             ยืนยันลบคอมเมนต์
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showReportModal} onHide={() => setShowReportModal(false)}>
+        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+          <input
+            className="report-form-modal"
+            onChange={(e) => setReportContent(e.target.value)}
+            value={reportContent}
+            placeholder="กรอกสาเหตุการรายงาน"
+          />
+        </Modal.Body>
+        <Modal.Footer className="content-center">
+          <Button
+            className="button-28-blue"
+            onClick={() => {
+              setShowReportModal(false);
+            }}
+          >
+            กลับ
+          </Button>
+          <Button
+            className="button-28-red"
+            onClick={() => {
+              handleSendReport();
+            }}
+          >
+            ยืนยันรายงาน
           </Button>
         </Modal.Footer>
       </Modal>

@@ -217,3 +217,20 @@
   background-color: rgba(0, 0, 0, 0.16);
   border-radius: 50%;
 }
+
+.report-icon{
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.report-icon:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
+}
+
+.report-form-modal {
+  border: rgb(0, 0, 0 ,0.16) 1px solid;
+  border-radius: 10px;
+  font-size: 70%;
+  width: 80%;
+}
