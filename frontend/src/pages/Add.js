@@ -29,11 +29,17 @@ function Add() {
   const [ingdata, setingdata] = useState([])
   const [waredata, setwaredata] = useState([])
   const [ignore, setignore] = useState(false)
+  const [imagename, setimagename] = useState("")
+  const [stepimagename, setstepimagename] = useState({})
   const [statusshow, setstatusshow] = useState(false)
   function setup(data, fulling, fullware) {
+    console.log(data)
     setrecipename(data.name)
     setrecipedesc(data.description)
-    setPreview("https://cookclick.code.in.th/images/".concat(data.image))
+    if (data.image) {
+      setimagename(data.image)
+      setPreview("https://cookclick.code.in.th/images/".concat(data.image))
+    }
     let olding = []
     let olduing = []
     data.ingredient.forEach((ing) => {
@@ -75,6 +81,7 @@ function Add() {
     data.cookingstep.forEach((step) => {
       let newstep = { pic: null, id: step.index, desc: step.description }
       if (step.image) {
+        stepimagename[step.index] = step.image
         oldpicstep[step.index] = "https://cookclick.code.in.th/images/".concat(
           step.image
         )
@@ -83,7 +90,9 @@ function Add() {
     })
     setsteplist(oldstep)
     setsteppic(oldpicstep)
-    setstepindex(oldstep.length)
+    console.log(oldpicstep)
+    console.log(oldstep)
+    setstepindex(oldstep[oldstep.length - 1].id + 1)
   }
   useEffect(() => {
     async function fetchdata() {
@@ -226,12 +235,18 @@ function Add() {
       lastwarelist.push(nextware)
     })
     let laststeplist = []
-    steplist.forEach((element, index) => {
-      let nextstep = { index: index, description: element.desc }
+    steplist.forEach((element) => {
+      let nextstep = { index: element.id, description: element.desc }
+      if (!element.pic) {
+        if (stepimagename[element.id]) {
+          nextstep.image = stepimagename[element.id]
+        }
+      }
       laststeplist.push(nextstep)
     })
     const ingarray = {
       name: recipename,
+      image: imagename,
       description: recipedesc,
       status: ready,
       ingredient: lastinglist,
@@ -250,7 +265,7 @@ function Add() {
             setfailtext("เกิดความผิดพลาดในการอัปโหลดภาพปก")
           }
         }
-        steplist.forEach(async (element, index) => {
+        steplist.forEach(async (element) => {
           if (element.pic) {
             const stepImage = new FormData()
             stepImage.append("step_image", element.pic, element.pic.name)
@@ -258,11 +273,11 @@ function Add() {
               token,
               stepImage,
               response.id,
-              index
+              element.id
             )
             if (!res.status) {
               setfailtext(
-                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${index + 1}`
+                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${element.id + 1}`
               )
             }
           }
@@ -284,7 +299,7 @@ function Add() {
             setfailtext("เกิดความผิดพลาดในการอัปโหลดภาพปก")
           }
         }
-        steplist.forEach(async (element, index) => {
+        steplist.forEach(async (element) => {
           if (element.pic) {
             const stepImage = new FormData()
             stepImage.append("step_image", element.pic, element.pic.name)
@@ -292,11 +307,11 @@ function Add() {
               token,
               stepImage,
               response.id,
-              index
+              element.id
             )
             if (!res.status) {
               setfailtext(
-                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${index + 1}`
+                `เกิดความผิดพลาดในการอัปโหลดภาพในขั้นตอนที่ ${element.id + 1}`
               )
             }
           }
