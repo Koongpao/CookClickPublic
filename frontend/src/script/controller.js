@@ -797,6 +797,38 @@ export const UnfavoriteMenu = async (token, menuid) => {
   }
 }
 
+export const DelMenuReport = async (token, menuID) => {
+  const baseURL = `https://cookclick-api.code.in.th/reports/menu/${menuID}`
+  try {
+    const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
+export const DelMenuCommentReport = async (token, commentID) => {
+  const baseURL = `https://cookclick-api.code.in.th/reports/comment/${commentID}`
+  try {
+    const response = await axios.delete(baseURL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (err) {
+    console.error(err.response.data)
+    alert(err.response.data.message)
+    return null
+  }
+}
+
 export const FavoriteMenu = async (token, menuid) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuid}/favorite`
   try {

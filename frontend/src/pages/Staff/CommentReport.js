@@ -1,4 +1,4 @@
-import { CommentReportedList } from "../../script/controller";
+import { CommentReportedList, DelMenuCommentReport } from "../../script/controller";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
@@ -7,7 +7,10 @@ const CommentReportPage = () => {
   const [commentReport, setCommentReport] = useState({
     commentreport: [],
   });
-  const [show, setShow] = useState([]);
+  const [show, setShow] = useState(false);
+  const [modalItem, setModalItem] = useState({
+    reportdescription: [],
+  });
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -16,8 +19,6 @@ const CommentReportPage = () => {
       setCommentReport((prev) =>
         ({ ...prev, commentreport: commentReportData.data.commentreport })
       );
-      const commentReportSize = commentReportData.data.commentreport.length;
-      setShow(Array(commentReportSize).fill(false));
     };
     fetchdata();
   }, []);
@@ -44,10 +45,10 @@ const CommentReportPage = () => {
               return (
                 <div className="db-menu" key={index}>
                   <div className="mb-1">
-                    Comment: {item.commentID}
+                    Comment: {item.comment ? item.comment : "[Deleted]" }
                   </div>
                   <div className="mb-1">
-                    On Menu: {item.menuInfo[0].name}
+                    On Menu: {item.menuInfo.length ? item.menuInfo[0].name : "[Deleted]" }
                   </div>
                   <div className="text-sm text-muted mb-3">
                     By: {item.userID}
@@ -55,47 +56,53 @@ const CommentReportPage = () => {
                   <div className="text-sm mb-1">
                     REPORTED {item.count} TIME(S).
                   </div>
-                  <div className="rp-desc" onClick={() => setShow(prev => [...prev, prev[index] = true])}>
+                  <div className="rp-desc" onClick={() => {
+                    setShow(true)
+                    setModalItem((prev) => ({ ...prev, reportdescription: item.reportdescription }))
+                  }}>
                     Description
                   </div>
                   <div className="flex justify-content-end">
-                    <button className="btn-blue">Ban Member</button>
-                    <button className="btn-lightblue">Delete</button>
+                    <button className="btn-blue">Delete Comment</button>
+                    <button className="btn-lightblue" onClick={
+                      async () => {
+                        const token = JSON.parse(localStorage.getItem("token"));
+                        const delReport = await DelMenuCommentReport(token, item._id);
+                        console.log(delReport);
+                        window.location.reload();
+                      }
+                    }>Delete</button>
                   </div>
-                  <Modal
-                    show={show[index]}
-                    onHide={() => {
-                      setShow(prev => [...prev, prev[index] = false])
-                    }}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Comments
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {item.reportdescription.map((it, id) => {
-                        return (
-                          <div key={id}>
-                            {it.reporterName}: {it.description} 
-                          </div>
-                        );
-                      })}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        onClick={() => setShow(prev => [...prev, prev[index] = false])}
-                      >
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
                 </div>
               )
             })}
+            <Modal
+              show={show}
+              onHide={() => setShow(false)}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Comments
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {modalItem.reportdescription.map((it, id) => {
+                  return (
+                    <div key={id}>
+                      {it.reporterName}: {it.description} 
+                    </div>
+                  );
+                })}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={() => setShow(false)} >
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

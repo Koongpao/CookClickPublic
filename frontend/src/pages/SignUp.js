@@ -1,9 +1,8 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import { useState,useEffect } from "react"
-import { AddUser, UserLogin,CheckSignupExist } from "../script/controller"
+import { AddUser, CheckSignupExist } from "../script/controller"
 import { AcceptedPopup, DeniedPopup,EmailVerifiedPopup } from "../components/SignInPopup"
-import { useAuth } from "../script/useAuth"
 import { useNavigate,useSearchParams } from "react-router-dom"
 
 
@@ -24,7 +23,6 @@ const SignUp = ({ onchangelogin }) => {
 
   
   const [deniedMessage, setDeniedMessage] = useState("")
-  const { login } = useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (error || errorN || errorpw || errorP) {
@@ -86,7 +84,7 @@ const SignUp = ({ onchangelogin }) => {
     const fetchData = async () => {
       if(displayname.text.length >= 6){
         let data = await CheckSignupExist("displayname",displayname.text);
-        if(data.message == "Already taken."){
+        if(data.message === "Already taken."){
           setErrorN("Display Name already taken.")
         }else{
           setErrorN(null)
@@ -102,7 +100,7 @@ const SignUp = ({ onchangelogin }) => {
     const fetchData = async () => {
       if(email.text.length >= 1){
         let data = await CheckSignupExist("email",email.text);
-        if(data.message == "Already taken."){
+        if(data.message === "Already taken."){
           setError("Email already taken.")
         }else{
           setError(null)
@@ -114,7 +112,7 @@ const SignUp = ({ onchangelogin }) => {
 
 
   useEffect(() => {
-    if(searchParams.get('verify') == "true"){
+    if(searchParams.get('verify') === "true"){
         setModalShowEmailVerified(true)
      }
   },[]);
@@ -128,7 +126,6 @@ const SignUp = ({ onchangelogin }) => {
       setErrorN("Display Name must only contain letters, numbers and underscores")
     }
     else {
-      const {value} = event.target.value;
       setDisplayname({
         ...displayname,
         text: event.target.value,

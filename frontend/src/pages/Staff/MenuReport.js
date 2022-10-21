@@ -1,4 +1,4 @@
-import { MenuReportedList, MenuReport } from "../../script/controller";
+import { MenuReportedList, DelMenuReport } from "../../script/controller";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
@@ -7,7 +7,11 @@ const MenuReportPage = () => {
   const [menuReport, setMenuReport] = useState({
     menu: [],
   });
-  const [show, setShow] = useState([]);
+  const [show, setShow] = useState(false);
+  const [modalItem, setModalItem] = useState({
+    reportdescription: [],
+  });
+
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -16,8 +20,6 @@ const MenuReportPage = () => {
       setMenuReport((prev) =>
         ({ ...prev, menu: menuReportData.data.menu })
       );
-      const menuReportSize = menuReportData.data.menu.length;
-      setShow(Array(menuReportSize).fill(false));
     };
     fetchdata();
   }, []);
@@ -53,46 +55,50 @@ const MenuReportPage = () => {
                     REPORTED {item.count} TIME(S).
                   </div>
                   <div className="rp-desc" onClick={() => {
-                    setShow(prev => [...prev, prev[index] = true])
+                    setShow(true)
+                    setModalItem((prev) => ({ ...prev, reportdescription: item.reportdescription }))
                   }}>
                     Description
                   </div>
                   <div className="flex justify-content-end">
-                    <button className="btn-blue">Ban Member</button>
-                    <button className="btn-lightblue">Delete</button>
+                    <button className="btn-blue">Delete Menu</button>
+                    <button className="btn-lightblue" onClick={
+                      async () => {
+                        const token = JSON.parse(localStorage.getItem("token"));
+                        const delReport = await DelMenuReport(token, item._id);
+                        console.log(delReport);
+                        window.location.reload();
+                      }
+                    }>Delete</button>
                   </div>
-                  <Modal
-                    show={show[index]}
-                    onHide={() => {
-                      setShow(prev => [...prev, prev[index] = false])
-                    }}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Comments
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {item.reportdescription.map((it, index) => {
-                        return (
-                          <div key={index}>
-                            {it.reporterName}: {it.description} 
-                          </div>
-                        );
-                      })}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button onClick={() => {
-                        setShow(prev => [...prev, prev[index] = false])
-                      }}>Close</Button>
-                    </Modal.Footer>
-                  </Modal>
                 </div>
               )
             })}
+            <Modal
+              show={show}
+              onHide={() => setShow(false)}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Comments
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {modalItem.reportdescription.map((it, index) => {
+                  return (
+                    <div key={index}>
+                      {it.reporterName}: {it.description} 
+                    </div>
+                  );
+                })}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={() => setShow(false)}>Close</Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
