@@ -235,3 +235,14 @@
   font-size: 70%;
   width: 80%;
 }
+
+.menu-report-menu{
+  font-size: 140%;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.menu-report-menu:hover{
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 50%;
+}

@@ -385,7 +385,6 @@ export const MenuReport = async (token, comment, menuId) => {
     return response.data
   } catch (err) {
     console.error(err.response.data)
-    alert(err.response.data.message)
     return null
   }
 }

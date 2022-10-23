@@ -16,6 +16,7 @@ import {
   DelComment,
   DelMyComment,
   CommentReport,
+  MenuReport,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
@@ -175,6 +176,8 @@ const MenuPage = ({ status }) => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportContent, setReportContent] = useState("");
   const [commentReportId, setCommentReportId] = useState("")
+  const [showMenuReportModal, setShowMenuReportModal] = useState(false);
+  const [MenuReportContent, setMenuReportContent] = useState("");
   const comBox = commentBox();
 
   const handleRatingClick = async (value) => {
@@ -222,6 +225,12 @@ const MenuPage = ({ status }) => {
     FetchData();
   };
 
+  const handleReportMenu = async () => {
+    const response = await MenuReport(token, {description: MenuReportContent}, mid);
+    console.log(response);
+    setShowMenuReportModal(false)
+  }
+
   return (
     <div className="menupage">
       <div className="menu-img">
@@ -229,8 +238,9 @@ const MenuPage = ({ status }) => {
       </div>
       <div className="menu-desc">
         <h1 className="menu-header">{menuDetails.name}</h1>
-        <div>
-          <BsPersonCircle /> By : {menuDetails.userDisplayName}
+        <div style={{display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <div><BsPersonCircle /> By : {menuDetails.userDisplayName}</div>
+          <BiFlag className="menu-report-menu" onClick={() => setShowMenuReportModal(true)}/>
         </div>
         <div style={{ height: "auto" }}>
           <MdOutlineDescription /> {menuDetails.description}
@@ -489,6 +499,34 @@ const MenuPage = ({ status }) => {
             className="button-28-red"
             onClick={() => {
               handleSendReport();
+            }}
+          >
+            ยืนยันรายงาน
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showMenuReportModal} onHide={() => setShowMenuReportModal(false)}>
+        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+          <input
+            className="report-form-modal"
+            onChange={(e) => setMenuReportContent(e.target.value)}
+            value={MenuReportContent}
+            placeholder="กรอกสาเหตุการรายงาน"
+          />
+        </Modal.Body>
+        <Modal.Footer className="content-center">
+          <Button
+            className="button-28-blue"
+            onClick={() => {
+              setShowMenuReportModal(false);
+            }}
+          >
+            กลับ
+          </Button>
+          <Button
+            className="button-28-red"
+            onClick={() => {
+              handleReportMenu(MenuReportContent);
             }}
           >
             ยืนยันรายงาน
