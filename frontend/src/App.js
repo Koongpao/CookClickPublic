@@ -51,13 +51,13 @@ import NewLogin from "./pages/NewLogin"
 function App() {
   const [login, setlogin] = useState(0)
   const [ignore, setignore] = useState(false)
-  const [udata, setudata] = useState()
+  const [udata, setudata] = useState("")
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"))
     const UserData = decodeToken(token)
     setudata(UserData)
     let role = 0
-    // console.log(UserData)
+    console.log(UserData)
     if (token === null) {
       role = 0
     } else {
@@ -101,16 +101,16 @@ function App() {
                 </ProtectedOwnerRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/login"
               element={
                 <Protectedlogin>
                   <Login onchangelogin={setignore} />
                 </Protectedlogin>
               }
-            />
+            /> */}
             <Route
-              path="/newlogin"
+              path="/login"
               element={
                 <Protectedlogin>
                   <NewLogin onchangelogin={setignore} />

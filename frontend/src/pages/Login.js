@@ -18,7 +18,7 @@ function Login({ onchangelogin }) {
       <h1 className="m-5 text-center">Login</h1>
       <div className="flex justify-content-center">
         <Form
-          className="flex flex-col formbox p-4"
+          className="new-login-form"
           onSubmit={async (e) => {
             e.preventDefault();
             const tokenData = await UserLogin(userDetails);

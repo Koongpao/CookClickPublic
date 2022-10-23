@@ -1012,25 +1012,12 @@ label:focus,
   margin: auto;
 }
 
-.new-login-page{
-  height: 92vh;
-  /* background-image: url("\img\Fall-Ingredient-Cover-Photo.gif"); */
-}
-
-.login-slideshow{
-  flex-grow: 2;
-  max-width: 60%;
-}
-
-.login-slideshow > img {
-  height: 100%;
-}
-
-
-.login-right-part{
-  max-width: 40%;
+.login-main-part{
+  margin-top: 10vh !important;
+  max-width: 30%;
   background-color: white;
   flex-grow: 1;
+  margin: auto;
 }
 
 .new-login-form{
@@ -1039,15 +1026,28 @@ label:focus,
   justify-content: center;
   padding: 15%;
   align-items: center;
+  box-shadow: rgb(0, 0, 0, 0.15) 0px 1px 4px;
+  border-radius: 25px;
+}
+
+.new-register-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5%;
+  align-items: center;
+  box-shadow: rgb(0, 0, 0, 0.15) 0px 1px 4px;
+  border-radius: 25px;
+  margin-top: 5vh;
+  margin-bottom: 5%;
 }
 
 .new-login-header{
   display: flex;
   justify-content: center;
-  margin-top: 10%;
-  margin-bottom: 15%;
-  color:rgb(0, 0, 0, 0.5);
-  font-size: 1.5em;
+  margin-top: 1%;
+  margin-bottom: 10%;
+  font-size: 2em;
 }
 
 .new-login-button{
@@ -1072,4 +1072,28 @@ label:focus,
   justify-content: center;
   margin-top: 1em;
   margin-bottom: 1em;
+}
+
+.new-login-input{
+  border: none;
+  border-bottom: rgb(0, 0, 0, 0.15) solid 1px;
+  margin: auto;
+  display: flex;
+}
+
+.new-login-input-label{
+  font-size: 1em;
+}
+
+.new-login-input-top{
+  display: flex;
+  align-items: center;
+  color: rgb(0, 0, 0, 0.3);
+}
+
+.register-border{
+  height: auto;
+  width: 100%;
+  margin: 0 0 2% 0;
+  border-bottom:rgb(0, 0, 0, 0.15) solid 1px;
 }

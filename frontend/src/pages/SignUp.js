@@ -1,191 +1,195 @@
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import { useState,useEffect } from "react"
-import { AddUser, CheckSignupExist } from "../script/controller"
-import { AcceptedPopup, DeniedPopup,EmailVerifiedPopup } from "../components/SignInPopup"
-import { useNavigate,useSearchParams } from "react-router-dom"
-
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useState, useEffect } from "react";
+import { AddUser, CheckSignupExist } from "../script/controller";
+import {
+  AcceptedPopup,
+  DeniedPopup,
+  EmailVerifiedPopup,
+} from "../components/SignInPopup";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { AiOutlineMail } from "react-icons/ai";
+import { BsFillKeyFill, BsFillPersonFill, BsKey, BsKeyFill } from "react-icons/bs";
 
 const SignUp = ({ onchangelogin }) => {
-
   const [searchParams] = useSearchParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({
     displayname: "",
     email: "",
     password: "",
-  })
-  const [modalShowAccepted, setModalShowAccepted] = useState(false)
-  const [modalShowDenied, setModalShowDenied] = useState(false)
-  const [modalShowEmailVerified, setModalShowEmailVerified] = useState(false)
+  });
+  const [modalShowAccepted, setModalShowAccepted] = useState(false);
+  const [modalShowDenied, setModalShowDenied] = useState(false);
+  const [modalShowEmailVerified, setModalShowEmailVerified] = useState(false);
 
-  
-  const [deniedMessage, setDeniedMessage] = useState("")
+  const [deniedMessage, setDeniedMessage] = useState("");
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (error || errorN || errorpw || errorP) {
-      setDeniedMessage("Please fill in all fields")
-      setModalShowDenied(true)
-      return
+      setDeniedMessage("Please fill in all fields");
+      setModalShowDenied(true);
+      return;
     }
-    const reqMessage = await AddUser(userDetails)
+    const reqMessage = await AddUser(userDetails);
     if (!reqMessage.success) {
-      console.log(reqMessage.message)
-      setDeniedMessage(reqMessage.message)
-      setModalShowDenied(true)
+      console.log(reqMessage.message);
+      setDeniedMessage(reqMessage.message);
+      setModalShowDenied(true);
+    } else {
+      setModalShowAccepted(true);
     }
-    else {
-      setModalShowAccepted(true)
-    }
-  }
-  const [error, setError] = useState(null)
-  const [errorN, setErrorN] = useState(null)
-  const [errorP, setErrorP] = useState(null)
-  const [errorpw, setErrorpw] = useState(null)
-  const [message, setMessage] = useState("")
-  const [messageN, setMessageN] = useState("")
-  const [messageP, setMessageP] = useState("")
-  const [cfMessage, setcfMessage] = useState("")
+  };
+  const [error, setError] = useState(null);
+  const [errorN, setErrorN] = useState(null);
+  const [errorP, setErrorP] = useState(null);
+  const [errorpw, setErrorpw] = useState(null);
+  const [message, setMessage] = useState("");
+  const [messageN, setMessageN] = useState("");
+  const [messageP, setMessageP] = useState("");
+  const [cfMessage, setcfMessage] = useState("");
 
   const isValidEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email)
-  }
+    return /\S+@\S+\.\S+/.test(email);
+  };
   const isValidName = (name) => {
-    return /^[a-zA-Z0-9_]+$/.test(name)
-  }
+    return /^[a-zA-Z0-9_]+$/.test(name);
+  };
 
   const isValidLengthN = (name) => {
-    return name.length >= 6 && name.length <= 20
-  }
+    return name.length >= 6 && name.length <= 20;
+  };
   const isValidLengthP = (password) => {
-    return password.length >= 8 && password.length <= 20
-  }
-
+    return password.length >= 8 && password.length <= 20;
+  };
 
   const checkEmail = (event) => {
     if (!isValidEmail(event.target.value)) {
-      setError("Email is invalid")
+      setError("Email is invalid");
     } else {
       setEmail({
         ...email,
         text: event.target.value,
       });
     }
-    setMessage(event.target.value)
-  }
+    setMessage(event.target.value);
+  };
 
-
-  const [displayname, setDisplayname] = useState({text: ''});
-
+  const [displayname, setDisplayname] = useState({ text: "" });
 
   useEffect(() => {
     const fetchData = async () => {
-      if(displayname.text.length >= 6){
-        let data = await CheckSignupExist("displayname",displayname.text);
-        if(data.message === "Already taken."){
-          setErrorN("Display Name already taken.")
-        }else{
-          setErrorN(null)
+      if (displayname.text.length >= 6) {
+        let data = await CheckSignupExist("displayname", displayname.text);
+        if (data.message === "Already taken.") {
+          setErrorN("Display Name already taken.");
+        } else {
+          setErrorN(null);
         }
       }
-    }
-   fetchData()
+    };
+    fetchData();
   }, [displayname]);
 
-  const [email, setEmail] = useState({text: ''});
- 
+  const [email, setEmail] = useState({ text: "" });
+
   useEffect(() => {
     const fetchData = async () => {
-      if(email.text.length >= 1){
-        let data = await CheckSignupExist("email",email.text);
-        if(data.message === "Already taken."){
-          setError("Email already taken.")
-        }else{
-          setError(null)
+      if (email.text.length >= 1) {
+        let data = await CheckSignupExist("email", email.text);
+        if (data.message === "Already taken.") {
+          setError("Email already taken.");
+        } else {
+          setError(null);
         }
       }
-    }
-   fetchData()
+    };
+    fetchData();
   }, [email]);
 
-
   useEffect(() => {
-    if(searchParams.get('verify') === "true"){
-        setModalShowEmailVerified(true)
-     }
-  },[]);
-  
+    if (searchParams.get("verify") === "true") {
+      setModalShowEmailVerified(true);
+    }
+  }, []);
 
   const checkLengthN = async (event) => {
     if (!isValidLengthN(event.target.value)) {
-      setErrorN("Display Name must be 6-20 characters long")
-    }
-    else if (!isValidName(event.target.value)) {
-      setErrorN("Display Name must only contain letters, numbers and underscores")
-    }
-    else {
+      setErrorN("Display Name must be 6-20 characters long");
+    } else if (!isValidName(event.target.value)) {
+      setErrorN(
+        "Display Name must only contain letters, numbers and underscores"
+      );
+    } else {
       setDisplayname({
         ...displayname,
         text: event.target.value,
       });
     }
-    setMessageN(event.target.value)
-  }
+    setMessageN(event.target.value);
+  };
   const checkLengthP = (event) => {
     if (!isValidLengthP(event.target.value)) {
-      setErrorP("Password must be 8-20 characters long")
+      setErrorP("Password must be 8-20 characters long");
     } else {
-      setErrorP(null)
+      setErrorP(null);
     }
-    setMessageP(event.target.value)
-  }
+    setMessageP(event.target.value);
+  };
   const checkPassword = (CFPassword) => {
     if (!(userDetails.password === CFPassword)) {
-      setErrorpw("Confirm password is not matched")
+      setErrorpw("Confirm password is not matched");
     } else {
-      setErrorpw(null)
+      setErrorpw(null);
     }
-    setcfMessage(CFPassword)
-  }
+    setcfMessage(CFPassword);
+  };
 
   const handleEmail = (event) => {
-    setUserDetails({ ...userDetails, email: event.target.value })
-    checkEmail(event)
-  }
+    setUserDetails({ ...userDetails, email: event.target.value });
+    checkEmail(event);
+  };
 
   const handleDisplayN = (event) => {
-    setUserDetails({ ...userDetails, displayname: event.target.value })
-    checkLengthN(event)
-  }
+    setUserDetails({ ...userDetails, displayname: event.target.value });
+    checkLengthN(event);
+  };
 
   const handlePass = (event) => {
-    setUserDetails({ ...userDetails, password: event.target.value })
-    checkLengthP(event)
-  }
+    setUserDetails({ ...userDetails, password: event.target.value });
+    checkLengthP(event);
+  };
 
   return (
     <>
-      <h1 className="m-5 text-center">Create Account</h1>
       <div className="flex justify-content-center">
-        <Form className="flex flex-col formbox p-4">
+        <form className="new-register-form">
+          <div className="new-login-header">Create Your New Account</div>
+          <label className="new-login-input-top"><AiOutlineMail/> Email Address</label>
           <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label>Email Address:</Form.Label>
-            <Form.Control
+            <input
+              className="new-login-input"
               type="email"
-              placeholder="name@example.com"
+              placeholder="Enter Email"
               value={message}
               onChange={(e) => handleEmail(e)}
               style={{ borderColor: error ? "#ff0033" : "" }}
             />
             {error && (
-              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {error}</div>
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! {error}
+              </div>
             )}
           </Form.Group>
+          
+          <label className="new-login-input-top"> <BsFillPersonFill/> Display Name </label>
           <Form.Group className="mb-5" controlId="formDisplayName">
-            <Form.Label>Display Name:</Form.Label>
-            <Form.Control
+            <input
+              className="new-login-input"
               type="text"
               placeholder="Enter Display Name"
               maxLength={20}
@@ -194,13 +198,20 @@ const SignUp = ({ onchangelogin }) => {
               style={{ borderColor: errorN ? "#ff0033" : "" }}
             />
             {errorN && (
-              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorN}</div>
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! {errorN}
+              </div>
             )}
+            
           </Form.Group>
-
+          <div className="register-border"></div>
+          <label className="new-login-input-top"><BsKey/>Password</label>
           <Form.Group className="mb-2" controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
+            <input
+              className="new-login-input"
               type="password"
               placeholder="Password"
               maxLength={20}
@@ -209,12 +220,18 @@ const SignUp = ({ onchangelogin }) => {
               style={{ borderColor: errorP ? "#ff0033" : "" }}
             />
             {errorP && (
-              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorP}</div>
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! {errorP}
+              </div>
             )}
           </Form.Group>
+          <label className="new-login-input-top"><BsKeyFill/>Confirm Password</label>
           <Form.Group className="mb-2" controlId="formConfirmPassword">
-            <Form.Label>Confirm Password:</Form.Label>
-            <Form.Control
+            <input
+              className="new-login-input"
               type="password"
               placeholder="Confirm Password"
               maxLength={20}
@@ -223,33 +240,39 @@ const SignUp = ({ onchangelogin }) => {
               style={{ borderColor: errorpw ? "#ff0033" : "" }}
             />
             {errorpw && (
-              <div className="text-sm px-1" style={{ color: "#ff0033", fontWeight: "400" }}>! {errorpw}</div>
+              <div
+                className="text-sm px-1"
+                style={{ color: "#ff0033", fontWeight: "400" }}
+              >
+                ! {errorpw}
+              </div>
             )}
           </Form.Group>
 
-          <Button
-            className="my-2"
+          <button
+            style={{ marginTop: "10%" }}
+            className="new-login-button"
             variant="primary"
             type="submit"
-            onClick={ (e) => handleSubmit(e) }
+            onClick={(e) => handleSubmit(e)}
           >
             Sign Up
-          </Button>
-        </Form>
+          </button>
+        </form>
       </div>
       <AcceptedPopup
         show={modalShowAccepted}
         onHide={() => {
-          navigate("/login")
+          navigate("/login");
         }}
       />
-	  <EmailVerifiedPopup
+      <EmailVerifiedPopup
         show={modalShowEmailVerified}
         onHide={() => {
-          navigate("/login")
+          navigate("/login");
         }}
       />
-	  
+
       <DeniedPopup
         className="text-center"
         show={modalShowDenied}
@@ -257,9 +280,7 @@ const SignUp = ({ onchangelogin }) => {
         message={deniedMessage}
       />
     </>
-	
-	
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
