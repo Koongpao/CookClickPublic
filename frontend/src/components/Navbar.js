@@ -38,7 +38,7 @@ function Nbar({ user, onchangelogout }) {
   return (
     <>
       <div>
-        <Navbar key="false" expand="false" className="color-nav" id="mynavbar">
+        <Navbar key="false" expand="false" className="color-nav mb-3" id="mynavbar">
           <Container fluid>
             <Navbar.Toggle onClick={handleShow} />
             <Navbar.Brand href="/">

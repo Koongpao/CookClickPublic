@@ -70,7 +70,7 @@ const Dashboard = () => {
                 {menuApprovedCount} approved menu(s).
               </div>
             </a>
-            <a href="/" className="db-menu">
+            <a href="/staff/approve" className="db-menu">
               <div>Waiting for Approval</div>
               <div className="text-sm text-muted">
                 {menuWaitingCount} menu(s) waiting for approval.
