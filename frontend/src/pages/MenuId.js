@@ -22,7 +22,7 @@ import {
   DecreaseMyIngredient,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
-import { BiFlag } from "react-icons/bi";
+import { BiFlag,BiNotepad } from "react-icons/bi";
 import {
   BsPersonCircle,
   BsFillStarFill,
@@ -36,6 +36,8 @@ import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import {ImCross, ImCheckmark} from "react-icons/im"
+
 
 const MenuPage = ({ status }) => {
   const Navigate = useNavigate();
@@ -329,7 +331,9 @@ const MenuPage = ({ status }) => {
       };
       deleteMyIngredient()
     });
-    return;
+    setPreviewAmountChange(false)
+    setCooking(prev => !prev)
+    FetchData()
   };
 
   return (
@@ -337,35 +341,35 @@ const MenuPage = ({ status }) => {
       {cooking && (
         <div className="menu-cooking">
           <h1 className="menu-cooking-text">Cooking in progress</h1>
-          <div>
+          <div className="menu-do-this">
             <button
-              className="do-this-menu-button"
+              className="button-28-red do-this-mw"
               onClick={() => {
                 setCooking((prev) => !prev);
               }}
             >
-              ยกเลิกการทำอาหาร
+              ยกเลิกการทำอาหาร <br/>
+              <ImCross/>
             </button>
             <button
-              className="do-this-menu-button"
+              className="button-28-blue do-this-mw"
               onClick={() => setShowCookingModal(true)}
             >
-              บันทึกวัตถุดิบที่ได้ใช้ไป
+              บันทึกวัตถุดิบที่ได้ใช้ไป <br/>
+              <BiNotepad/>
             </button>
             <button
-              className="do-this-menu-button"
+              className="button-28-green do-this-mw"
               onClick={() => setShowCookingFinal(true)}
             >
               {" "}
-              ทำอาหารเสร็จสิ้น{" "}
+              ทำอาหารเสร็จสิ้น{" "} <br/>
+              <ImCheckmark/> 
             </button>
           </div>
         </div>
       )}
       <div className="menupage">
-        <button onClick={() => console.log(IngRefData)}></button>
-        <button onClick={() => console.log(menuDetails.ingredient)}>asd</button>
-        <button onClick={() => console.log(cookingIng)}>cookingIng</button>
         <div className="menu-img">
           <img src={menuDetails.image} alt="testburger"></img>
         </div>
@@ -765,8 +769,6 @@ const MenuPage = ({ status }) => {
         >
           <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
             <span>
-              การทำอาหารเสร็จสิ้น!
-              <br />
               โปรดตรวจสอบวัตถุดิบที่คุณได้ใช้ไป
               <br />
               ให้ครบถ้วน
@@ -816,7 +818,7 @@ const MenuPage = ({ status }) => {
                 setShowCookingFinal(false);
               }}
             >
-              ยืนยัน
+              ต่อไป
             </Button>
           </Modal.Footer>
         </Modal>
@@ -855,7 +857,7 @@ const MenuPage = ({ status }) => {
                 handleCookingFinal();
               }}
             >
-              ต่อไป
+              ยืนยัน
             </Button>
           </Modal.Footer>
         </Modal>

@@ -259,8 +259,6 @@
 }
 
 .do-this-menu-button:hover{
-  height: 12vh;
-  width: 24vw;
   background-color: rgb(0, 0, 0 ,0.16);
   border: rgb(0, 0, 0 ,0.16) 1px solid;
   border-radius: 10px;
@@ -360,4 +358,17 @@
 
 .preview-change-text{
   font-size: 0.6em;
+}
+
+.menu-do-this{
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 2%;
+}
+
+.do-this-mw{
+  max-width: 30%;
+  border-radius: 20px;
 }
