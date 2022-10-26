@@ -19,6 +19,7 @@ import {
   MenuReport,
   GetAllMeIngredient,
   GetAllMeKitware,
+  DecreaseMyIngredient,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
@@ -34,7 +35,7 @@ import { Form, Card } from "react-bootstrap";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
-import axios from "axios";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const MenuPage = ({ status }) => {
   const Navigate = useNavigate();
@@ -57,6 +58,8 @@ const MenuPage = ({ status }) => {
   const token = JSON.parse(localStorage.getItem("token"));
   const userId = JSON.parse(localStorage.getItem("userId"));
 
+  const [IngRefData, setIngRefData] = useState([]);
+
   const FetchData = async () => {
     const ingFullData = await GetSystemIngredient();
     const wareFullData = await GetSystemKitchenware();
@@ -67,6 +70,7 @@ const MenuPage = ({ status }) => {
       myRefIng = await GetAllMeIngredient(token);
       myWareIng = await GetAllMeKitware(token);
       setMenuFavorite(ifFavorited.result);
+      setIngRefData(myRefIng.ingredient);
       if (!IgnoreInitialFavorite) {
         setInitialFavorite(ifFavorited.result);
         setIgnoreInitialFavorite(true);
@@ -163,6 +167,15 @@ const MenuPage = ({ status }) => {
     const token = JSON.parse(localStorage.getItem("token"));
   };
 
+  const CheckIngAmountInRef = (eachIng) => {
+    let correspondIng = IngRefData.filter(
+      (refIng) => eachIng._id === refIng.ingredientID
+    );
+    if (correspondIng.length === 0) {
+      return 0;
+    } else return correspondIng[0].amount;
+  };
+
   const [myComment, setMyComment] = useState("");
 
   function commentBox(props) {
@@ -223,6 +236,8 @@ const MenuPage = ({ status }) => {
   const [commentReportId, setCommentReportId] = useState("");
   const [showMenuReportModal, setShowMenuReportModal] = useState(false);
   const [MenuReportContent, setMenuReportContent] = useState("");
+  const [showCookingFinal, setShowCookingFinal] = useState("");
+  const [previewAmountChange, setPreviewAmountChange] = useState(false);
   const comBox = commentBox();
 
   const [showCookingModal, setShowCookingModal] = useState("");
@@ -287,6 +302,36 @@ const MenuPage = ({ status }) => {
     setShowMenuReportModal(false);
   };
 
+  const handleCookingFinal = async () => {
+    // setShowCookingFinal(false)
+    cookingIng.forEach((eachUsedIng) => {
+      let deleteValue = 0;
+      if (eachUsedIng.amount < CheckIngAmountInRef(eachUsedIng)) {
+        deleteValue = eachUsedIng.amount;
+      } else if (eachUsedIng.amount >= CheckIngAmountInRef(eachUsedIng)) {
+        deleteValue = CheckIngAmountInRef(eachUsedIng);
+      }
+      // console.log(deleteValue);
+      // console.log(eachUsedIng._id);
+      const deleteMyIngredient = async () => {
+        if (deleteValue > 0) {
+          let ingForDecrease = {
+            ingredient: [
+              {
+                ingredientID: eachUsedIng._id,
+                amount: deleteValue,
+              },
+            ],
+          };
+          const response = await DecreaseMyIngredient(token, ingForDecrease);
+          console.log(response)
+        }
+      };
+      deleteMyIngredient()
+    });
+    return;
+  };
+
   return (
     <div>
       {cooking && (
@@ -294,16 +339,23 @@ const MenuPage = ({ status }) => {
           <h1 className="menu-cooking-text">Cooking in progress</h1>
           <div>
             <button
+              className="do-this-menu-button"
               onClick={() => {
                 setCooking((prev) => !prev);
               }}
             >
               ยกเลิกการทำอาหาร
             </button>
-            <button onClick={() => setShowCookingModal(true)}>
+            <button
+              className="do-this-menu-button"
+              onClick={() => setShowCookingModal(true)}
+            >
               บันทึกวัตถุดิบที่ได้ใช้ไป
             </button>
-            <button onClick={() => setCooking((prev) => !prev)}>
+            <button
+              className="do-this-menu-button"
+              onClick={() => setShowCookingFinal(true)}
+            >
               {" "}
               ทำอาหารเสร็จสิ้น{" "}
             </button>
@@ -311,9 +363,9 @@ const MenuPage = ({ status }) => {
         </div>
       )}
       <div className="menupage">
-        <button onClick={() => console.log(cookingIng)}></button>
+        <button onClick={() => console.log(IngRefData)}></button>
         <button onClick={() => console.log(menuDetails.ingredient)}>asd</button>
-        <button onClick={() => console.log(MenuDoable)}>menudoable</button>
+        <button onClick={() => console.log(cookingIng)}>cookingIng</button>
         <div className="menu-img">
           <img src={menuDetails.image} alt="testburger"></img>
         </div>
@@ -483,7 +535,9 @@ const MenuPage = ({ status }) => {
                 className="do-this-menu-button"
                 onClick={() => {
                   setCooking((prev) => !prev);
-                  setCookingIng(menuDetails.ingredient);
+                  setCookingIng(
+                    JSON.parse(JSON.stringify(menuDetails.ingredient))
+                  );
                 }}
               >
                 ทำอาหารจานนี้เลย!
@@ -666,27 +720,31 @@ const MenuPage = ({ status }) => {
           <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
             <span>บันทึกวัตถุดิบที่ใช้ไป</span>
             {cookingIng.map((eachIng) => (
-              <div className="ref-ing-item">
-                <Card className="ref-ing-name">
-                  <Card.Body>{eachIng.name}</Card.Body>
-                </Card>
-                <Form.Control
-                  style={{
-                    backgroundColor: eachIng.amount > 450 ? "red" : "white",
-                  }}
-                  type="number"
-                  min="0"
-                  placeholder="ปริมาณ"
-                  className="ref-ing-amount"
-                  onChange={(e) => {
-                    eachIng.amount = e.target.value;
-                    setIngDummy((dummy) => !dummy);
-                  }}
-                  value={eachIng.amount}
-                />
-                <Card className="ref-ing-unit">
-                  <Card.Body>{eachIng.unit}</Card.Body>
-                </Card>
+              <div className="menu-ing-modal">
+                <div className="ref-ing-item">
+                  <Card className="ref-ing-name">
+                    <Card.Body>{eachIng.name}</Card.Body>
+                  </Card>
+                  <Form.Control
+                    type="number"
+                    min="0"
+                    placeholder="ปริมาณ"
+                    className="ref-ing-amount"
+                    onChange={(e) => {
+                      eachIng.amount = e.target.value;
+                      setIngDummy((dummy) => !dummy);
+                    }}
+                    value={eachIng.amount}
+                  />
+                  <Card className="ref-ing-unit">
+                    <Card.Body>{eachIng.unit}</Card.Body>
+                  </Card>
+                </div>
+                <span className="cooking-modal-text">
+                  {" "}
+                  ( ในตู้เย็นมีอยู่ {CheckIngAmountInRef(eachIng)}{" "}
+                  {eachIng.unit} )
+                </span>
               </div>
             ))}
           </Modal.Body>
@@ -698,6 +756,106 @@ const MenuPage = ({ status }) => {
               }}
             >
               บันทึก
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showCookingFinal}
+          onHide={() => setShowCookingFinal(false)}
+        >
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            <span>
+              การทำอาหารเสร็จสิ้น!
+              <br />
+              โปรดตรวจสอบวัตถุดิบที่คุณได้ใช้ไป
+              <br />
+              ให้ครบถ้วน
+            </span>
+            {cookingIng.map((eachIng) => (
+              <div className="menu-ing-modal">
+                <div className="ref-ing-item">
+                  <Card className="ref-ing-name">
+                    <Card.Body>{eachIng.name}</Card.Body>
+                  </Card>
+                  <Form.Control
+                    type="number"
+                    min="0"
+                    placeholder="ปริมาณ"
+                    className="ref-ing-amount"
+                    onChange={(e) => {
+                      eachIng.amount = e.target.value;
+                      setIngDummy((dummy) => !dummy);
+                    }}
+                    value={eachIng.amount}
+                  />
+                  <Card className="ref-ing-unit">
+                    <Card.Body>{eachIng.unit}</Card.Body>
+                  </Card>
+                </div>
+                <span className="cooking-modal-text">
+                  {" "}
+                  ( ในตู้เย็นมีอยู่ {CheckIngAmountInRef(eachIng)}{" "}
+                  {eachIng.unit} )
+                </span>
+              </div>
+            ))}
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-blue"
+              onClick={() => {
+                setShowCookingFinal(false);
+              }}
+            >
+              กลับ
+            </Button>
+            <Button
+              className="button-28-green"
+              onClick={() => {
+                setPreviewAmountChange(true);
+                setShowCookingFinal(false);
+              }}
+            >
+              ยืนยัน
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={previewAmountChange}
+          onHide={() => setPreviewAmountChange(false)}
+        >
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            <div>
+              <span>วัตถุดิบในตู้เย็นของคุณจะมีการเปลี่ยนแปลงดังนี้</span>
+            </div>
+            {cookingIng.map((eachIng) => (
+              <div className="preview-change-text">
+                <span> {eachIng.name} </span>
+                <span>
+                  {" "}
+                  {CheckIngAmountInRef(eachIng)} <FaLongArrowAltRight />{" "}
+                  {Math.max(0, CheckIngAmountInRef(eachIng) - eachIng.amount)}{" "}
+                </span>
+              </div>
+            ))}
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-blue"
+              onClick={() => {
+                setPreviewAmountChange(false);
+                setShowCookingFinal(true);
+              }}
+            >
+              กลับ
+            </Button>
+            <Button
+              className="button-28-green"
+              onClick={() => {
+                handleCookingFinal();
+              }}
+            >
+              ต่อไป
             </Button>
           </Modal.Footer>
         </Modal>

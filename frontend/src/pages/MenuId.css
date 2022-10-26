@@ -347,3 +347,17 @@
         transform: rotate(0deg);
     }
 }
+
+.cooking-modal-text{
+  margin-top: 0;
+  font-size: 0.5em;
+
+}
+
+.menu-ing-modal{
+  border-top:rgb(0, 0, 0 ,0.16) solid 1px;
+}
+
+.preview-change-text{
+  font-size: 0.6em;
+}
