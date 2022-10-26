@@ -132,7 +132,7 @@ const Ref = () => {
       setuniqueingid((prev) => [...prev, eachIng._id])
     )
     mytool.kitchenware.forEach((eachTool) => {
-      setuniquetoolid((prev) => [...prev, eachTool._id])
+      setuniquetoolid((prev) => [...prev, eachTool.kitchenwareID])
     })
   }
 

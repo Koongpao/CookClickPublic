@@ -17,6 +17,8 @@ import {
   DelMyComment,
   CommentReport,
   MenuReport,
+  GetAllMeIngredient,
+  GetAllMeKitware,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag } from "react-icons/bi";
@@ -28,7 +30,7 @@ import {
   BsBookmarkStarFill,
 } from "react-icons/bs";
 import { MdOutlineDescription, MdDelete } from "react-icons/md";
-import Form from "react-bootstrap/Form";
+import { Form, Card } from "react-bootstrap";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
@@ -47,16 +49,23 @@ const MenuPage = ({ status }) => {
     cookingstep: [],
     comment: [],
   });
+  const [MenuDoable, setMenuDoable] = useState(false);
+  const [wareDoable, setWareDoable] = useState(false);
+  const [cooking, setCooking] = useState(false);
+  const [cookingIng, setCookingIng] = useState([]);
+  const [ingDummy, setIngDummy] = useState(false);
   const token = JSON.parse(localStorage.getItem("token"));
   const userId = JSON.parse(localStorage.getItem("userId"));
 
   const FetchData = async () => {
     const ingFullData = await GetSystemIngredient();
     const wareFullData = await GetSystemKitchenware();
-    let myRating, ifFavorited;
+    let myRating, ifFavorited, myRefIng, myWareIng;
     if (token) {
       myRating = await GetMyRatingOnMenu(token, mid);
       ifFavorited = await GetCurrentMenuIfFavorited(token, mid);
+      myRefIng = await GetAllMeIngredient(token);
+      myWareIng = await GetAllMeKitware(token);
       setMenuFavorite(ifFavorited.result);
       if (!IgnoreInitialFavorite) {
         setInitialFavorite(ifFavorited.result);
@@ -70,8 +79,6 @@ const MenuPage = ({ status }) => {
     } else {
       menuInfo = await MenuEdit(token, mid);
     }
-
-    // console.log(menuInfo);
     menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
       menuInfo.query[0].image
     );
@@ -107,6 +114,44 @@ const MenuPage = ({ status }) => {
     wareFullData.data.forEach((element, i) => {
       element.id = i;
     });
+    console.log(menuInfo);
+    checkIfMenuDoable(menuInfo.query[0], myRefIng, myWareIng);
+  };
+
+  const checkIfMenuDoable = (menuInfo, myRefIng, myRefWare) => {
+    let IngSatisfied = false;
+    let WareSatisfied = false;
+    menuInfo.ingredient.forEach((menuIng) => {
+      let count = 0;
+      myRefIng.ingredient.forEach((myIng) => {
+        if (
+          menuIng.ingredientID === myIng.ingredientID &&
+          myIng.amount >= menuIng.amount
+        ) {
+          count++;
+        }
+      });
+      if (count === menuInfo.ingredient.length) {
+        IngSatisfied = true;
+      }
+    });
+    menuInfo.kitchenware.forEach((menuWare) => {
+      let count = 0;
+      myRefWare.kitchenware.forEach((myWare) => {
+        if (menuWare.kitchenwareID === myWare.kitchenwareID) {
+          count++;
+        }
+      });
+      if (count === menuInfo.kitchenware.length) {
+        WareSatisfied = true;
+      }
+    });
+    if (IngSatisfied && WareSatisfied) {
+      setMenuDoable(true);
+    }
+    if (WareSatisfied) {
+      setWareDoable(true);
+    }
   };
 
   const { mid } = useParams();
@@ -175,10 +220,12 @@ const MenuPage = ({ status }) => {
   const [IgnoreInitialFavorite, setIgnoreInitialFavorite] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportContent, setReportContent] = useState("");
-  const [commentReportId, setCommentReportId] = useState("")
+  const [commentReportId, setCommentReportId] = useState("");
   const [showMenuReportModal, setShowMenuReportModal] = useState(false);
   const [MenuReportContent, setMenuReportContent] = useState("");
   const comBox = commentBox();
+
+  const [showCookingModal, setShowCookingModal] = useState("");
 
   const handleRatingClick = async (value) => {
     setCurrentStarValue(value);
@@ -194,8 +241,13 @@ const MenuPage = ({ status }) => {
   const handleSendReport = async () => {
     setReportContent("");
     setShowReportModal(false);
-    const response = await CommentReport(token, {description: reportContent}, mid, commentReportId)
-    console.log(response)
+    const response = await CommentReport(
+      token,
+      { description: reportContent },
+      mid,
+      commentReportId
+    );
+    console.log(response);
   };
 
   const handleFavoriteClick = async () => {
@@ -226,313 +278,430 @@ const MenuPage = ({ status }) => {
   };
 
   const handleReportMenu = async () => {
-    const response = await MenuReport(token, {description: MenuReportContent}, mid);
+    const response = await MenuReport(
+      token,
+      { description: MenuReportContent },
+      mid
+    );
     console.log(response);
-    setShowMenuReportModal(false)
-  }
+    setShowMenuReportModal(false);
+  };
 
   return (
-    <div className="menupage">
-      <div className="menu-img">
-        <img src={menuDetails.image} alt="testburger"></img>
-      </div>
-      <div className="menu-desc">
-        <h1 className="menu-header">{menuDetails.name}</h1>
-        <div style={{display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <div><BsPersonCircle /> By : {menuDetails.userDisplayName}</div>
-          <BiFlag className="menu-report-menu" onClick={() => setShowMenuReportModal(true)}/>
-        </div>
-        <div style={{ height: "auto" }}>
-          <MdOutlineDescription /> {menuDetails.description}
-        </div>
-        <div>
-          <BsFillStarFill /> Rating : {menuDetails.rating}/5 -{" "}
-          <span style={{ color: "rgba(0, 0, 0, 0.5)" }}>
-            {" "}
-            rated by {menuDetails.ratingWeight} peoples
-          </span>
-        </div>
-        <div>
-          <BsFillBookmarksFill /> Favorites : {menuDetails.favCount}
-        </div>
-      </div>
-
-      <div
-        className="menu-rating-bar"
-        style={{ display: token ? "flex" : "none" }}
-      >
-        <div className="menu-rating-rate">
-          Rate
-          <div className="menu-rating-star">
-            {[...Array(5)].map((star, starValue) => {
-              const ratingValue = starValue + 1;
-              return (
-                <>
-                  <label
-                    style={{
-                      display:
-                        ratingValue > (hoverStarValue || currentStarValue)
-                          ? "none"
-                          : "block",
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      style={{ display: "none" }}
-                      value={ratingValue}
-                      onClick={() => handleRatingClick(ratingValue)}
-                    />
-                    <TiStarFullOutline
-                      className="menu-star"
-                      onMouseOver={() => setHoverStarValue(ratingValue)}
-                      onMouseLeave={() => setHoverStarValue(0)}
-                    />
-                  </label>
-                  <label
-                    style={{
-                      display:
-                        ratingValue > (hoverStarValue || currentStarValue)
-                          ? "block"
-                          : "none",
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      style={{ display: "none" }}
-                      value={ratingValue}
-                      onClick={() => handleRatingClick(ratingValue)}
-                    />
-                    <TiStarOutline
-                      className="menu-star"
-                      onMouseOver={() => setHoverStarValue(ratingValue)}
-                      onMouseLeave={() => setHoverStarValue(0)}
-                    />
-                  </label>
-                </>
-              );
-            })}
-          </div>
-          <span
-            style={{
-              display: rateSuccessMsg ? "block" : "none",
-              fontSize: "70%",
-            }}
-          >
-            {" "}
-            คุณได้ให้ {currentStarValue} ดาวกับเมนูนี้!
-          </span>
-        </div>
-        <div className="menu-rating-comment">
-          Comment
+    <div>
+      {cooking && (
+        <div className="menu-cooking">
+          <h1 className="menu-cooking-text">Cooking in progress</h1>
           <div>
-            <a href="#comment-section">
-              <AiOutlineComment
-                style={{ fontSize: "180%", cursor: "pointer", color: "black" }}
-                href="comment-section"
-              />
-            </a>
+            <button
+              onClick={() => {
+                setCooking((prev) => !prev);
+              }}
+            >
+              ยกเลิกการทำอาหาร
+            </button>
+            <button onClick={() => setShowCookingModal(true)}>
+              บันทึกวัตถุดิบที่ได้ใช้ไป
+            </button>
+            <button onClick={() => setCooking((prev) => !prev)}>
+              {" "}
+              ทำอาหารเสร็จสิ้น{" "}
+            </button>
           </div>
         </div>
-        <div className="menu-rating-fav">
-          Favorite
-          <div className="flex justify-content-center">
-            <BsBookmarkPlus
-              style={{
-                fontSize: "150%",
-                cursor: "pointer",
-                display: menuFavorite ? "none" : "block",
-                color: "green",
-              }}
-              onClick={() => handleFavoriteClick()}
-            />
-            <BsBookmarkStarFill
-              style={{
-                fontSize: "150%",
-                cursor: "pointer",
-                display: menuFavorite ? "block" : "none",
-                color: "green",
-              }}
-              onClick={() => handleFavoriteClick()}
-            />
-          </div>
-          <span
+      )}
+      <div className="menupage">
+        <button onClick={() => console.log(cookingIng)}></button>
+        <button onClick={() => console.log(menuDetails.ingredient)}>asd</button>
+        <button onClick={() => console.log(MenuDoable)}>menudoable</button>
+        <div className="menu-img">
+          <img src={menuDetails.image} alt="testburger"></img>
+        </div>
+        <div className="menu-desc">
+          <h1 className="menu-header">{menuDetails.name}</h1>
+          <div
             style={{
-              display: showFavoritemsg ? "block" : "none",
-              fontSize: "70%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
-            นำเข้ารายการโปรดแล้ว
-          </span>
-          <span
-            style={{
-              display: showUnfavoritemsg ? "block" : "none",
-              fontSize: "70%",
-            }}
-          >
-            นำออกจากรายการโปรดแล้ว
-          </span>
-        </div>
-      </div>
-
-      <div className="menu-ing-list">
-        <h4>ส่วนผสม</h4>
-        {menuDetails.ingredient.map((eachIng, index) => (
-          <div key={index}>
-            <MenuIngItem
-              index={index}
-              name={eachIng.name}
-              amount={eachIng.amount}
-              unit={eachIng.unit}
-            />
-          </div>
-        ))}
-        <h4 className="pt-4">อุปกรณ์</h4>
-        {menuDetails.kitchenware.map((eachWare, index) => (
-          <div key={index}>
-            <MenuIngItem name={eachWare.name} index={index} />
-          </div>
-        ))}
-      </div>
-      <div className="menu-steps-list">
-        <div className="menu-steps-head">
-          <h1>ขั้นตอนการทำ</h1>
-        </div>
-        {menuDetails.cookingstep.map((eachSteps) => (
-          <MenuStepsItem
-            img={eachSteps.image}
-            desc={eachSteps.description}
-            index={eachSteps.index + 1}
-            key={eachSteps.index}
-          />
-        ))}
-      </div>
-      <h1 className="mt-5" id="comment-section">
-        Comments
-      </h1>
-      {token && comBox}
-      {menuDetails.comment
-        .filter((eachItem) => eachItem.status !== false)
-        .map((eachComment, id) => (
-          <div className="menu-comments-list" key={id}>
-            <div className="flex justify-content-between text-md">
-              <span className="menu-comment-username">
-                <BsPersonCircle style={{ fontSize: "150%" }} />
-                &nbsp;
-                {eachComment.displayname} &nbsp;{" "}
-                <span
-                  style={{
-                    display: userId === eachComment.userID ? "block" : "none",
-                  }}
-                >
-                  (You)
-                </span>
-              </span>
-              <div className="flex">
-                <MdDelete
-                  className="delete-icon"
-                  style={{
-                    display: userId === eachComment.userID ? "block" : "none",
-                  }}
-                  onClick={() => {
-                    setShowCommentDeleteConf(true);
-                    setCurrentCommentForDelete(eachComment.commentID);
-                  }}
-                />
-                {token && <BiFlag
-                  className="report-icon"
-                  style={{display: (userId === eachComment.userID)? "none" : "block"}}
-                  onClick={() => {
-                    setShowReportModal(true);
-                    setCommentReportId(eachComment.commentID)
-                  }}
-                />}
-              </div>
+            <div>
+              <BsPersonCircle /> By : {menuDetails.userDisplayName}
             </div>
-            <p>{eachComment.description}</p>
+            <BiFlag
+              className="menu-report-menu"
+              onClick={() => setShowMenuReportModal(true)}
+            />
           </div>
-        ))}
-      <Modal
-        show={commentDeleteConf}
-        onHide={() => setShowCommentDeleteConf(false)}
-      >
-        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
-          ยืนยันลบคอมเมนต์นี้หรือไม่
-        </Modal.Body>
-        <Modal.Footer className="content-center">
-          <Button
-            className="button-28-blue"
-            onClick={() => {
-              setShowCommentDeleteConf(false);
-            }}
-          >
-            กลับ
-          </Button>
-          <Button
-            className="button-28-red"
-            onClick={() => {
-              handleRemoveComment();
-            }}
-          >
-            ยืนยันลบคอมเมนต์
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showReportModal} onHide={() => setShowReportModal(false)}>
-        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
-          <input
-            className="report-form-modal"
-            onChange={(e) => setReportContent(e.target.value)}
-            value={reportContent}
-            placeholder="กรอกสาเหตุการรายงาน"
-          />
-        </Modal.Body>
-        <Modal.Footer className="content-center">
-          <Button
-            className="button-28-blue"
-            onClick={() => {
-              setShowReportModal(false);
-            }}
-          >
-            กลับ
-          </Button>
-          <Button
-            className="button-28-red"
-            onClick={() => {
-              handleSendReport();
-            }}
-          >
-            ยืนยันรายงาน
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showMenuReportModal} onHide={() => setShowMenuReportModal(false)}>
-        <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
-          <input
-            className="report-form-modal"
-            onChange={(e) => setMenuReportContent(e.target.value)}
-            value={MenuReportContent}
-            placeholder="กรอกสาเหตุการรายงาน"
-          />
-        </Modal.Body>
-        <Modal.Footer className="content-center">
-          <Button
-            className="button-28-blue"
-            onClick={() => {
-              setShowMenuReportModal(false);
-            }}
-          >
-            กลับ
-          </Button>
-          <Button
-            className="button-28-red"
-            onClick={() => {
-              handleReportMenu(MenuReportContent);
-            }}
-          >
-            ยืนยันรายงาน
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <div style={{ height: "auto" }}>
+            <MdOutlineDescription /> {menuDetails.description}
+          </div>
+          <div>
+            <BsFillStarFill /> Rating : {menuDetails.rating}/5 -{" "}
+            <span style={{ color: "rgba(0, 0, 0, 0.5)" }}>
+              {" "}
+              rated by {menuDetails.ratingWeight} peoples
+            </span>
+          </div>
+          <div>
+            <BsFillBookmarksFill /> Favorites : {menuDetails.favCount}
+          </div>
+        </div>
+
+        <div
+          className="menu-rating-bar"
+          style={{ display: token ? "flex" : "none" }}
+        >
+          <div className="menu-rating-rate">
+            Rate
+            <div className="menu-rating-star">
+              {[...Array(5)].map((star, starValue) => {
+                const ratingValue = starValue + 1;
+                return (
+                  <>
+                    <label
+                      style={{
+                        display:
+                          ratingValue > (hoverStarValue || currentStarValue)
+                            ? "none"
+                            : "block",
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        style={{ display: "none" }}
+                        value={ratingValue}
+                        onClick={() => handleRatingClick(ratingValue)}
+                      />
+                      <TiStarFullOutline
+                        className="menu-star"
+                        onMouseOver={() => setHoverStarValue(ratingValue)}
+                        onMouseLeave={() => setHoverStarValue(0)}
+                      />
+                    </label>
+                    <label
+                      style={{
+                        display:
+                          ratingValue > (hoverStarValue || currentStarValue)
+                            ? "block"
+                            : "none",
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        style={{ display: "none" }}
+                        value={ratingValue}
+                        onClick={() => handleRatingClick(ratingValue)}
+                      />
+                      <TiStarOutline
+                        className="menu-star"
+                        onMouseOver={() => setHoverStarValue(ratingValue)}
+                        onMouseLeave={() => setHoverStarValue(0)}
+                      />
+                    </label>
+                  </>
+                );
+              })}
+            </div>
+            <span
+              style={{
+                display: rateSuccessMsg ? "block" : "none",
+                fontSize: "70%",
+              }}
+            >
+              {" "}
+              คุณได้ให้ {currentStarValue} ดาวกับเมนูนี้!
+            </span>
+          </div>
+          <div className="menu-rating-comment">
+            Comment
+            <div>
+              <a href="#comment-section">
+                <AiOutlineComment
+                  style={{
+                    fontSize: "180%",
+                    cursor: "pointer",
+                    color: "black",
+                  }}
+                  href="comment-section"
+                />
+              </a>
+            </div>
+          </div>
+          <div className="menu-rating-fav">
+            Favorite
+            <div className="flex justify-content-center">
+              <BsBookmarkPlus
+                style={{
+                  fontSize: "150%",
+                  cursor: "pointer",
+                  display: menuFavorite ? "none" : "block",
+                  color: "green",
+                }}
+                onClick={() => handleFavoriteClick()}
+              />
+              <BsBookmarkStarFill
+                style={{
+                  fontSize: "150%",
+                  cursor: "pointer",
+                  display: menuFavorite ? "block" : "none",
+                  color: "green",
+                }}
+                onClick={() => handleFavoriteClick()}
+              />
+            </div>
+            <span
+              style={{
+                display: showFavoritemsg ? "block" : "none",
+                fontSize: "70%",
+              }}
+            >
+              นำเข้ารายการโปรดแล้ว
+            </span>
+            <span
+              style={{
+                display: showUnfavoritemsg ? "block" : "none",
+                fontSize: "70%",
+              }}
+            >
+              นำออกจากรายการโปรดแล้ว
+            </span>
+          </div>
+        </div>
+        {token && !cooking && (
+          <div className="menu-do-this-menu">
+            <span>
+              {" "}
+              คุณมีอุปกรณ์ {wareDoable
+                ? "พร้อม"
+                : "ไม่พร้อม"} สำหรับอาหารจานนี้{" "}
+            </span>
+            <span> คุณมีวัตถุดิบพร้อมสำหรับอาหารจานนี้ </span>
+            {wareDoable && !cooking && (
+              <button
+                className="do-this-menu-button"
+                onClick={() => {
+                  setCooking((prev) => !prev);
+                  setCookingIng(menuDetails.ingredient);
+                }}
+              >
+                ทำอาหารจานนี้เลย!
+              </button>
+            )}
+          </div>
+        )}
+
+        <div className="menu-ing-list">
+          <h4>ส่วนผสม</h4>
+          {menuDetails.ingredient.map((eachIng, index) => (
+            <div key={index}>
+              <MenuIngItem
+                index={index}
+                name={eachIng.name}
+                amount={eachIng.amount}
+                unit={eachIng.unit}
+              />
+            </div>
+          ))}
+          <h4 className="pt-4">อุปกรณ์</h4>
+          {menuDetails.kitchenware.map((eachWare, index) => (
+            <div key={index}>
+              <MenuIngItem name={eachWare.name} index={index} />
+            </div>
+          ))}
+        </div>
+        <div className="menu-steps-list">
+          <div className="menu-steps-head">
+            <h1>ขั้นตอนการทำ</h1>
+          </div>
+          {menuDetails.cookingstep.map((eachSteps) => (
+            <MenuStepsItem
+              img={eachSteps.image}
+              desc={eachSteps.description}
+              index={eachSteps.index + 1}
+              key={eachSteps.index}
+            />
+          ))}
+        </div>
+        <h1 className="mt-5" id="comment-section">
+          Comments
+        </h1>
+        {token && comBox}
+        {menuDetails.comment
+          .filter((eachItem) => eachItem.status !== false)
+          .map((eachComment, id) => (
+            <div className="menu-comments-list" key={id}>
+              <div className="flex justify-content-between text-md">
+                <span className="menu-comment-username">
+                  <BsPersonCircle style={{ fontSize: "150%" }} />
+                  &nbsp;
+                  {eachComment.displayname} &nbsp;{" "}
+                  <span
+                    style={{
+                      display: userId === eachComment.userID ? "block" : "none",
+                    }}
+                  >
+                    (You)
+                  </span>
+                </span>
+                <div className="flex">
+                  <MdDelete
+                    className="delete-icon"
+                    style={{
+                      display: userId === eachComment.userID ? "block" : "none",
+                    }}
+                    onClick={() => {
+                      setShowCommentDeleteConf(true);
+                      setCurrentCommentForDelete(eachComment.commentID);
+                    }}
+                  />
+                  {token && (
+                    <BiFlag
+                      className="report-icon"
+                      style={{
+                        display:
+                          userId === eachComment.userID ? "none" : "block",
+                      }}
+                      onClick={() => {
+                        setShowReportModal(true);
+                        setCommentReportId(eachComment.commentID);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+              <p>{eachComment.description}</p>
+            </div>
+          ))}
+        <Modal
+          show={commentDeleteConf}
+          onHide={() => setShowCommentDeleteConf(false)}
+        >
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            ยืนยันลบคอมเมนต์นี้หรือไม่
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-blue"
+              onClick={() => {
+                setShowCommentDeleteConf(false);
+              }}
+            >
+              กลับ
+            </Button>
+            <Button
+              className="button-28-red"
+              onClick={() => {
+                handleRemoveComment();
+              }}
+            >
+              ยืนยันลบคอมเมนต์
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={showReportModal} onHide={() => setShowReportModal(false)}>
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            <input
+              className="report-form-modal"
+              onChange={(e) => setReportContent(e.target.value)}
+              value={reportContent}
+              placeholder="กรอกสาเหตุการรายงาน"
+            />
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-blue"
+              onClick={() => {
+                setShowReportModal(false);
+              }}
+            >
+              กลับ
+            </Button>
+            <Button
+              className="button-28-red"
+              onClick={() => {
+                handleSendReport();
+              }}
+            >
+              ยืนยันรายงาน
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showMenuReportModal}
+          onHide={() => setShowMenuReportModal(false)}
+        >
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            <input
+              className="report-form-modal"
+              onChange={(e) => setMenuReportContent(e.target.value)}
+              value={MenuReportContent}
+              placeholder="กรอกสาเหตุการรายงาน"
+            />
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-blue"
+              onClick={() => {
+                setShowMenuReportModal(false);
+              }}
+            >
+              กลับ
+            </Button>
+            <Button
+              className="button-28-red"
+              onClick={() => {
+                handleReportMenu(MenuReportContent);
+              }}
+            >
+              ยืนยันรายงาน
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showCookingModal}
+          onHide={() => setShowCookingModal(false)}
+        >
+          <Modal.Body className="text-center" style={{ fontSize: "28px" }}>
+            <span>บันทึกวัตถุดิบที่ใช้ไป</span>
+            {cookingIng.map((eachIng) => (
+              <div className="ref-ing-item">
+                <Card className="ref-ing-name">
+                  <Card.Body>{eachIng.name}</Card.Body>
+                </Card>
+                <Form.Control
+                  style={{
+                    backgroundColor: eachIng.amount > 450 ? "red" : "white",
+                  }}
+                  type="number"
+                  min="0"
+                  placeholder="ปริมาณ"
+                  className="ref-ing-amount"
+                  onChange={(e) => {
+                    eachIng.amount = e.target.value;
+                    setIngDummy((dummy) => !dummy);
+                  }}
+                  value={eachIng.amount}
+                />
+                <Card className="ref-ing-unit">
+                  <Card.Body>{eachIng.unit}</Card.Body>
+                </Card>
+              </div>
+            ))}
+          </Modal.Body>
+          <Modal.Footer className="content-center">
+            <Button
+              className="button-28-green"
+              onClick={() => {
+                setShowCookingModal(false);
+              }}
+            >
+              บันทึก
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };
