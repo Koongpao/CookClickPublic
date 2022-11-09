@@ -1,4 +1,4 @@
-import { MenuReportedList, DelMenuReport } from "../../script/controller";
+import { MenuReportedList, DelMenuReport, DelMenu } from "../../script/controller";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
@@ -46,10 +46,10 @@ const MenuReportPage = () => {
               return (
                 <div className="db-menu" key={index}>
                   <div className="mb-1">
-                    Menu: {item.menuInfo[0].name} ({item.menuID})
+                    Menu: {item.menuInfo[0].name}
                   </div>
                   <div className="text-sm text-muted mb-3">
-                    By: {item.userDisplayName} ({item.userID})
+                    By: {item.userDisplayName}
                   </div>
                   <div className="text-sm mb-1">
                     REPORTED {item.count} TIME(S).
@@ -61,7 +61,15 @@ const MenuReportPage = () => {
                     Description
                   </div>
                   <div className="flex justify-content-end">
-                    <button className="btn-blue">Delete Menu</button>
+                    <button className="btn-blue" onClick={
+                      async () => {
+                        const token = JSON.parse(localStorage.getItem("token"));
+                        const res = await DelMenu(token, item.menuID);
+                        console.log(res);
+                        await DelMenuReport(token, item._id);
+                        window.location.reload();
+                      }
+                    }>Delete Menu</button>
                     <button className="btn-lightblue" onClick={
                       async () => {
                         const token = JSON.parse(localStorage.getItem("token"));
