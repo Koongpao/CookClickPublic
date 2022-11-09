@@ -13,7 +13,7 @@ import {
 import { TiHeartFullOutline } from "react-icons/ti"
 import { BsList } from "react-icons/bs"
 import React, { useState } from "react"
-import Logonobg from "../img/logonobg.svg"
+import Logonobg from "../img/logo2.svg"
 import Button from "react-bootstrap/Button"
 import { useAuth } from "../script/useAuth"
 import Modal from "react-bootstrap/Modal"

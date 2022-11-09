@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { FaHome, FaSearch, FaPlus } from "react-icons/fa"
 import React, { useState } from "react"
-import Logonobg from "../img/logonobg.svg"
+import Logonobg from "../img/logo2.svg"
 
 function GNbar() {
   const [show, setShow] = useState(false)

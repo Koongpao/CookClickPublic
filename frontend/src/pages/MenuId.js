@@ -22,7 +22,7 @@ import {
   DecreaseMyIngredient,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
-import { BiFlag,BiNotepad } from "react-icons/bi";
+import { BiFlag, BiNotepad } from "react-icons/bi";
 import {
   BsPersonCircle,
   BsFillStarFill,
@@ -36,8 +36,7 @@ import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import {ImCross, ImCheckmark} from "react-icons/im"
-
+import { ImCross, ImCheckmark } from "react-icons/im";
 
 const MenuPage = ({ status }) => {
   const Navigate = useNavigate();
@@ -176,6 +175,38 @@ const MenuPage = ({ status }) => {
     if (correspondIng.length === 0) {
       return 0;
     } else return correspondIng[0].amount;
+  };
+
+  const [notEnoughIng, setNotEnoughIng] = useState([]);
+
+  const CheckNotEnoughIng = (Ing) => {
+    menuDetails.ingredient.forEach((eachMenuIng) => {
+      let found = false;
+      IngRefData.forEach((refIng) => {
+        if (refIng.ingredientID === eachMenuIng._id) {
+          found = true;
+          if (refIng.amount < eachMenuIng.amount) {
+            setNotEnoughIng((prevIng) => [
+              ...prevIng,
+              {
+                ingredientID: eachMenuIng._id,
+                ingredientName: refIng.ingredientName,
+              },
+            ]);
+          }
+        }
+      });
+      if (!found) {
+        setNotEnoughIng((prevIng) => [
+          ...prevIng,
+          {
+            ingredientID: eachMenuIng._id,
+          },
+        ]);
+      }
+    });
+    console.log(notEnoughIng);
+    return;
   };
 
   const [myComment, setMyComment] = useState("");
@@ -326,18 +357,19 @@ const MenuPage = ({ status }) => {
             ],
           };
           const response = await DecreaseMyIngredient(token, ingForDecrease);
-          console.log(response)
+          console.log(response);
         }
       };
-      deleteMyIngredient()
+      deleteMyIngredient();
     });
-    setPreviewAmountChange(false)
-    setCooking(prev => !prev)
-    FetchData()
+    setPreviewAmountChange(false);
+    setCooking((prev) => !prev);
+    FetchData();
   };
 
   return (
     <div>
+      <button onClick={() => CheckNotEnoughIng()}></button>
       {cooking && (
         <div className="menu-cooking">
           <h1 className="menu-cooking-text">Cooking in progress</h1>
@@ -348,23 +380,23 @@ const MenuPage = ({ status }) => {
                 setCooking((prev) => !prev);
               }}
             >
-              ยกเลิกการทำอาหาร <br/>
-              <ImCross/>
+              ยกเลิกการทำอาหาร <br />
+              <ImCross />
             </button>
             <button
               className="button-28-blue do-this-mw"
               onClick={() => setShowCookingModal(true)}
             >
-              บันทึกวัตถุดิบที่ได้ใช้ไป <br/>
-              <BiNotepad/>
+              บันทึกวัตถุดิบที่ได้ใช้ไป <br />
+              <BiNotepad />
             </button>
             <button
               className="button-28-green do-this-mw"
               onClick={() => setShowCookingFinal(true)}
             >
               {" "}
-              ทำอาหารเสร็จสิ้น{" "} <br/>
-              <ImCheckmark/> 
+              ทำอาหารเสร็จสิ้น <br />
+              <ImCheckmark />
             </button>
           </div>
         </div>

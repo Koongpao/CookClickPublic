@@ -366,7 +366,7 @@ const Ref = () => {
           <div className="ref-page-form-box">
             <Form>
               <button
-                onClick={handleShowing}
+                onClick={() => handleShowing()}
                 className="do-this-menu-button ref-add-button"
                 style={{ display: showAddIngButton ? "block" : "none" }}
               >
@@ -375,7 +375,7 @@ const Ref = () => {
               </button>
               <Offcanvas
                 show={showing}
-                onHide={handleCloseing}
+                onHide={() => handleCloseing()}
                 placement="top"
                 className="searchoffcanvas"
               >
