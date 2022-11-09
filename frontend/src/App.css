@@ -970,9 +970,8 @@ label:focus,
   border: rgba(0, 0, 0, 0.16) solid 1px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 10px;
-  width: 250px;
-  height: 250px;
-  max-height: 50px;
+  width: 20vw;
+  flex: 0 0 vh;
   margin: 0.5% auto 0.5% auto;
   transition: all 0.5s;
 }

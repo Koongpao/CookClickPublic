@@ -12,7 +12,7 @@ import Nav from "react-bootstrap/Nav"
 import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
 import Offcanvas from "react-bootstrap/Offcanvas"
-import Logonobg from "../img/logonobg.svg"
+import Logonobg from "../img/logo2.svg"
 import { useAuth } from "../script/useAuth"
 import Modal from "react-bootstrap/Modal"
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./MenuId.css";
 import MenuIngItem from "../components/MenuIdPage/MenuIngItem.js";
 import MenuStepsItem from "../components/MenuIdPage/MenuStepsItem.js";
@@ -105,7 +105,7 @@ const MenuPage = ({ status }) => {
         (wareFull) => wareFull._id === ware.kitchenwareID
       ),
     }));
-    console.log(menuInfo.query[0]);
+    // console.log(menuInfo.query[0]);
     setMenuDetails((prev) => ({
       ...prev,
       rating: prev.rating.toFixed(2),
@@ -119,8 +119,10 @@ const MenuPage = ({ status }) => {
     wareFullData.data.forEach((element, i) => {
       element.id = i;
     });
-    console.log(menuInfo);
+    // console.log(menuInfo);
     checkIfMenuDoable(menuInfo.query[0], myRefIng, myWareIng);
+
+    CheckNotEnoughIng(menuInfo.query[0], myRefIng.ingredient)
   };
 
   const checkIfMenuDoable = (menuInfo, myRefIng, myRefWare) => {
@@ -162,6 +164,7 @@ const MenuPage = ({ status }) => {
   const { mid } = useParams();
   useEffect(() => {
     FetchData();
+    setTimeout(CheckIngAmountInRef, 500)
   }, []);
 
   const sendReport = async () => {
@@ -179,11 +182,13 @@ const MenuPage = ({ status }) => {
 
   const [notEnoughIng, setNotEnoughIng] = useState([]);
 
-  const CheckNotEnoughIng = (Ing) => {
-    menuDetails.ingredient.forEach((eachMenuIng) => {
+  const CheckNotEnoughIng = (menu, ref) => {
+    console.log(ref)
+    menu.ingredient.forEach((eachMenuIng) => {
       let found = false;
-      IngRefData.forEach((refIng) => {
-        if (refIng.ingredientID === eachMenuIng._id) {
+      ref.forEach((refIng) => {
+        console.log(refIng)
+        if (refIng.ingredientID === eachMenuIng.ingredientID) {
           found = true;
           if (refIng.amount < eachMenuIng.amount) {
             setNotEnoughIng((prevIng) => [
@@ -191,6 +196,7 @@ const MenuPage = ({ status }) => {
               {
                 ingredientID: eachMenuIng._id,
                 ingredientName: refIng.ingredientName,
+                missingAmount: eachMenuIng.maount - refIng.amount,
               },
             ]);
           }
@@ -201,11 +207,12 @@ const MenuPage = ({ status }) => {
           ...prevIng,
           {
             ingredientID: eachMenuIng._id,
+            ingredientName: eachMenuIng.name,
+            missingAmount: eachMenuIng.amount,
           },
         ]);
       }
     });
-    console.log(notEnoughIng);
     return;
   };
 
@@ -369,7 +376,7 @@ const MenuPage = ({ status }) => {
 
   return (
     <div>
-      <button onClick={() => CheckNotEnoughIng()}></button>
+      <button onClick={() => console.log(notEnoughIng)}></button>
       {cooking && (
         <div className="menu-cooking">
           <h1 className="menu-cooking-text">Cooking in progress</h1>
@@ -417,10 +424,12 @@ const MenuPage = ({ status }) => {
             <div>
               <BsPersonCircle /> By : {menuDetails.userDisplayName}
             </div>
-            {token && <BiFlag
-              className="menu-report-menu"
-              onClick={() => setShowMenuReportModal(true)}
-            />}
+            {token && (
+              <BiFlag
+                className="menu-report-menu"
+                onClick={() => setShowMenuReportModal(true)}
+              />
+            )}
           </div>
           <div style={{ height: "auto" }}>
             <MdOutlineDescription /> {menuDetails.description}
