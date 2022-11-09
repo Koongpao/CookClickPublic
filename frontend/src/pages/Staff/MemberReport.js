@@ -83,7 +83,7 @@ const MemberReportPage = () => {
                 </div>
               )
             })}
-
+            <Button variant="primary" onClick={() => setShowBan(true)}>TEST@</Button>
             <Button variant="primary" onClick={async () => {
               const token = JSON.parse(localStorage.getItem("token"));
               const res = await MemberReport(token, { description: "fdsfdfasdf" }, "63157c161a8bd975b7a3b302");
@@ -105,7 +105,7 @@ const MemberReportPage = () => {
                     date: startDate,
                   };
                   console.log(data);
-                  // await MemberBan(token, data);
+                  await MemberBan(token, data);
                   window.location.reload();
                 }}
               >

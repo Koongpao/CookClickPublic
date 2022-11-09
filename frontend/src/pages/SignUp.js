@@ -166,7 +166,7 @@ const SignUp = ({ onchangelogin }) => {
       <div className="flex justify-content-center">
         <form className="new-register-form">
           <div className="new-login-header">Create Your New Account</div>
-          <label className="new-login-input-top"><AiOutlineMail/> Email Address</label>
+          <label className="new-login-input-top"><AiOutlineMail className="m-1"/> Email Address</label>
           <Form.Group className="mb-3" controlId="formEmail">
             <input
               className="new-login-input"
@@ -186,7 +186,7 @@ const SignUp = ({ onchangelogin }) => {
             )}
           </Form.Group>
           
-          <label className="new-login-input-top"> <BsFillPersonFill/> Display Name </label>
+          <label className="new-login-input-top"> <BsFillPersonFill className="m-1"/> Display Name </label>
           <Form.Group className="mb-5" controlId="formDisplayName">
             <input
               className="new-login-input"
@@ -207,8 +207,8 @@ const SignUp = ({ onchangelogin }) => {
             )}
             
           </Form.Group>
-          <div className="register-border"></div>
-          <label className="new-login-input-top"><BsKey/>Password</label>
+          <div className="register-border mb-3"></div>
+          <label className="new-login-input-top"><BsKey className="m-1"/>Password</label>
           <Form.Group className="mb-2" controlId="formPassword">
             <input
               className="new-login-input"
@@ -228,7 +228,9 @@ const SignUp = ({ onchangelogin }) => {
               </div>
             )}
           </Form.Group>
-          <label className="new-login-input-top"><BsKeyFill/>Confirm Password</label>
+          <label className="new-login-input-top">
+            <BsKeyFill className="m-1" />Confirm Password
+          </label>
           <Form.Group className="mb-2" controlId="formConfirmPassword">
             <input
               className="new-login-input"
