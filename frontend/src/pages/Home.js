@@ -14,6 +14,7 @@ import {
 
 
 function Home() {
+  let baimai;
   const [dfoods, setdfoods] = useState([])
   const [mfoods, setmfoods] = useState([])
   const [afoods, setafoods] = useState([])
