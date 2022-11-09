@@ -1011,8 +1011,9 @@ label:focus,
 }
 
 .login-main-part {
-  margin-top: 10vh !important;
-  max-width: 30%;
+  margin-top: 10vh;
+  max-width: 95%;
+  width: 600px;
   background-color: white;
   flex-grow: 1;
   margin: auto;

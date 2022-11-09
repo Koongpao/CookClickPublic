@@ -21,10 +21,9 @@ const MemberReportPage = () => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
       const memberReportData = await MemberReportedList(token);
-      console.log(memberReportData);
-      // setMemberReport((prev) =>
-      //   ({ ...prev, memreport: memberReportData.memreport })
-      // );
+      setMemberReport((prev) =>
+        ({ ...prev, memreport: memberReportData.memreport })
+      );
     };
     fetchdata();
   }, []);
