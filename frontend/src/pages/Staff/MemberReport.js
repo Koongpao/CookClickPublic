@@ -1,16 +1,22 @@
-import { MemberReportedList, DelMemberReport } from "../../script/controller";
-import { useEffect, useState } from "react";
+import { MemberReportedList, DelMemberReport, MemberBan } from "../../script/controller";
+import { useEffect, useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
+import DatePicker from "react-datepicker";
+import Form from 'react-bootstrap/Form';
+import { MemberReport } from "../../script/controller";
 
 const MemberReportPage = () => {
   const [memberReport, setMemberReport] = useState({
     memreport: [],
   });
   const [show, setShow] = useState(false);
+  const [showBan, setShowBan] = useState(false);
   const [modalItem, setModalItem] = useState({
     reportdescription: [],
   });
+  const descriptionRef = useRef("");
+  const [startDate, setStartDate] = useState(new Date());
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -44,7 +50,7 @@ const MemberReportPage = () => {
               return (
                 <div className="db-menu" key={index}>
                   <div className="mb-1">
-                    Username: {item.username} ({item.userID})
+                    Username: {item.username}
                   </div>
                   <div className="text-sm text-muted mb-3">
                     Email: {item.email}
@@ -59,12 +65,14 @@ const MemberReportPage = () => {
                     Description
                   </div>
                   <div className="flex justify-content-end">
-                    <button className="btn-blue">Ban Member</button>
+                    <button className="btn-blue"
+                      onClick={() => setShowBan(true)}>
+                      Ban Member
+                    </button>
                     <button className="btn-lightblue" onClick={
                       async () => {
                         const token = JSON.parse(localStorage.getItem("token"));
-                        const delReport = await DelMemberReport(token, item._id);
-                        console.log(delReport);
+                        await DelMemberReport(token, item._id);
                         window.location.reload();
                       }
                     }>
@@ -74,6 +82,53 @@ const MemberReportPage = () => {
                 </div>
               )
             })}
+            <Button variant="primary" onClick={() => setShowBan(true)}>TEST@</Button>
+            <Button variant="primary" onClick={async () => {
+              const token = JSON.parse(localStorage.getItem("token"));
+              const res = await MemberReport(token, { description: "fdsfdfasdf" }, "63157c161a8bd975b7a3b302");
+              console.log(res);
+            }}>Test</Button>
+            <Modal
+              show={showBan}
+              onHide={() => setShowBan(false)}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const token = JSON.parse(localStorage.getItem("token"));
+                  const data = {
+                    description: descriptionRef.current.value,
+                    date: startDate,
+                  };
+                  console.log(data);
+                  await MemberBan(token, data);
+                  window.location.reload();
+                }}
+              >
+                <Modal.Header>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    Ban Member
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Ban Member Until</Form.Label>
+                    <DatePicker selected={startDate} dateFormat="dd/MM/yyyy" onChange={(date) => setStartDate(date)} />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Description</Form.Label>
+                    <div><input ref={descriptionRef} type="text" /></div>
+                  </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button type="submit">Submit</Button>
+                  <Button onClick={() => setShowBan(false)}>Close</Button>
+                </Modal.Footer>
+              </Form>
+            </Modal>
             <Modal
               show={show}
               onHide={() => setShow(false)}

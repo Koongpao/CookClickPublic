@@ -965,7 +965,7 @@ label:focus,
   overflow: hidden;
 }
 
-.ref-offcanva-button{
+.ref-offcanva-button {
   background-color: white;
   border: rgba(0, 0, 0, 0.16) solid 1px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -974,14 +974,14 @@ label:focus,
   height: 250px;
   max-height: 50px;
   margin: 0.5% auto 0.5% auto;
-  transition: all 0.5s
+  transition: all 0.5s;
 }
 
-.ref-offcanva-button:hover{
-  background-color: rgb(0, 0, 0, 0.15)
+.ref-offcanva-button:hover {
+  background-color: rgb(0, 0, 0, 0.15);
 }
 
-.ref-offcanva-body{
+.ref-offcanva-body {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -989,9 +989,7 @@ label:focus,
   margin: auto;
 }
 
-
-
-.normal-search-box-button{
+.normal-search-box-button {
   margin-left: 5%;
   transition: all 0.2s;
   border: rgba(0, 0, 0, 0.16) solid 1px;
@@ -999,28 +997,29 @@ label:focus,
   border-radius: 10px;
 }
 
-.normal-search-box-input{
-  border:rgb(0, 0, 0, 0.15) 1px solid;
+.normal-search-box-input {
+  border: rgb(0, 0, 0, 0.15) 1px solid;
   border-radius: 10px;
 }
-.normal-search-box-button:hover{
+.normal-search-box-button:hover {
   background-color: rgba(0, 0, 0, 0.16);
 }
 
-.normal-search-box{
+.normal-search-box {
   width: 30%;
   margin: auto;
 }
 
-.login-main-part{
-  margin-top: 10vh !important;
-  max-width: 30%;
+.login-main-part {
+  margin-top: 10vh;
+  max-width: 95%;
+  width: 600px;
   background-color: white;
   flex-grow: 1;
   margin: auto;
 }
 
-.new-login-form{
+.new-login-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1030,7 +1029,7 @@ label:focus,
   border-radius: 25px;
 }
 
-.new-register-form{
+.new-register-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1042,31 +1041,33 @@ label:focus,
   margin-bottom: 5%;
 }
 
-.new-login-header{
+.new-login-header {
   display: flex;
+  text-align: center;
   justify-content: center;
   margin-top: 1%;
   margin-bottom: 10%;
   font-size: 2em;
 }
 
-.new-login-button{
+.new-login-button {
   border-radius: 100px;
-  width: 15vw;
-  height: 5vh;
+  min-width: 10rem;
+  width: 15%;
+  height: 3rem;
   border: none;
   background-color: #37333d;
   color: white;
   transition: all 0.2s;
 }
 
-.new-login-button:hover{
+.new-login-button:hover {
   background-color: #000000;
   border: rgb(0, 0, 0, 1) 10px 10px 10px;
 }
 
-.or-text{
-  border-top:rgb(0, 0, 0, 0.15) solid 1px;
+.or-text {
+  border-top: rgb(0, 0, 0, 0.15) solid 1px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -1074,26 +1075,26 @@ label:focus,
   margin-bottom: 1em;
 }
 
-.new-login-input{
+.new-login-input {
   border: none;
   border-bottom: rgb(0, 0, 0, 0.15) solid 1px;
   margin: auto;
   display: flex;
 }
 
-.new-login-input-label{
+.new-login-input-label {
   font-size: 1em;
 }
 
-.new-login-input-top{
+.new-login-input-top {
   display: flex;
-  align-items: center;
+  align-self: center;
   color: rgb(0, 0, 0, 0.3);
 }
 
-.register-border{
+.register-border {
   height: auto;
   width: 100%;
   margin: 0 0 2% 0;
-  border-bottom:rgb(0, 0, 0, 0.15) solid 1px;
+  border-bottom: rgb(0, 0, 0, 0.15) solid 1px;
 }

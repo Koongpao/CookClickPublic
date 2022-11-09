@@ -47,7 +47,7 @@ function NewLogin({ onchangelogin }) {
           >
             <span className="new-login-header">Welcome to Cookclick</span>
             <div className="new-login-input-top">
-              <AiOutlineMail />
+              <AiOutlineMail className="m-1"/>
               <span className="new-login-input-label">Email</span>
             </div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -70,7 +70,7 @@ function NewLogin({ onchangelogin }) {
               )}
             </Form.Group>
             <div className="new-login-input-top">
-              <BsFillKeyFill />
+              <BsFillKeyFill className="m-1"/>
               <span className="new-login-input-label">Password</span>
             </div>
             <Form.Group className="mb-5" controlId="formBasicPassword">

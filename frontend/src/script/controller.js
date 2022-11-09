@@ -374,10 +374,10 @@ export const MenuEdit = async (token, menuid) => {
   }
 };
 
-export const DelMenu = async (token, menu, menuId) => {
+export const DelMenu = async (token, menuId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}`;
   try {
-    const response = await axios.post(baseURL, menu, {
+    const response = await axios.delete(baseURL, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -388,10 +388,10 @@ export const DelMenu = async (token, menu, menuId) => {
   }
 };
 
-export const DelComment = async (token, menu, menuId, commentId) => {
+export const DelComment = async (token, menuId, commentId) => {
   const baseURL = `https://cookclick-api.code.in.th/menu/${menuId}/comments/${commentId}`;
   try {
-    const response = await axios.post(baseURL, menu, {
+    const response = await axios.delete(baseURL, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -417,10 +417,10 @@ const MenuPage = ({ status }) => {
             <div>
               <BsPersonCircle /> By : {menuDetails.userDisplayName}
             </div>
-            <BiFlag
+            {token && <BiFlag
               className="menu-report-menu"
               onClick={() => setShowMenuReportModal(true)}
-            />
+            />}
           </div>
           <div style={{ height: "auto" }}>
             <MdOutlineDescription /> {menuDetails.description}

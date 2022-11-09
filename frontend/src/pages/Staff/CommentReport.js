@@ -1,4 +1,4 @@
-import { CommentReportedList, DelMenuCommentReport } from "../../script/controller";
+import { CommentReportedList, DelMenuCommentReport, DelComment } from "../../script/controller";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
@@ -51,7 +51,7 @@ const CommentReportPage = () => {
                     On Menu: {item.menuInfo.length ? item.menuInfo[0].name : "[Deleted]" }
                   </div>
                   <div className="text-sm text-muted mb-3">
-                    By: {item.userID}
+                    By: 
                   </div>
                   <div className="text-sm mb-1">
                     REPORTED {item.count} TIME(S).
@@ -63,7 +63,16 @@ const CommentReportPage = () => {
                     Description
                   </div>
                   <div className="flex justify-content-end">
-                    <button className="btn-blue">Delete Comment</button>
+                    <button className="btn-blue" onClick={
+                      async () => {
+                        const token = JSON.parse(localStorage.getItem("token"));
+                        console.log(item.menuID, item.commentID);
+                        const res = await DelComment(token, item.menuID, item.commentID);
+                        console.log(res);
+                        await DelMenuCommentReport(token, item._id);
+                        window.location.reload();
+                      }
+                    }>Delete Comment</button>
                     <button className="btn-lightblue" onClick={
                       async () => {
                         const token = JSON.parse(localStorage.getItem("token"));
