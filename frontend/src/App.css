@@ -462,21 +462,14 @@ label:focus,
 .user-mod-txt,
 .user-admin-txt {
   background-color: #f8be28;
-  padding: 13px;
-  padding-left: 25px;
-  width: 1335px;
+  padding: 1rem;
+  width: 100%;
   font-weight: 400;
 }
 
 .user-mem-txt {
   position: relative;
   top: 70px;
-  left: 100px;
-}
-.user-mod-txt,
-.user-admin-txt {
-  position: relative;
-  left: 100px;
 }
 
 .userbox-box {
@@ -484,8 +477,7 @@ label:focus,
   border-radius: 8px;
   padding: 15px;
   padding-left: 10px;
-  margin-left: 100px;
-  margin-right: 85px;
+  margin: 1rem 3rem;
   border: 1px solid rgb(235, 234, 234);
   box-shadow: 0px 2px rgb(235, 234, 234);
 }
@@ -495,6 +487,10 @@ label:focus,
 .userbox-email,
 .userbox-deluser-btn {
   display: inline-block;
+}
+
+.userbox-deluser-btn {
+  align-self: flex-end;
 }
 
 .user-memlist {
@@ -984,7 +980,8 @@ label:focus,
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  width: 50%;
+  width: 500px;
+  max-width: 100%;
   margin: auto;
 }
 

@@ -4,7 +4,6 @@ import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
 import DatePicker from "react-datepicker";
 import Form from 'react-bootstrap/Form';
-import { MemberReport } from "../../script/controller";
 
 const MemberReportPage = () => {
   const [memberReport, setMemberReport] = useState({
@@ -15,12 +14,17 @@ const MemberReportPage = () => {
   const [modalItem, setModalItem] = useState({
     reportdescription: [],
   });
+  const [banID, setBanID] = useState({
+    userID: "",
+    reportID: "",
+  });
   const descriptionRef = useRef("");
   const [startDate, setStartDate] = useState(new Date());
   useEffect(() => {
     const fetchdata = async () => {
       const token = JSON.parse(localStorage.getItem("token"));
       const memberReportData = await MemberReportedList(token);
+      console.log(memberReportData);
       setMemberReport((prev) =>
         ({ ...prev, memreport: memberReportData.memreport })
       );
@@ -66,7 +70,10 @@ const MemberReportPage = () => {
                   </div>
                   <div className="flex justify-content-end">
                     <button className="btn-blue"
-                      onClick={() => setShowBan(true)}>
+                      onClick={() => {
+                        setBanID((prev) => ({ ...prev, userID: item.userID, reportID: item._id }))
+                        setShowBan(true)
+                      }}>
                       Ban Member
                     </button>
                     <button className="btn-lightblue" onClick={
@@ -82,12 +89,7 @@ const MemberReportPage = () => {
                 </div>
               )
             })}
-            <Button variant="primary" onClick={() => setShowBan(true)}>TEST@</Button>
-            <Button variant="primary" onClick={async () => {
-              const token = JSON.parse(localStorage.getItem("token"));
-              const res = await MemberReport(token, { description: "fdsfdfasdf" }, "63157c161a8bd975b7a3b302");
-              console.log(res);
-            }}>Test</Button>
+
             <Modal
               show={showBan}
               onHide={() => setShowBan(false)}
@@ -103,8 +105,8 @@ const MemberReportPage = () => {
                     description: descriptionRef.current.value,
                     date: startDate,
                   };
-                  console.log(data);
-                  await MemberBan(token, data);
+                  await MemberBan(token, data, banID.userID);
+                  await DelMemberReport(token, banID.reportID);
                   window.location.reload();
                 }}
               >
