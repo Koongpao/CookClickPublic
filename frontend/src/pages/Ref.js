@@ -365,14 +365,14 @@ const Ref = () => {
         <div className="refpage-right">
           <div className="ref-page-form-box">
             <Form>
-              <Button
+              <button
                 onClick={handleShowing}
-                className="button-28"
+                className="do-this-menu-button ref-add-button"
                 style={{ display: showAddIngButton ? "block" : "none" }}
               >
                 <FaPlus />
                 เพิ่มวัตถุดิบ
-              </Button>
+              </button>
               <Offcanvas
                 show={showing}
                 onHide={handleCloseing}
@@ -405,14 +405,14 @@ const Ref = () => {
               </Offcanvas>
             </Form>
             <Form>
-              <Button
+              <button
                 onClick={handleShowtool}
-                className="button-28"
+                className="do-this-menu-button ref-add-button"
                 style={{ display: showAddIngButton ? "block" : "none" }}
               >
                 <FaPlus />
                 เพิ่มอุปกรณ์
-              </Button>
+              </button>
               <Offcanvas
                 show={showtool}
                 onHide={handleClosetool}

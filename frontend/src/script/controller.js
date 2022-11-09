@@ -31,8 +31,6 @@ export const CheckSignupExist = async (type, value) => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -43,8 +41,6 @@ export const GetSystemIngredient = async () => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -55,8 +51,6 @@ export const GetSystemKitchenware = async () => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -71,8 +65,6 @@ export const AddSysIngredient = async (token, ingredient) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -87,8 +79,6 @@ export const AddSysKitchenware = async (token, kitchenware) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -103,8 +93,6 @@ export const AddMenu = async (token, menu) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return err.response.data;
   }
 };
@@ -119,8 +107,6 @@ export const UpdateMenu = async (token, menu, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return err.response.data;
   }
 };
@@ -135,8 +121,6 @@ export const AddorEditIngredient = async (token, ingredient) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -151,8 +135,6 @@ export const AddorEditKitchenware = async (token, kitchenware) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -167,8 +149,6 @@ export const AddMenuComment = async (token, comment, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -183,8 +163,6 @@ export const MemberReport = async (token, comment, memberId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -195,8 +173,6 @@ export const GetMenuInfo = async (menuId) => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -211,8 +187,6 @@ export const GetAllMeMenu = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -227,8 +201,6 @@ export const GetAllMeFavMenu = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -243,8 +215,6 @@ export const GetAllMeIngredient = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -259,8 +229,6 @@ export const GetAllMeKitware = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -275,8 +243,6 @@ export const GetAllMeMenuStatus = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -292,8 +258,6 @@ export const GetWaitMeMenuStatus = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -308,8 +272,6 @@ export const GetDraftMeMenuStatus = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -324,8 +286,6 @@ export const DelMeMenu = async (token, menu, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -340,8 +300,6 @@ export const RatingMenu = async (token, score, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -356,8 +314,6 @@ export const MenuApproveOrUnapprove = async (token, menuId, status, desc) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -372,7 +328,6 @@ export const CommentReport = async (token, comment, menuId, commentId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
     return null;
   }
 };
@@ -387,7 +342,6 @@ export const MenuReport = async (token, comment, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
     return null;
   }
 };
@@ -402,8 +356,6 @@ export const MenuRequest = async (token, type) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -418,8 +370,6 @@ export const MenuEdit = async (token, menuid) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -434,8 +384,6 @@ export const DelMenu = async (token, menu, menuId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -450,8 +398,6 @@ export const DelComment = async (token, menu, menuId, commentId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -466,8 +412,6 @@ export const DelMyComment = async (token, menuId, commentId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -478,8 +422,6 @@ export const SearchMenu = async (name) => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -495,8 +437,6 @@ export const SearchAdvance = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -511,8 +451,6 @@ export const MenuReportedList = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -527,8 +465,6 @@ export const CommentReportedList = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -543,8 +479,6 @@ export const MemberReportedList = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -559,8 +493,6 @@ export const EditMemberRole = async (token, memberID, role) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -575,8 +507,6 @@ export const GetAdsList = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -591,8 +521,6 @@ export const AdsEditing = async (token, adscontent) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -607,8 +535,6 @@ export const MemberBan = async (token, member, memberId) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -623,8 +549,6 @@ export const AddIngredientCategory = async (token, category) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -639,8 +563,6 @@ export const DelIngredientCategory = async (token, category) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -655,8 +577,6 @@ export const DelIngredient = async (token, ingredient) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -671,8 +591,6 @@ export const DelKitware = async (token, kitwares) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -688,8 +606,6 @@ export const ImageUpload = async (token, menu, menuId) => {
     console.log(response.data);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -705,8 +621,6 @@ export const StepImageUpload = async (token, menu, menuId, stepnumber) => {
     console.log(response.data);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -718,8 +632,6 @@ export const GetPopularMenuDay = async () => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -731,8 +643,6 @@ export const GetPopularMenuMonth = async () => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -744,8 +654,6 @@ export const GetPopularMenuAll = async () => {
     const response = await axios.get(baseURL);
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -760,8 +668,6 @@ export const GetAllMember = async (token) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -776,8 +682,6 @@ export const DelMemberReport = async (token, reportID) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -792,8 +696,6 @@ export const UnfavoriteMenu = async (token, menuid) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -808,8 +710,6 @@ export const DelMenuReport = async (token, menuID) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -824,8 +724,6 @@ export const DelMenuCommentReport = async (token, commentID) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -840,8 +738,6 @@ export const FavoriteMenu = async (token, menuid) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -856,8 +752,6 @@ export const GetCurrentMenuIfFavorited = async (token, menuid) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -872,8 +766,6 @@ export const GetMyRatingOnMenu = async (token, menuid) => {
     });
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
-    alert(err.response.data.message);
     return null;
   }
 };
@@ -894,7 +786,6 @@ export const DecreaseMyIngredient = async (token, payload) => {
     );
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
     return null;
   }
 };

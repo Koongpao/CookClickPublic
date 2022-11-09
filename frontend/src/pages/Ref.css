@@ -151,6 +151,8 @@
 
 .ref-page-form-box {
   display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 .tab-content {
@@ -225,4 +227,8 @@
   color: #2088dd !important;
   background-color: transparent !important;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+}
+
+.ref-add-button{
+  width: 100% !important;
 }
