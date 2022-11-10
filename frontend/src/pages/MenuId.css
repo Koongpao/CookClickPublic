@@ -1,4 +1,3 @@
-
 .menupage {
   height: auto;
   max-width: 50%;
@@ -107,7 +106,7 @@
   float: right;
 }
 
-.menu-steps-item-img{
+.menu-steps-item-img {
   flex-grow: 1;
 }
 .menu-steps-item-desc {
@@ -119,7 +118,7 @@
   flex-direction: column;
 }
 
-.menu-steps-index{
+.menu-steps-index {
   background-color: rgba(0, 0, 0, 0.16);
   width: 4em;
   height: 1.7em;
@@ -139,51 +138,50 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.menu-rating-bar{
-  display:flex;
+.menu-rating-bar {
+  display: flex;
   flex: space-evenly;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 2%;
+  padding: 0.5rem 0;
   height: auto;
   border-radius: 10px;
   font-size: 110%;
   text-align: center;
 }
 
-.menu-rating-rate{
-  flex-grow:1;
+.menu-rating-rate {
+  flex-grow: 1;
   border-right: rgba(0, 0, 0, 0.16) solid 1px;
   max-width: 30%;
 }
 
-.menu-rating-comment{
+.menu-rating-comment {
   flex-grow: 1;
   border-right: rgba(0, 0, 0, 0.16) solid 1px;
 }
 
-.menu-rating-fav{
+.menu-rating-fav {
   flex-grow: 1;
   max-width: 30%;
 }
-.menu-rating-star{
+.menu-rating-star {
   color: none;
   display: flex;
   justify-content: center;
 }
 
-.menu-star{
+.menu-star {
   cursor: pointer;
   color: rgb(250, 217, 71);
 }
 
-.comment-box-button-box{
+.comment-box-button-box {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  
 }
 
-.comment-box-button{
+.comment-box-button {
   padding: 6px;
   margin: 0 1% 0 1%;
   background-color: white;
@@ -193,78 +191,78 @@
   transition: all 0.2s;
 }
 
-.menu-comments-list{
+.menu-comments-list {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 10px;
 }
 
-.comment-box-button:hover{
+.comment-box-button:hover {
   background-color: rgba(0, 0, 0, 0.16);
 }
 
-.menu-comment-username{
+.menu-comment-username {
   width: 50%;
   font-size: 80%;
   display: flex;
 }
 
-.delete-icon{
+.delete-icon {
   margin-right: 6px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
-.delete-icon:hover{
+.delete-icon:hover {
   background-color: rgba(0, 0, 0, 0.16);
   border-radius: 50%;
 }
 
-.report-icon{
+.report-icon {
   cursor: pointer;
   transition: all 0.3s;
 }
 
-.report-icon:hover{
+.report-icon:hover {
   background-color: rgba(0, 0, 0, 0.16);
   border-radius: 50%;
 }
 
 .report-form-modal {
-  border: rgb(0, 0, 0 ,0.16) 1px solid;
+  border: rgb(0, 0, 0, 0.16) 1px solid;
   border-radius: 10px;
   font-size: 70%;
   width: 80%;
 }
 
-.menu-report-menu{
+.menu-report-menu {
   font-size: 140%;
   transition: all 0.2s;
   cursor: pointer;
 }
 
-.menu-report-menu:hover{
+.menu-report-menu:hover {
   background-color: rgba(0, 0, 0, 0.16);
   border-radius: 50%;
 }
 
-.do-this-menu-button{
+.do-this-menu-button {
   height: 10vh;
   width: 20vw;
   background-color: white;
-  border: rgb(0, 0, 0 ,0.16) 1px solid;
+  border: rgb(0, 0, 0, 0.16) 1px solid;
   border-radius: 10px;
   transition: all 0.2s;
   margin: 2% 0 2% 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.do-this-menu-button:hover{
-  background-color: rgb(0, 0, 0 ,0.16);
-  border: rgb(0, 0, 0 ,0.16) 1px solid;
+.do-this-menu-button:hover {
+  background-color: rgb(0, 0, 0, 0.16);
+  border: rgb(0, 0, 0, 0.16) 1px solid;
   border-radius: 10px;
 }
 
-.menu-do-this-menu{
+.menu-do-this-menu {
   width: 100%;
   height: auto;
   margin: 1% 0 1% 0;
@@ -277,7 +275,7 @@
   align-items: center;
 }
 
-.menu-cooking{
+.menu-cooking {
   width: 100%;
   height: auto;
   padding: 2.5%;
@@ -293,74 +291,74 @@
   background-color: white;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+@import url("https://fonts.googleapis.com/css?family=Amatic+SC");
 
 .menu-cooking-text {
-    margin: 0 auto;
-    text-align: center;
-    font-family: 'Amatic SC';
-    font-size: 6vh;
-    color: #333;
-    opacity: 0.75;
-    animation: pulse 3.5s linear infinite;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Amatic SC";
+  font-size: 6vh;
+  color: #333;
+  opacity: 0.75;
+  animation: pulse 3.5s linear infinite;
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1, 1);
-        opacity: 0.25;
-    }
-    50% {
-        transform: scale(1.2, 1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1, 1);
-        opacity: 0.25;
-    }
+  0% {
+    transform: scale(1, 1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.2, 1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 0.25;
+  }
 }
 
 @keyframes flip {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    5% {
-        transform: rotate(-27deg);
-    }
+  5% {
+    transform: rotate(-27deg);
+  }
 
-    30%, 50% {
-        transform: rotate(0deg);
-    }
+  30%,
+  50% {
+    transform: rotate(0deg);
+  }
 
-    55% {
-        transform: rotate(27deg);
-    }
+  55% {
+    transform: rotate(27deg);
+  }
 
-    83.3% {
-        transform: rotate(0deg);
-    }
+  83.3% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(0deg);
-    }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
-.cooking-modal-text{
+.cooking-modal-text {
   margin-top: 0;
   font-size: 0.5em;
-
 }
 
-.menu-ing-modal{
-  border-top:rgb(0, 0, 0 ,0.16) solid 1px;
+.menu-ing-modal {
+  border-top: rgb(0, 0, 0, 0.16) solid 1px;
 }
 
-.preview-change-text{
+.preview-change-text {
   font-size: 0.6em;
 }
 
-.menu-do-this{
+.menu-do-this {
   display: flex;
   width: 40%;
   justify-content: space-between;
@@ -368,7 +366,7 @@
   margin-top: 2%;
 }
 
-.do-this-mw{
+.do-this-mw {
   max-width: 30%;
   border-radius: 20px;
 }

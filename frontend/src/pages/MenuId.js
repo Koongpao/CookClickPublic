@@ -84,6 +84,7 @@ const MenuPage = ({ status }) => {
     } else {
       menuInfo = await MenuEdit(token, mid);
     }
+    console.log(menuInfo);
     menuInfo.query[0].image = "https://cookclick.code.in.th/images/".concat(
       menuInfo.query[0].image
     );
@@ -224,7 +225,7 @@ const MenuPage = ({ status }) => {
         <Form.Group className="mb-3" controlId="AddDesc">
           <Form.Control
             type="text"
-            placeholder="ใส่คำอธิบายของสูตรอาหาร"
+            placeholder="แสดงความคิดเห็นของคุณ"
             as="textarea"
             onChange={(e) => setMyComment(e.target.value)}
             value={myComment}
@@ -410,7 +411,7 @@ const MenuPage = ({ status }) => {
       )}
       <div className="menupage">
         <div className="menu-img">
-          <img src={menuDetails.image} alt="testburger"></img>
+          <img src={menuDetails.image} alt="main-pic"></img>
         </div>
         <div className="menu-desc">
           <h1 className="menu-header">{menuDetails.name}</h1>
@@ -450,7 +451,7 @@ const MenuPage = ({ status }) => {
           className="menu-rating-bar"
           style={{ display: token ? "flex" : "none" }}
         >
-          <div className="menu-rating-rate">
+          <div className="menu-rating-rate px-1">
             Rate
             <div className="menu-rating-star">
               {[...Array(5)].map((star, starValue) => {
@@ -458,6 +459,7 @@ const MenuPage = ({ status }) => {
                 return (
                   <>
                     <label
+
                       style={{
                         display:
                           ratingValue > (hoverStarValue || currentStarValue)
@@ -511,7 +513,7 @@ const MenuPage = ({ status }) => {
               คุณได้ให้ {currentStarValue} ดาวกับเมนูนี้!
             </span>
           </div>
-          <div className="menu-rating-comment">
+          <div className="menu-rating-comment px-1">
             Comment
             <div>
               <a href="#comment-section">
@@ -526,7 +528,7 @@ const MenuPage = ({ status }) => {
               </a>
             </div>
           </div>
-          <div className="menu-rating-fav">
+          <div className="menu-rating-fav px-1">
             Favorite
             <div className="flex justify-content-center">
               <BsBookmarkPlus
@@ -614,12 +616,12 @@ const MenuPage = ({ status }) => {
           <div className="menu-steps-head">
             <h1>ขั้นตอนการทำ</h1>
           </div>
-          {menuDetails.cookingstep.map((eachSteps) => (
+          {menuDetails.cookingstep.map((eachSteps,id) => (
             <MenuStepsItem
               img={eachSteps.image}
               desc={eachSteps.description}
-              index={eachSteps.index + 1}
-              key={eachSteps.index}
+              index={id + 1}
+              key={id}
             />
           ))}
         </div>
