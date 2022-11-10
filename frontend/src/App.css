@@ -1100,3 +1100,7 @@ label:focus,
   overflow-y: scroll;
   max-height: 50vh;
 }
+
+.hover-pointer:hover {
+  cursor: pointer;
+}

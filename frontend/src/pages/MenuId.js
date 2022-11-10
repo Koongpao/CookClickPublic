@@ -20,6 +20,7 @@ import {
   GetAllMeIngredient,
   GetAllMeKitware,
   DecreaseMyIngredient,
+  MemberReport,
 } from "../script/controller";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiFlag, BiNotepad } from "react-icons/bi";
@@ -33,7 +34,7 @@ import {
 import { MdOutlineDescription, MdDelete } from "react-icons/md";
 import { Form, Card } from "react-bootstrap";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
-import { Modal, Button, Dropdown } from "react-bootstrap";
+import { Modal, Button, Popover, OverlayTrigger } from "react-bootstrap";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { ImCross, ImCheckmark } from "react-icons/im";
@@ -375,6 +376,43 @@ const MenuPage = ({ status }) => {
     FetchData();
   };
 
+  const [userReport, setUserReport] = useState({});
+  const reportRef = useRef("");
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Report {userReport.displayname}?</Popover.Header>
+      <Popover.Body>
+        <Form onSubmit={
+          async (e) => {
+            e.preventDefault();
+            if (reportRef.current.value) {
+              const response = await MemberReport(token, { description: reportRef.current.value }, userReport.userID);
+              if (response.success) {
+                alert("Reported Successfully");
+              }
+              else {
+                alert("Error: Cannot report");
+              }
+            } else {
+              alert("Please fill the report reason");
+            }
+          }
+        }>
+          <Form.Group className="mb-3" controlId="ReportDesc">
+            <Form.Label>รายละเอียด</Form.Label>
+            <Form.Control
+              ref={reportRef}
+              as="textarea"
+              rows={3}
+            />
+          </Form.Group>
+          <Button variant="secondary" type="submit">Submit</Button>
+        </Form>
+      </Popover.Body>
+    </Popover>
+  );
+
   return (
     <div>
       <button onClick={() => console.log(notEnoughIng)}></button>
@@ -459,7 +497,6 @@ const MenuPage = ({ status }) => {
                 return (
                   <>
                     <label
-
                       style={{
                         display:
                           ratingValue > (hoverStarValue || currentStarValue)
@@ -634,18 +671,20 @@ const MenuPage = ({ status }) => {
           .map((eachComment, id) => (
             <div className="menu-comments-list" key={id}>
               <div className="flex justify-content-between text-md">
-                <span className="menu-comment-username">
-                  <BsPersonCircle style={{ fontSize: "150%" }} />
-                  &nbsp;
-                  {eachComment.displayname} &nbsp;{" "}
-                  <span
-                    style={{
-                      display: userId === eachComment.userID ? "block" : "none",
-                    }}
-                  >
-                    (You)
+                <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                  <span className="menu-comment-username hover-pointer" onClick={() => setUserReport(eachComment)}>
+                    <BsPersonCircle style={{ fontSize: "150%" }} />
+                    &nbsp;
+                    {eachComment.displayname} &nbsp;{" "}
+                    <span
+                      style={{
+                        display: userId === eachComment.userID ? "block" : "none",
+                      }}
+                    >
+                      (You)
+                    </span>
                   </span>
-                </span>
+                </OverlayTrigger>
                 <div className="flex">
                   <MdDelete
                     className="delete-icon"
