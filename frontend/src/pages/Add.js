@@ -92,7 +92,11 @@ function Add() {
     setsteppic(oldpicstep)
     console.log(oldpicstep)
     console.log(oldstep)
-    setstepindex(oldstep[oldstep.length - 1].id + 1)
+    if (oldstep.length) {
+      setstepindex(oldstep[oldstep.length - 1].id + 1)
+    } else {
+      setstepindex(0)
+    }
   }
   useEffect(() => {
     async function fetchdata() {
@@ -255,8 +259,8 @@ function Add() {
     }
     if (!menuid) {
       const response = await AddMenu(token, ingarray)
-      setMenuid(response.id)
       if (response.success) {
+        setMenuid(response.id)
         if (selectedFile) {
           const menuImage = new FormData()
           menuImage.append("menu_image", selectedFile, selectedFile.name)
@@ -610,7 +614,10 @@ function Add() {
           </Button>
           <Button
             onClick={() => {
-              navigate(`../Add/${userdata.userID}/${menuid}`)
+              if (failtext !== "เกิดความผิดพลาดในการอัปโหลดสูตรอาหาร") {
+                navigate(`../Add/${userdata.userID}/${menuid}`)
+              }
+              setfailtext("การอัปโหลดสำเร็จ")
               setstatusshow(false)
             }}
           >
