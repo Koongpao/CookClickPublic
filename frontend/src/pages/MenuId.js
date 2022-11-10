@@ -162,6 +162,9 @@ const MenuPage = ({ status }) => {
     if (WareSatisfied) {
       setWareDoable(true);
     }
+    if (menuInfo.kitchenware.length === 0){
+      setWareDoable(true);
+    }
   };
 
   const { mid } = useParams();
