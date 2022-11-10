@@ -8,6 +8,7 @@ import Logo from "../img/logonobg.svg";
 import Mypic from "../img/Fall-Ingredient-Cover-Photo.gif";
 import { BsFillPersonFill, BsFillKeyFill } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
+import moment from "moment";
 
 function NewLogin({ onchangelogin }) {
   const [userDetails, setUserDetails] = useState({
@@ -29,6 +30,9 @@ function NewLogin({ onchangelogin }) {
             onSubmit={async (e) => {
               e.preventDefault();
               const tokenData = await UserLogin(userDetails);
+              if (tokenData.message === "You've been banned.") {
+                alert(`You've been banned until ${moment(tokenData.banuntil).format("DD/MM/YYYY")}. Reason : ${tokenData.banreason}`);
+              }
               if (tokenData.userID !== undefined) {
                 localStorage.setItem(
                   "userId",
