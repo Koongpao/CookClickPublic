@@ -36,6 +36,7 @@ import CommentReportPage from "./pages/Staff/CommentReport"
 import StaffLogin from "./pages/Staff/StaffLogin"
 import Ads from "./pages/Staff/Ads"
 import AddAds from "./pages/Staff/AddAds"
+import AddIng from "./pages/Staff/AddIng"
 
 //test modal
 import ReportUserModal from "./components/Report/Modal/ReportUser"
@@ -172,6 +173,14 @@ function App() {
               element={
                 <ProtectedStaffRoute>
                   <Dashboard />
+                </ProtectedStaffRoute>
+              }
+            />
+            <Route
+              path="/staff/add-ingredient"
+              element={
+                <ProtectedStaffRoute>
+                  <AddIng />
                 </ProtectedStaffRoute>
               }
             />
