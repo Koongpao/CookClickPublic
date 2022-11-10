@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import Button from "react-bootstrap/Button"
 import Collapse from "react-bootstrap/Collapse"
 import MCard from "../components/MCard"
+import MCardCanDelete from "../components/MCardCanDelete"
 import { GetAllMeMenuStatus } from "../script/controller"
 
 function Menulist() {
@@ -31,19 +32,24 @@ function Menulist() {
     setwaitfoods(newwait)
     setrejfoods(newrej)
   }
+
+  const [token, setToken] = useState("")
+
+  async function fetchdata(token) {
+    const allmenu = await GetAllMeMenuStatus(token)
+    typeset(allmenu.data)
+  }
+
   useEffect(() => {
-    async function fetchdata(token) {
-      const allmenu = await GetAllMeMenuStatus(token)
-      typeset(allmenu.data)
-    }
     if (!ignore) {
-      let token = JSON.parse(localStorage.getItem("token"))
-      fetchdata(token)
+      let myToken = JSON.parse(localStorage.getItem("token"));
+      setToken(myToken)
+      fetchdata(myToken)
     }
     return () => {
       setignore(true)
     }
-  })
+  },[])
   const [open0, setOpen0] = useState(true)
   const [open1, setOpen1] = useState(false)
   const [open2, setOpen2] = useState(false)
@@ -60,6 +66,7 @@ function Menulist() {
   return (
     <>
       <div className="flex flex-col align-items-center">
+        
         <h1>สูตรอาหารของคุณ</h1>
         <div className="common-home flex justify-content-evenly">
           <Button
@@ -120,7 +127,7 @@ function Menulist() {
             <div className="flex flex-col width-100">
               {pubfoods.map((food, index) => {
                 return (
-                  <MCard
+                  <MCardCanDelete
                     key={index}
                     FoodName={food.name}
                     FoodImg={food.image}
@@ -130,6 +137,8 @@ function Menulist() {
                     MenuID={food._id}
                     Status={food.status}
                     UserID={food.userID}
+                    Token={token}
+                    FetchData={fetchdata}
                   />
                 )
               })}

@@ -51,6 +51,26 @@ body {
   }
 }
 
+.menu-delete{
+  font-size: 4vh;
+  border:#ddd 1px solid;
+  justify-content: center;
+  margin: 0.25rem 0 10rem 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.menu-delete-icon{
+  transition: all 0.2s;
+  cursor: pointer;
+  margin: auto;
+}
+
+.menu-delete-icon:hover{
+  background-color: rgb(0, 0, 0, 0.3);
+  border-radius: 100px;
+}
+
 .food-image {
   display: inline-block;
   overflow: hidden;
@@ -62,6 +82,10 @@ body {
     border-radius: 5px;
     object-fit: cover;
   }
+}
+
+.menu-card-can-delete{
+  justify-content: center;
 }
 
 .border-red {
