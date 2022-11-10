@@ -102,6 +102,7 @@ const MenuPage = ({ status }) => {
       ...ingFullData.data.find((ingFull) => ingFull._id === ing.ingredientID),
       amount: ing.amount,
     }));
+
     const menuKitchenware = menuInfo.query[0].kitchenware.map((ware) => ({
       ...wareFullData.data.find(
         (wareFull) => wareFull._id === ware.kitchenwareID
@@ -124,7 +125,7 @@ const MenuPage = ({ status }) => {
     // console.log(menuInfo);
     checkIfMenuDoable(menuInfo.query[0], myRefIng, myWareIng);
 
-    CheckNotEnoughIng(menuInfo.query[0], myRefIng.ingredient)
+    CheckNotEnoughIng(menuIngredients, myRefIng.ingredient);
   };
 
   const checkIfMenuDoable = (menuInfo, myRefIng, myRefWare) => {
@@ -164,9 +165,12 @@ const MenuPage = ({ status }) => {
   };
 
   const { mid } = useParams();
+  const [ignore, setIgnore] = useState(false);
+
   useEffect(() => {
+    if (ignore) return;
+    setIgnore(true);
     FetchData();
-    setTimeout(CheckIngAmountInRef, 500)
   }, []);
 
   const sendReport = async () => {
@@ -185,36 +189,45 @@ const MenuPage = ({ status }) => {
   const [notEnoughIng, setNotEnoughIng] = useState([]);
 
   const CheckNotEnoughIng = (menu, ref) => {
-    console.log(ref)
-    menu.ingredient.forEach((eachMenuIng) => {
-      let found = false;
-      ref.forEach((refIng) => {
-        console.log(refIng)
-        if (refIng.ingredientID === eachMenuIng.ingredientID) {
-          found = true;
-          if (refIng.amount < eachMenuIng.amount) {
-            setNotEnoughIng((prevIng) => [
-              ...prevIng,
-              {
-                ingredientID: eachMenuIng._id,
-                ingredientName: refIng.ingredientName,
-                missingAmount: eachMenuIng.maount - refIng.amount,
-              },
-            ]);
-          }
+    let notEnoughIngArray = [];
+    menu.forEach((eachMenuIng) => {
+      let dupe = false;
+      notEnoughIngArray.forEach((notEnough) => {
+        if (eachMenuIng._id === notEnough.ingredientID) {
+          dupe = true;
         }
       });
+      let found = false;
+      if (!dupe) {
+        ref.forEach((refIng) => {
+          if (refIng.ingredientID === eachMenuIng._id) {
+            found = true;
+            if (refIng.amount < eachMenuIng.amount) {
+              let newEntry = {
+                ingredientID: eachMenuIng._id,
+                ingredientName: eachMenuIng.name,
+                missingAmount: eachMenuIng.amount - refIng.amount,
+                ingredientUnit: eachMenuIng.unit,
+                AmountinRef: refIng.amount,
+              };
+              console.log(newEntry);
+              notEnoughIngArray.push(newEntry);
+            }
+          }
+        });
+      }
       if (!found) {
-        setNotEnoughIng((prevIng) => [
-          ...prevIng,
-          {
-            ingredientID: eachMenuIng._id,
-            ingredientName: eachMenuIng.name,
-            missingAmount: eachMenuIng.amount,
-          },
-        ]);
+        let newEntry = {
+          ingredientID: eachMenuIng._id,
+          ingredientName: eachMenuIng.name,
+          missingAmount: eachMenuIng.amount,
+          ingredientUnit: eachMenuIng.unit,
+        };
+        notEnoughIngArray.push(newEntry);
       }
     });
+
+    setNotEnoughIng(notEnoughIngArray);
     return;
   };
 
@@ -383,31 +396,32 @@ const MenuPage = ({ status }) => {
     <Popover id="popover-basic">
       <Popover.Header as="h3">Report {userReport.displayname}?</Popover.Header>
       <Popover.Body>
-        <Form onSubmit={
-          async (e) => {
+        <Form
+          onSubmit={async (e) => {
             e.preventDefault();
             if (reportRef.current.value) {
-              const response = await MemberReport(token, { description: reportRef.current.value }, userReport.userID);
+              const response = await MemberReport(
+                token,
+                { description: reportRef.current.value },
+                userReport.userID
+              );
               if (response.success) {
                 alert("Reported Successfully");
-              }
-              else {
+              } else {
                 alert("Error: Cannot report");
               }
             } else {
               alert("Please fill the report reason");
             }
-          }
-        }>
+          }}
+        >
           <Form.Group className="mb-3" controlId="ReportDesc">
             <Form.Label>รายละเอียด</Form.Label>
-            <Form.Control
-              ref={reportRef}
-              as="textarea"
-              rows={3}
-            />
+            <Form.Control ref={reportRef} as="textarea" rows={3} />
           </Form.Group>
-          <Button variant="secondary" type="submit">Submit</Button>
+          <Button variant="secondary" type="submit">
+            Submit
+          </Button>
         </Form>
       </Popover.Body>
     </Popover>
@@ -415,7 +429,6 @@ const MenuPage = ({ status }) => {
 
   return (
     <div>
-      <button onClick={() => console.log(notEnoughIng)}></button>
       {cooking && (
         <div className="menu-cooking">
           <h1 className="menu-cooking-text">Cooking in progress</h1>
@@ -607,13 +620,40 @@ const MenuPage = ({ status }) => {
         </div>
         {token && !cooking && (
           <div className="menu-do-this-menu">
-            <span>
-              {" "}
-              คุณมีอุปกรณ์ {wareDoable
-                ? "พร้อม"
-                : "ไม่พร้อม"} สำหรับอาหารจานนี้{" "}
-            </span>
-            <span> คุณมีวัตถุดิบพร้อมสำหรับอาหารจานนี้ </span>
+            {wareDoable && (
+              <span className="green">คุณมีอุปกรณ์พร้อมสำหรับอาหารจานนี้ </span>
+            )}
+            {!wareDoable && (
+              <span className="missing-ingredient-text2">
+                คุณไม่มีอุปกรณ์ที่จะทำอาหารจานนี้
+              </span>
+            )}
+            {notEnoughIng.length === 0 && (
+              <span className="green">
+                {" "}
+                คุณมีวัตถุดิบพร้อมสำหรับอาหารจานนี้{" "}
+              </span>
+            )}
+            {notEnoughIng.length > 0 && (
+              <span className="missing-ingredient-text2">
+                {" "}
+                คุณขาดวัตถุดิบในการทำดังนี้{" "}
+              </span>
+            )}
+            <div className="missing-ingredient">
+              {notEnoughIng.map((eachMissing) => (
+                <li className="missing-ingredient-text">
+                  {" "}
+                  ขาด {eachMissing.ingredientName} {eachMissing.missingAmount}{" "}
+                  {eachMissing.ingredientUnit}{" "}
+                  {(eachMissing.AmountinRef > 0) &&
+                    <span className="amount-in-ref">
+                      (ในตู้เย็นมีอยู่ {eachMissing.AmountinRef})
+                    </span>
+                  }
+                </li>
+              ))}
+            </div>
             {wareDoable && !cooking && (
               <button
                 className="do-this-menu-button"
@@ -653,7 +693,7 @@ const MenuPage = ({ status }) => {
           <div className="menu-steps-head">
             <h1>ขั้นตอนการทำ</h1>
           </div>
-          {menuDetails.cookingstep.map((eachSteps,id) => (
+          {menuDetails.cookingstep.map((eachSteps, id) => (
             <MenuStepsItem
               img={eachSteps.image}
               desc={eachSteps.description}
@@ -671,14 +711,22 @@ const MenuPage = ({ status }) => {
           .map((eachComment, id) => (
             <div className="menu-comments-list" key={id}>
               <div className="flex justify-content-between text-md">
-                <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-                  <span className="menu-comment-username hover-pointer" onClick={() => setUserReport(eachComment)}>
+                <OverlayTrigger
+                  trigger="click"
+                  placement="top"
+                  overlay={popover}
+                >
+                  <span
+                    className="menu-comment-username hover-pointer"
+                    onClick={() => setUserReport(eachComment)}
+                  >
                     <BsPersonCircle style={{ fontSize: "150%" }} />
                     &nbsp;
                     {eachComment.displayname} &nbsp;{" "}
                     <span
                       style={{
-                        display: userId === eachComment.userID ? "block" : "none",
+                        display:
+                          userId === eachComment.userID ? "block" : "none",
                       }}
                     >
                       (You)

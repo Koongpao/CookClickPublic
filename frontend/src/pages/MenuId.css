@@ -370,3 +370,25 @@
   max-width: 30%;
   border-radius: 20px;
 }
+
+.missing-ingredient{
+  display: flex;
+  flex-direction: column;
+}
+
+.missing-ingredient-text{
+  font-size: 1.7vh;
+  color:rgba(203, 40, 40)
+}
+
+.missing-ingredient-text2{
+  color:rgba(203, 40, 40)
+}
+
+.green {
+  color:rgb(24, 189, 60)
+}
+
+.amount-in-ref{
+  color:rgb(162, 149, 149)
+}
