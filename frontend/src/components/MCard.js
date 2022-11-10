@@ -39,7 +39,8 @@ const MCard = ({
   }
 
   return (
-    <a href={linkwarp} className="link-dark mcard-a-nounderline">
+    <>
+    {Status !== 0 && <a href={linkwarp} className="link-dark mcard-a-nounderline">
       <div className="flex menu-card">
         <div className="food-image">
           {FoodImg && (
@@ -70,7 +71,8 @@ const MCard = ({
           <p className="overflowhidp">{Desc}</p>
         </div>
       </div>
-    </a>
+    </a>}
+    </>
   )
 }
 
