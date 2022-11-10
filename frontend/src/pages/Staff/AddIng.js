@@ -1,6 +1,8 @@
 import { Button, Form, Modal } from "react-bootstrap"
 import { useState, useEffect, useRef } from "react"
 import { GetSystemIngredient, GetSystemKitchenware, AddSysIngredient, AddSysKitchenware } from "../../script/controller";
+import "../Ref.css";
+import { FaPlus } from "react-icons/fa";
 
 const AddIng = () => {
   const [categoryData] = useState({
@@ -31,8 +33,8 @@ const AddIng = () => {
 
   return (
     <>
-      <div className="flex flex-col align-items-center">
-        <h1>เพิ่มวัตถุดิบและอุปกรณ์การทำอาหารลงในระบบ</h1>
+      <div className="refpage">
+        <h1 className="text-center">เพิ่มวัตถุดิบและอุปกรณ์การทำอาหารลงในระบบ</h1>
         <div className="refpage-lower-section">
           <div className="refpage-category">
             <div
@@ -93,95 +95,99 @@ const AddIng = () => {
               อุปกรณ์ทำอาหาร
             </div>
           </div>
+          <div className="refpage-right p-3">
+            <h5>วัตถุดิบและอุปกรณ์ทำอาหารในระบบ</h5>
+            <div className="text-end">
+              <Button className="m-1" variant="primary" onClick={
+                () => {
+                  setModalShow(true);
+                }
+              }><FaPlus />{" "}เพิ่มวัตถุดิบ</Button>
+              <Button className="m-1" variant="primary" onClick={
+                () => {
+                  setModalShowTwo(true);
+                }
+              }><FaPlus />{" "}เพิ่มอุปกรณ์</Button>
+            </div>
+            <div className="sys-ingredient-list">
+              <div
+                style={{
+                  display:
+                    currentIngShow === "meat" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  ingredient.map((ing, id) => {
+                    if (ing.categoryID === categoryData.meat) {
+                      return <div key={id}>{ing.name}</div>;
+                    }
+                  })
+              }</div>
+              <div
+                style={{
+                  display:
+                    currentIngShow === "veg" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  ingredient.map((ing, id) => {
+                    if (ing.categoryID === categoryData.veggie) {
+                      return <div key={id}>{ing.name}</div>;
+                    }
+                  }
+              )}</div>
+              
+              <div
+                style={{
+                  display: currentIngShow === "cond" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  ingredient.map((ing, id) => {
+                    if (ing.categoryID === categoryData.condiment) {
+                      return <div key={id}>{ing.name}</div>;
+                    }
+                  }
+              )}</div>
+              <div
+                style={{
+                  display: currentIngShow === "flour" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  ingredient.map((ing, id) => {
+                    if (ing.categoryID === categoryData.flour) {
+                      return <div key={id}>{ing.name}</div>;
+                    }
+                  }
+              )}</div>
+              <div
+                style={{
+                  display: currentIngShow === "other" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  ingredient.map((ing, id) => {
+                    if (ing.categoryID === categoryData.other) {
+                      return <div key={id}>{ing.name}</div>;
+                    }
+                  }
+              )}</div>
+              <div
+                style={{
+                  display: currentIngShow === "tool" || currentIngShow === "all"
+                      ? "block" : "none",
+                }}
+              >{
+                  kitchenware.map((kitware, id) => {
+                    return <div key={id}>{kitware.name}</div>;
+                  }
+              )}</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="refpage-right">
-        <Button variant="primary" onClick={
-          () => {
-            setModalShow(true);
-          }
-        }>เพิ่มวัตถุดิบ</Button>
-        <Button variant="primary" onClick={
-          () => {
-            setModalShowTwo(true);
-          }
-        }>เพิ่มอุปกรณ์</Button>
-        <div className="ref-page-ingredient-list">
-          <div
-            style={{
-              display:
-                currentIngShow === "meat" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              ingredient.map((ing, id) => {
-                if (ing.categoryID === categoryData.meat) {
-                  return <div key={id}>{ing.name}</div>;
-                }
-              })
-          }</div>
-          <div
-            style={{
-              display:
-                currentIngShow === "veg" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              ingredient.map((ing, id) => {
-                if (ing.categoryID === categoryData.veggie) {
-                  return <div key={id}>{ing.name}</div>;
-                }
-              }
-          )}</div>
-          
-          <div
-            style={{
-              display: currentIngShow === "cond" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              ingredient.map((ing, id) => {
-                if (ing.categoryID === categoryData.condiment) {
-                  return <div key={id}>{ing.name}</div>;
-                }
-              }
-          )}</div>
-          <div
-            style={{
-              display: currentIngShow === "flour" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              ingredient.map((ing, id) => {
-                if (ing.categoryID === categoryData.flour) {
-                  return <div key={id}>{ing.name}</div>;
-                }
-              }
-          )}</div>
-          <div
-            style={{
-              display: currentIngShow === "other" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              ingredient.map((ing, id) => {
-                if (ing.categoryID === categoryData.other) {
-                  return <div key={id}>{ing.name}</div>;
-                }
-              }
-          )}</div>
-          <div
-            style={{
-              display: currentIngShow === "tool" || currentIngShow === "all"
-                  ? "block" : "none",
-            }}
-          >{
-              kitchenware.map((kitware, id) => {
-                return <div key={id}>{kitware.name}</div>;
-              }
-          )}</div>
-        </div>
-      </div>
+      
       <Modal
         show={modalShow}
         onHide={() => setModalShow(false)}

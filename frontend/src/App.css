@@ -1095,3 +1095,8 @@ label:focus,
   margin: 0 0 2% 0;
   border-bottom: rgb(0, 0, 0, 0.15) solid 1px;
 }
+
+.sys-ingredient-list {
+  overflow-y: scroll;
+  max-height: 50vh;
+}

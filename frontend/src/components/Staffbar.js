@@ -5,6 +5,7 @@ import {
   FaBan,
   FaUserCircle,
   FaUser,
+  FaPlus,
 } from "react-icons/fa"
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
@@ -67,6 +68,12 @@ function Staffbar({ user, onchangelogout }) {
                   <Nav.Link href="/Staff/Dashboard">
                     <FaSearch />
                     &nbsp;Dashboard
+                  </Nav.Link>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/Staff/add-ingredient">
+                    <FaPlus />
+                    &nbsp;เพิ่มวัตถุดิบและอุปกรณ์
                   </Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
