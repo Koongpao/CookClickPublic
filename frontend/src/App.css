@@ -987,24 +987,27 @@ label:focus,
 }
 
 .normal-search-box-button {
-  margin-left: 5%;
+  margin-left: 0.5rem;
   transition: all 0.2s;
   border: rgba(0, 0, 0, 0.16) solid 1px;
   background-color: white;
   border-radius: 10px;
+  margin-block: 0.5rem;
 }
 
 .normal-search-box-input {
   border: rgb(0, 0, 0, 0.15) 1px solid;
   border-radius: 10px;
+  padding: 0.5rem;
+  margin-block: 0.5rem;
 }
 .normal-search-box-button:hover {
   background-color: rgba(0, 0, 0, 0.16);
 }
 
 .normal-search-box {
-  width: 30%;
-  margin: auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .login-main-part {
@@ -1099,8 +1102,4 @@ label:focus,
 .sys-ingredient-list {
   overflow-y: scroll;
   max-height: 50vh;
-}
-
-.hover-pointer:hover {
-  cursor: pointer;
 }
